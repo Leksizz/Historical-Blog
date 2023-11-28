@@ -1,0 +1,58 @@
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <h1 class="text-center mt-5">Авторизация</h1>
+        <div class="col-md-3 border p-3 border-secondary rounded shadow mt-2">
+            <form action="/handlerLogin" onsubmit="sendForm(this); return false;"
+                  method="POST">
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
+                    <input name="login" type="text" class="form-control" placeholder="Логин, Email">
+                </div>
+
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                    <input name="password" type="password" class="form-control" id="password" placeholder="Пароль">
+                </div>
+                <div class="col-md-12 mb-4 d-flex justify-content-center">
+                    <input type="submit" class="btn btn-secondary w-50" value="Вход">
+                </div>
+                <div class="col-md-12 mb-4 d-flex justify-content-center">
+                    <p>Нет аккаунта? <a href="/reg" class="link-success link-underline link-underline-opacity-0">-
+                        Зарегистрируйтесь!</a></p>
+                </div>
+                <div class="col-md-12 mb-4 d-flex justify-content-center">
+                    <p class="text-danger" id='error' hidden>Неверный логин или пароль</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    fetch('/getUserData')
+        .then(response => response.json())
+        .then(result => {
+            if (result.id) {
+                location.href = '/';
+            }
+        })
+    const error = document.getElementById('error');
+
+    function sendForm(form) {
+        error.hidden = true;
+        const formData = new FormData(form);
+        fetch('/handlerLogin', {
+            method: "POST",
+            body: formData
+        }).then(response => response.json())
+            .then(result => {
+                if (result.result === 'success') {
+                    location.href = '/profile';
+                } else {
+                    error.hidden = false;
+                }
+            });
+    }
+
+    let pageTitle = "Авторизация";
+    document.getElementById('pageTitle').innerText = pageTitle;
+</script>

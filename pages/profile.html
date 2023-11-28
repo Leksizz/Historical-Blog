@@ -1,0 +1,43 @@
+<div class="container my-4">
+    <h1 class="text-center mb-4">Ваши данные:</h1>
+    <div class="row justify-content-center">
+        <div class="mb-2">
+            <p><strong>Имя: </strong><span id="name"></span></p>
+        </div>
+        <div class="mb-2">
+            <p><strong>Фамилия: </strong><span id="lastname"></span></p>
+        </div>
+        <div class="mb-2">
+            <p><strong>Никнейм: </strong><span id="login"></span></p>
+        </div>
+        <div class="mb-2">
+            <p><strong>Email: </strong><span id="email"></span></p>
+        </div>
+        <div class="mb-2">
+            <p><strong>ID: </strong><span id="userId"></span></p>
+        </div>
+    </div>
+</div>
+<script>
+    const name = document.getElementById('name');
+    const lastname = document.getElementById('lastname');
+    const login = document.getElementById('login');
+    const email = document.getElementById('email');
+    const userId = document.getElementById('userId');
+    fetch('/getUserData')
+        .then(response => response.json())
+        .then(result => {
+            if (result.id) {
+                name.innerText = result.name;
+                lastname.innerText = result.lastname;
+                login.innerText = result.login;
+                email.innerText = result.email;
+                userId.innerText = result.id;
+            } else {
+                location.href = '/login';
+            }
+        })
+
+    let pageTitle = "Профиль";
+    document.getElementById('pageTitle').innerText = pageTitle;
+</script>

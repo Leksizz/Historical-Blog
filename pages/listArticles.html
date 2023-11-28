@@ -1,0 +1,42 @@
+<div class="container my-5" id="container">
+</div>
+<div class="container-fluid my-5">
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <a class="page-link">Предыдущая</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Следующая</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<script>
+    const container = document.getElementById('container');
+    fetch('/getArticles')
+        .then(response => response.json())
+        .then(result => {
+            for (let i = 0; i < result.length; i++) {
+                let article = result[i];
+                const a = document.createElement('a');
+                const div = document.createElement('div');
+                const p = document.createElement('p');
+                const hr = document.createElement('hr');
+                a.classList.add('h3');
+                a.href = 'article/' + article.id;
+                a.innerText = article.title;
+                div.innerText = article.content;
+                p.innerText = article.author;
+                container.append(a, div, p, hr)
+            }
+        })
+
+    let pageTitle = "Список статей";
+    document.getElementById('pageTitle').innerText = pageTitle;
+</script>

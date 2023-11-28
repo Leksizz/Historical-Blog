@@ -1,0 +1,94 @@
+<div class="container my-5 ">
+    <h1 class="text-center my-4">Регистрация на сайте</h1>
+    <div class="col-md-5 mx-auto border p-3 border-secondary rounded shadow">
+        <form onsubmit="sendForm(this); return false">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
+                        <input name="name" type="text" class="form-control" placeholder="Имя">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
+                        <input name="lastname" type="text" class="form-control" placeholder="Фамилия">
+                    </div>
+                </div>
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                    <input
+                            name="login"
+                            type="text"
+                            class="form-control"
+                            placeholder="Логин"
+                    />
+                </div>
+            </div>
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
+                <input
+                        name="email"
+                        type="email"
+                        class="form-control"
+                        placeholder="E-mail"
+                />
+            </div>
+            <div class="mb-3 input-group">
+            <span class="input-group-text"
+            ><i class="fa-solid fa-lock"></i
+            ></span>
+                <input
+                        name="password"
+                        type="password"
+                        class="form-control"
+                        placeholder="Пароль"
+                />
+            </div>
+            <div class="mb-3">
+                <input
+                        type="submit"
+                        class="form-control btn btn-secondary"
+                        value="Зарегистрироваться"
+                />
+            </div>
+            <div class="col-md-12 mb-4 d-flex justify-content-center">
+                <p>Есть аккаунт? <a href="/login" class="link-success link-underline link-underline-opacity-0">-
+                    Авторизируйтесь!</a></p>
+            </div>
+            <div class="col-md-12 mb-4 d-flex justify-content-center">
+                <p class="text-danger" id="error" hidden>Такой пользователь уже существует</p>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    fetch('/getUserData')
+        .then(response => response.json())
+        .then(result => {
+            if (result.id) {
+                location.href = '/';
+            }
+        })
+
+    const error = document.getElementById('error');
+
+    function sendForm(form) {
+        error.hidden = true;
+        const formData = new FormData(form);
+        fetch('/handlerReg', {
+            method: "POST",
+            body: formData
+        }).then(response => response.json())
+            .then(result => {
+                if (result.result === "success") {
+                    location.href = '/login';
+                } else {
+                    error.hidden = false;
+                }
+            })
+    }
+
+    let pageTitle = "Регистрация";
+    document.getElementById('pageTitle').innerText = pageTitle;
+</script>
