@@ -9,25 +9,16 @@ class Blog
         $title = $_POST['title'];
         $content = $_POST['article'];
         $author = $_SESSION['login'];
-        $mysqli = new mysqli('localhost', 'root', '', 'blog');
         switch (true) {
             case(empty($title) && empty($content)):
-                $_SESSION['error_title'] = "Обязательное поле для ввода";
-                $_SESSION['error_article'] = "Обязательное поле для ввода";
-                header("Location: /addArticle");
-                break;
+                return json_encode(['result' => 'error']);
             case(empty($title)):
-                $_SESSION['error_title'] = "Обязательное поле для ввода";
-                header("Location: /addArticle");
-                break;
+                return json_encode(['result' => 'errorTitle']);
             case(empty($content)):
-                $_SESSION['error_article'] = "Обязательное поле для ввода";
-                header("Location: /addArticle");
-                break;
+                return json_encode(['result' => 'errorText']);
             default:
-                $result = $mysqli->query("INSERT INTO articles(title, content, author) VALUES ('$title', '$content', '$author')");
-                header("Location: /listArticles");
-                break;
+                $mysqli->query("INSERT INTO articles(title, content, author) VALUES ('$title', '$content', '$author')");
+                return json_encode(['result' => 'success']);
         }
     }
 

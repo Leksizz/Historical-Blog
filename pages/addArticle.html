@@ -1,31 +1,40 @@
 <div class="my-5 ms-3">
     <h1>Новая тема:</h1>
-    <form action="/handlerAddArticles" method="POST">
+    <form onsubmit="sendForm(this); return false" method="POST">
         <p class="mt-3">Заголовок</p>
         <input type="text" name="title">
-        <p class="text-danger">
-            <?php if (isset($_SESSION['error_title'])) {
-                echo $_SESSION['error_title'];
-                unset($_SESSION['error_title']);
-            } ?></p>
+        <p class="text-danger" id="errorTitle" hidden>Обязательное поле</p>
         <p class="mt-3">Ваша тема</p>
         <textarea name="article"></textarea><br/>
-        <p class="text-danger">
-            <?php if (isset($_SESSION['error_article'])) {
-                echo $_SESSION['error_article'];
-                unset($_SESSION['error_article']);
-            } ?></p>
+        <p class="text-danger" id="errorText" hidden>Обязательно поле</p>
         <input type="submit" value="Отправить">
     </form>
 </div>
 <script>
-    fetch('/getUserData')
-        .then(response => response.json())
-        .then(result => {
-            if (!result.id) {
-                location.href = '/';
-            }
-        })
+    const errorText = document.getElementById('errorText');
+    const errorTitle = document.getElementById('errorTitle');
+
+    function sendForm(form) {
+        errorText.hidden = true;
+        errorTitle.hidden = true;
+        const formData = new FormData(form);
+        fetch('/handlerAddArticle', {
+            method: "POST",
+            body: formData,
+        }).then(response => response.json())
+            .then(result => {
+                const actions = {
+                    'success': () => location.href = '/listArticles',
+                    'errorTitle': () => errorTitle.hidden = false,
+                    'errorText': () => errorText.hidden = false,
+                    'error': () => {
+                        errorTitle.hidden = false;
+                        errorText.hidden = false;
+                    },
+                };
+                actions[result.result]?.();
+            })
+    }
 
     let pageTitle = "Добавление статьи";
     document.getElementById('pageTitle').innerText = pageTitle;

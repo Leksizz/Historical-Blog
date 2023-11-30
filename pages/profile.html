@@ -1,19 +1,19 @@
-<div class="container my-4">
+<div class="container">
     <h1 class="text-center mb-4">Ваши данные:</h1>
-    <div class="row justify-content-center">
-        <div class="mb-2">
+    <div class="row">
+        <div class="col-sm-3 text-center">
+            <img width="80% text-center" id="userAvatar" src="" alt="">
+            <form action="/changeAvatar" method="POST" enctype="multipart/form-data">
+                <input type="file" name="avatar" class="form-control mt-5">
+                <input type="submit" value="загрузить" class="form-control btn btn-secondary mt-2">
+            </form>
+            <p class="text-danger" id="error" hidden>Недопустимый формат файла</p>
+        </div>
+        <div class="col-sm-9">
             <p><strong>Имя: </strong><span id="name"></span></p>
-        </div>
-        <div class="mb-2">
             <p><strong>Фамилия: </strong><span id="lastname"></span></p>
-        </div>
-        <div class="mb-2">
             <p><strong>Никнейм: </strong><span id="login"></span></p>
-        </div>
-        <div class="mb-2">
             <p><strong>Email: </strong><span id="email"></span></p>
-        </div>
-        <div class="mb-2">
             <p><strong>ID: </strong><span id="userId"></span></p>
         </div>
     </div>
@@ -23,6 +23,7 @@
     const lastname = document.getElementById('lastname');
     const login = document.getElementById('login');
     const email = document.getElementById('email');
+    const userAvatar = document.getElementById('userAvatar');
     const userId = document.getElementById('userId');
     fetch('/getUserData')
         .then(response => response.json())
@@ -33,6 +34,7 @@
                 login.innerText = result.login;
                 email.innerText = result.email;
                 userId.innerText = result.id;
+                userAvatar.src = result.img;
             } else {
                 location.href = '/login';
             }

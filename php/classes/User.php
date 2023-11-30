@@ -38,8 +38,9 @@ class User
                 $_SESSION['lastname'] = $row['lastname'];
                 $_SESSION['login'] = $row['login'];
                 $_SESSION['email'] = $row['email'];
+                $_SESSION['img'] = $row['img'];
                 $_SESSION['id'] = $row['id'];
-                echo json_encode(["result" => "success"]);
+                return json_encode(["result" => "success"]);
             } else {
                 return json_encode(["result" => "error"]);
             }
@@ -57,5 +58,25 @@ class User
     {
         session_destroy();
         header("Location: /login");
+    }
+
+    public static function changeUserAvatar()
+    {
+        global $mysqli;
+        $userId = $_SESSION['id'];
+        $img = $_FILES['avatar'];
+        // Получаем уникальное название файла
+        $extension = explode('/', $img['type'])[1];
+        $filename = time() . '.' . $extension;
+        if ($extension == 'jpeq' || $extension == 'png') {
+            $uploadDir = 'img/' . $filename;
+            move_uploaded_file($img['tmp_name'], $uploadDir);
+            $mysqli->query("UPDATE `users` SET `img`= '/$uploadDir' WHERE id= '$userId'");
+            $_SESSION['img'] = "/$uploadDir";
+            header('Location: /profile');
+        } else {
+            echo "123";
+            // return json_encode(["result" => "error"]); Доделать эту хуйню под JS
+        }
     }
 }

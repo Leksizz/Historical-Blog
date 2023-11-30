@@ -63,14 +63,6 @@
     </div>
 </div>
 <script>
-    fetch('/getUserData')
-        .then(response => response.json())
-        .then(result => {
-            if (result.id) {
-                location.href = '/';
-            }
-        })
-
     const error = document.getElementById('error');
 
     function sendForm(form) {
