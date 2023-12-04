@@ -9,14 +9,15 @@ $mysqli = new mysqli('localhost', 'root', '', 'blog');
 require_once('php/classes/User.php');
 require_once('php/classes/Blog.php');
 require_once('php/classes/Route.php');
+require_once('php/simple_html_dom.php'); // Подключаем стороннюю библиотеку
 
-//Views GET
+
 Route::view('/', 'pages/main.html');
 Route::view('/category', 'pages/category.html');
 Route::view('/listArticles', 'pages/listArticles.html');
 Route::view('/article/{id}', 'pages/article.html');
-// Controllers GET
-Route::get('/getArticle/{id}', function (){return Blog::getArticleById(1);});
+
+Route::get('/getArticle/{id}', function ($id){return Blog::getArticleById($id);});
 Route::get('/getArticles', function (){return Blog::getArticles();});
 Route::get('/getUserData', function (){return User::getUserData();});
 Route::get('/logout', function (){return User::logout();});

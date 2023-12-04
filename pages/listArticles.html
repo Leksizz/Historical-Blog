@@ -31,7 +31,7 @@
                 a.classList.add('h3');
                 a.href = '/article/' + article.id;
                 a.innerText = article.title;
-                div.innerText = article.content;
+                div.innerHTML = article.content;
                 p.innerText = article.author;
                 container.append(a, div, p, hr)
             }

@@ -68,14 +68,14 @@ class User
         // Получаем уникальное название файла
         $extension = explode('/', $img['type'])[1];
         $filename = time() . '.' . $extension;
-        if ($extension == 'jpeq' || $extension == 'png') {
+        if ($extension == 'jpeg' || $extension == 'png' || $extension == 'jpg') {
             $uploadDir = 'img/' . $filename;
             move_uploaded_file($img['tmp_name'], $uploadDir);
             $mysqli->query("UPDATE `users` SET `img`= '/$uploadDir' WHERE id= '$userId'");
             $_SESSION['img'] = "/$uploadDir";
             header('Location: /profile');
         } else {
-            echo "123";
+            echo "1243";
             // return json_encode(["result" => "error"]); Доделать эту хуйню под JS
         }
     }
