@@ -3,25 +3,27 @@
 <div class="container-fluid my-5">
     <nav aria-label="...">
         <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link">Предыдущая</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Следующая</a>
-            </li>
+            <!--            <li class="page-item disabled">-->
+            <!--                <a class="page-link">Предыдущая</a>-->
+            <!--            </li>-->
+            <!--            <li class="page-item"><a class="page-link" href="#"></a></li>-->
+            <!--            <li class="page-item active" aria-current="page">-->
+            <!--                <a class="page-link" href="#"></a>-->
+            <!--            </li>-->
+            <!--            <li class="page-item"><a class="page-link" href="#"></a></li>-->
+            <!--            <li class="page-item">-->
+            <!--                <a class="page-link" href="#">Следующая</a>-->
+            <!--            </li>-->
         </ul>
     </nav>
 </div>
 <script>
     const container = document.getElementById('container');
+    const paginationContainer = document.querySelector('.pagination');
     fetch('/getArticles')
         .then(response => response.json())
         .then(result => {
+
             for (let i = 0; i < result.length; i++) {
                 let article = result[i];
                 const a = document.createElement('a');
@@ -35,8 +37,34 @@
                 p.innerText = article.author;
                 container.append(a, div, p, hr)
             }
-        })
 
+            const pageCount = Math.ceil(result.length / 7);
+            for (i = 0; i < pageCount; i++) {
+                const currentPage = i + 1;
+                const li = document.createElement('li');
+                const aPagination = document.createElement('a');
+                const aBack = document.createElement('a');
+                const aNext = document.createElement('a');
+                const iconBack = document.createElement('i');
+                const iconNext = document.createElement('i');
+
+                li.classList.add('page-item');
+                aPagination.classList.add('page-link');
+                aPagination.href = `/listArticles/${i + 1}`;
+                aPagination.innerText = i + 1;
+                aBack.classList.add('page-link');
+                aBack.href = `/listArticles/${i - 1}`;
+                iconBack.classList.add('fa-solid', 'fa-backward');
+                aBack.appendChild(iconBack);
+                if (i + 1 === currentPage) {
+                    li.classList.add('active');
+                }
+                li.appendChild(aPagination);
+                paginationContainer.appendChild(aBack);
+                paginationContainer.appendChild(li);
+            }
+        });
+// Доделать этот дурдом блядь
     let pageTitle = "Список статей";
     document.getElementById('pageTitle').innerText = pageTitle;
 </script>

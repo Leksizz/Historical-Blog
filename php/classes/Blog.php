@@ -46,6 +46,7 @@ class Blog
         }
     }
 
+
     public static function getArticleById($articleId)
     {
         global $mysqli;
