@@ -14,7 +14,7 @@ require_once('php/simple_html_dom.php'); // Подключаем сторонн�
 
 Route::view('/', 'pages/main.html');
 Route::view('/category', 'pages/category.html');
-Route::view('/listArticles', 'pages/listArticles.html');
+Route::view('/listArticles/{id}', 'pages/listArticles.html');
 Route::view('/article/{id}', 'pages/article.html');
 
 Route::get('/getArticle/{id}', function ($id){return Blog::getArticleById($id);});

@@ -1,16 +1,10 @@
 <div class="mt-5">
-    <a id="listArticles" href="/listArticles">Античность</a>
+    <a href="/listArticles/1">Античность</a>
 </div>
 <div class="mt-5">
     <a href="/addArticle">Написать статью</a>
 </div>
 <script>
-    const listArticles = document.getElementById('listArticles');
-    fetch('/getArticles')
-        .then(response => response.json())
-        .then(result => {
-        })
-
     let pageTitle = "Категории";
     document.getElementById('pageTitle').innerText = pageTitle;
 </script>
