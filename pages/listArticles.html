@@ -37,15 +37,18 @@
             aBack.innerHTML = "Назад";
             aBack.href = "/listArticles/" + (currentPage - 1);
 
-            // const btnStart = document.createElement('li');
-            // btnStart.classList.add('page-link');
-            // const aStart = document.createElement('a');
-            // btnStart.appendChild(aStart);
-            // aStart.innerHTML = <i className="fa-solid fa-backward-fast"></i>;
-            // aStart.href = "/listArticles/" + 1;
+            const btnStart = document.createElement('li');
+            btnStart.classList.add('page-link');
+            const aStart = document.createElement('a');
+            btnStart.appendChild(aStart);
+            const iconStart = document.createElement('i');
+            iconStart.classList.add('fa-solid', 'fa-backward-fast');
+            aStart.appendChild(iconStart);
+            aStart.href = "/listArticles/" + 1;
 
             if (currentPage > 1) {
                 pagination.insertAdjacentHTML('afterbegin', btnBack.outerHTML);
+                pagination.insertAdjacentHTML('afterbegin', btnStart.outerHTML);
             }
 
             const btnNext= document.createElement('li');
@@ -54,8 +57,19 @@
             btnNext.appendChild(aNext);
             aNext.innerHTML = "Вперёд";
             aNext.href = "/listArticles/" + (currentPage + 1);
+
+            const btnEnd = document.createElement('li');
+            btnEnd.classList.add('page-link');
+            const aEnd = document.createElement('a');
+            btnEnd.appendChild(aEnd);
+            const iconEnd = document.createElement('i');
+            iconEnd.classList.add('fa-solid', 'fa-forward-fast');
+            aEnd.appendChild(iconEnd);
+            aEnd.href = "/listArticles/" + countPage;
+
             if (currentPage < countPage) {
                 pagination.insertAdjacentHTML('beforeend', btnNext.outerHTML);
+                pagination.insertAdjacentHTML('beforeend', btnEnd.outerHTML);
             }
 
 

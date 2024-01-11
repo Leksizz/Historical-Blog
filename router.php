@@ -29,6 +29,7 @@ if (!empty($_SESSION['id'])) {
     Route::get('/login', function(){ return header("Location: /");});
     Route::post('/handlerAddArticle', function () {return Blog::handlerAddArticle();});
     Route::post('/changeAvatar', function (){return User::changeUserAvatar();});
+    Route::post('/deleteAvatar', function (){return User::deleteAvatar();});
 } else {
     Route::view('/reg', 'pages/reg.html');
     Route::view('/login', 'pages/login.html');

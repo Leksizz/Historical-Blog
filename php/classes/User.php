@@ -32,7 +32,7 @@ class User
             $result = $mysqli->query("SELECT * FROM users where login='$login'");
         }
         if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc(); // Преобразуем ответ от БД в массив, где ключи массива = названия столбцов
+            $row = $result->fetch_assoc();
             if (password_verify($password, $row['password'])) {
                 $_SESSION['name'] = $row['name'];
                 $_SESSION['lastname'] = $row['lastname'];
@@ -68,15 +68,33 @@ class User
         // Получаем уникальное название файла
         $extension = explode('/', $img['type'])[1];
         $filename = time() . '.' . $extension;
+        $oldAvatar = $_SESSION['img'];
         if ($extension == 'jpeg' || $extension == 'png' || $extension == 'jpg') {
             $uploadDir = 'img/' . $filename;
             move_uploaded_file($img['tmp_name'], $uploadDir);
             $mysqli->query("UPDATE `users` SET `img`= '/$uploadDir' WHERE id= '$userId'");
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . $oldAvatar)) {
+                unlink($_SERVER['DOCUMENT_ROOT'] . $oldAvatar);
+            }
             $_SESSION['img'] = "/$uploadDir";
-            header('Location: /profile');
+            return json_encode(['result' => 'success']);
         } else {
-            echo "1243";
-            // return json_encode(["result" => "error"]); Доделать эту хуйню под JS
+            return json_encode(["result" => "error"]);
+        }
+    }
+
+    public static function deleteAvatar()
+    {
+        global $mysqli;
+        $userId = $_SESSION['id'];
+        $oldAvatar = $_SESSION['img'];
+        if (file_exists($_SERVER['DOCUMENT_ROOT'] . $oldAvatar)) {
+            $mysqli->query("UPDATE `users` SET `img` = '/user_avatar.png' WHERE id= '$userId'");
+            unlink($_SERVER['DOCUMENT_ROOT'] . $oldAvatar);
+            unset($_SESSION['img']);
+            return json_encode(['result' => 'success']);
+        } else {
+            return json_encode(['result' => 'error']);
         }
     }
 }

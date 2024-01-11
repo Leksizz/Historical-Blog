@@ -3,11 +3,15 @@
     <div class="row">
         <div class="col-sm-3 text-center">
             <img width="80% text-center" id="userAvatar" src="" alt="">
-            <form action="/changeAvatar" method="POST" enctype="multipart/form-data">
+            <form onsubmit="changeAvatar(this); return false">
                 <input type="file" name="avatar" class="form-control mt-5">
                 <input type="submit" value="загрузить" class="form-control btn btn-secondary mt-2">
             </form>
-            <p class="text-danger" id="error" hidden>Недопустимый формат файла</p>
+            <p class="text-danger" id="errorChange" hidden>Недопустимый формат файла</p>
+            <form onsubmit="deleteAvatar(this); return false">
+                <input type="submit" value="удалить" class="form-control btn btn-secondary mt-2">
+            </form>
+            <p class="text-danger" id="errorDelete" hidden>Нету аватара для удаления</p>
         </div>
         <div class="col-sm-9">
             <p><strong>Имя: </strong><span id="name"></span></p>
@@ -25,6 +29,41 @@
     const email = document.getElementById('email');
     const userAvatar = document.getElementById('userAvatar');
     const userId = document.getElementById('userId');
+    const errorChange = document.getElementById('errorChange');
+    const errorDelete = document.getElementById('errorDelete');
+
+    function changeAvatar(form) {
+        errorChange.hidden = true;
+        const formData = new FormData(form);
+        fetch('/changeAvatar', {
+            method: "POST",
+            body: formData
+        }).then(response => response.json())
+            .then(result => {
+                if (result.result === 'success') {
+                    location.reload();
+                } else {
+                    errorChange.hidden = false;
+                }
+            })
+    }
+
+    function deleteAvatar(form) {
+        errorDelete.hidden = true;
+        const formData = new FormData(form);
+        fetch('/deleteAvatar', {
+            method: "POST",
+            body: formData
+        }). then(response => response.json())
+            .then(result => {
+                if (result.result === 'success') {
+                    location.reload();
+                } else {
+                    errorDelete.hidden = false;
+                }
+            })
+    }
+
     fetch('/getUserData')
         .then(response => response.json())
         .then(result => {
