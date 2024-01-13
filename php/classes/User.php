@@ -65,21 +65,21 @@ class User
         global $mysqli;
         $userId = $_SESSION['id'];
         $img = $_FILES['avatar'];
-        // Получаем уникальное название файла
         $extension = explode('/', $img['type'])[1];
         $filename = time() . '.' . $extension;
         $oldAvatar = $_SESSION['img'];
+        $defaultAvatar = '/img/user_avatar.png';
         if ($extension == 'jpeg' || $extension == 'png' || $extension == 'jpg') {
             $uploadDir = 'img/' . $filename;
             move_uploaded_file($img['tmp_name'], $uploadDir);
             $mysqli->query("UPDATE `users` SET `img`= '/$uploadDir' WHERE id= '$userId'");
-            if (file_exists($_SERVER['DOCUMENT_ROOT'] . $oldAvatar)) {
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . $oldAvatar) && $oldAvatar !== $defaultAvatar) {
                 unlink($_SERVER['DOCUMENT_ROOT'] . $oldAvatar);
             }
             $_SESSION['img'] = "/$uploadDir";
             return json_encode(['result' => 'success']);
         } else {
-            return json_encode(["result" => "error"]);
+            return json_encode(["result" => "errorChange"]);
         }
     }
 
@@ -88,13 +88,15 @@ class User
         global $mysqli;
         $userId = $_SESSION['id'];
         $oldAvatar = $_SESSION['img'];
-        if (file_exists($_SERVER['DOCUMENT_ROOT'] . $oldAvatar)) {
-            $mysqli->query("UPDATE `users` SET `img` = '/user_avatar.png' WHERE id= '$userId'");
+        $defaultAvatar = '/img/user_avatar.png';
+        if (file_exists($_SERVER['DOCUMENT_ROOT'] . $oldAvatar) && $oldAvatar !== $defaultAvatar) {
             unlink($_SERVER['DOCUMENT_ROOT'] . $oldAvatar);
-            unset($_SESSION['img']);
-            return json_encode(['result' => 'success']);
         } else {
             return json_encode(['result' => 'error']);
         }
+        $mysqli->query("UPDATE users SET img = '$defaultAvatar' WHERE id = '$userId'");
+        $_SESSION['img'] = $defaultAvatar;
+        return json_encode(['result' => 'success']);
     }
+
 }

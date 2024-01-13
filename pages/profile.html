@@ -8,6 +8,7 @@
                 <input type="submit" value="загрузить" class="form-control btn btn-secondary mt-2">
             </form>
             <p class="text-danger" id="errorChange" hidden>Недопустимый формат файла</p>
+            <p class="text-danger" id="errorNoUploadFile" hidden>Отсутствует файл для загрузки</p>
             <form onsubmit="deleteAvatar(this); return false">
                 <input type="submit" value="удалить" class="form-control btn btn-secondary mt-2">
             </form>
@@ -31,9 +32,14 @@
     const userId = document.getElementById('userId');
     const errorChange = document.getElementById('errorChange');
     const errorDelete = document.getElementById('errorDelete');
+    const errorNoUploadFile = document.getElementById('errorNoUploadFile');
 
     function changeAvatar(form) {
         errorChange.hidden = true;
+        errorNoUploadFile.hidden = true;
+        if (!form.elements.avatar.files[0]) {
+            errorNoUploadFile.hidden = false;
+        }
         const formData = new FormData(form);
         fetch('/changeAvatar', {
             method: "POST",
@@ -42,9 +48,10 @@
             .then(result => {
                 if (result.result === 'success') {
                     location.reload();
-                } else {
+                } else if (result.result === 'errorChange') {
                     errorChange.hidden = false;
                 }
+
             })
     }
 
@@ -54,7 +61,7 @@
         fetch('/deleteAvatar', {
             method: "POST",
             body: formData
-        }). then(response => response.json())
+        }).then(response => response.json())
             .then(result => {
                 if (result.result === 'success') {
                     location.reload();
