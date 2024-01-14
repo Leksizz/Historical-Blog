@@ -9,8 +9,7 @@ $mysqli = new mysqli('localhost', 'root', '', 'blog');
 require_once('php/classes/User.php');
 require_once('php/classes/Blog.php');
 require_once('php/classes/Route.php');
-require_once('php/simple_html_dom.php'); // Подключаем стороннюю библиотеку
-
+require_once('vendor/autoload.php'); // Подключаем стороннюю библиотеку
 
 Route::view('/', 'pages/main.html');
 Route::view('/category', 'pages/category.html');

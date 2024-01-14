@@ -1,6 +1,8 @@
 <?php
 
 namespace classes;
+use simple_html_dom\simple_html_dom;
+
 class Blog
 {
     public static function handlerAddArticle()
@@ -10,26 +12,17 @@ class Blog
         $title = $_POST['title'];
         $content = $_POST['content'];
         $author = $_SESSION['login'];
-        // Создаем объект
-        $html = new \simple_html_dom();
-        // Загружаем предоставленную строку HTML-документа
+        $html = new simple_html_dom();
         $html->load($content);
-        // Получаем картинку (data:image/png;base64, кодировка в base64)
+        var_dump($html);
         $img = $html->getElementByTagName('img');
-        // Получаем служебные данные
         $meta = explode(',', $img->src)[0];
-        // Получаем закодированные данные в бинарной формации
         $base64 = explode(',', $img->src)[1];
-        // Получаем расширение файла
         $extension = explode(';', explode('/', $meta)[1])[0];
         $filename = "img/blog/" . microtime() . "." . $extension;
-        // Открываем файл в режиме бинарной записи
         $ifp = fopen($filename, 'wb');
-        // Записываем в файл содержимое
         fwrite($ifp, base64_decode($base64));
-        // Закрываем файл
         fclose($ifp);
-        // Меняем расположение $img
         $img->src = "/" . $filename;
         $content = $html->save();
 
