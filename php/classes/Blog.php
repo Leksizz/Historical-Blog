@@ -57,4 +57,10 @@ class Blog
         }
         return json_encode($articles);
     }
+
+    public static function updateViews($articleId)
+    {
+        global $mysqli;
+        $mysqli->query("UPDATE articles SET views = views + 1 WHERE id = '$articleId'");
+    }
 }

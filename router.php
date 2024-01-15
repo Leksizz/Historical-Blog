@@ -9,17 +9,20 @@ $mysqli = new mysqli('localhost', 'root', '', 'blog');
 require_once('php/classes/User.php');
 require_once('php/classes/Blog.php');
 require_once('php/classes/Route.php');
-require_once('vendor/autoload.php'); // Подключаем стороннюю библиотеку
+require_once('vendor/autoload.php');
 
 Route::view('/', 'pages/main.html');
 Route::view('/category', 'pages/category.html');
 Route::view('/listArticles/{id}', 'pages/listArticles.html');
-Route::view('/article/{id}', 'pages/article.html');
 
 Route::get('/getArticle/{id}', function ($id){return Blog::getArticleById($id);});
 Route::get('/getArticles', function (){return Blog::getArticles();});
 Route::get('/getUserData', function (){return User::getUserData();});
 Route::get('/logout', function (){return User::logout();});
+// доделать счетчик просмотров
+Route::get('/article/{id}', function ($id){ Blog::updateViews($id);
+return Route::view('/article/{id}', 'pages/article.html');
+});
 
 if (!empty($_SESSION['id'])) {
     Route::view('/profile', 'pages/profile.html');
