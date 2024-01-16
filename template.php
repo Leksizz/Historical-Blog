@@ -15,7 +15,7 @@ session_start();
     <link href="/css/styles.css" rel="stylesheet"/>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <style>
-        .navbar {
+        #mainNavbar {
             background-color: #472400 !important;
         }
 
@@ -48,58 +48,49 @@ session_start();
 </head>
 <body>
 <!-- Responsive navbar-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNavbar">
     <div class="container">
         <a class="navbar-brand" href="/">Historium</a>
-                <!-- Для авторизованных пользователей -->
-                <?php if (isset($_SESSION['id'])): ?>
-                    <div class="d-flex ms-auto" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 dropstart">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                    <?php echo $_SESSION['login'] ?>
-                                </a>
-                                <ul class="dropdown-menu bg-dark">
-                                    <li><a class="profile dropdown-item text-light" href="/profile"><i
-                                                    class="fa-solid fa-user pe-2"></i>Профиль</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="exit dropdown-item text-light" href="/logout"><i
-                                                    class="fa-solid fa-door-open pe-2"></i>Выход</a>
-                                    </li>
-                                </ul>
+        <!-- Для авторизованных пользователей -->
+        <?php if (isset($_SESSION['id'])): ?>
+            <div class="d-flex ms-auto" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 dropstart">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <?php echo $_SESSION['login'] ?>
+                        </a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li><a class="profile dropdown-item text-light" href="/profile"><i
+                                            class="fa-solid fa-user pe-2"></i>Профиль</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="exit dropdown-item text-light" href="/logout"><i
+                                            class="fa-solid fa-door-open pe-2"></i>Выход</a>
                             </li>
                         </ul>
-                    </div>
-                    <!-- Для неавторизованных пользователей -->
-                <?php else: ?>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                            </li>
-                        </ul>
-                        <a class="me-3 btn btn-secondary" href="/reg" role="button">Регистрация</a>
-                        <a class="btn btn-secondary" href="/login" role="button">Вход</a>
-                    </div>
-                <?php endif; ?>
+                    </li>
+                </ul>
+            </div>
+            <!-- Для неавторизованных пользователей -->
+        <?php else: ?>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                    </li>
+                </ul>
+                <a class="me-3 btn btn-secondary" href="/reg" role="button">Регистрация</a>
+                <a class="btn btn-secondary" href="/login" role="button">Вход</a>
+            </div>
+        <?php endif; ?>
     </div>
 </nav>
-<!-- Page header with logo and tagline-->
-<header class="py-5 bg-light border-bottom mb-4">
-    <div class="container">
-        <div class="text-center my-5">
-            <h1 class="fw-bolder">Welcome to Blog Home!</h1>
-            <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
-        </div>
-    </div>
-</header>
 <!-- Page content-->
 <div class="container">
     <!-- Page content-->
     <div class="content">
-            <?= $content ?>
+        <?= $content ?>
     </div>
     <div class="row">
         <!-- Blog entries-->
@@ -207,7 +198,7 @@ session_start();
                     <div class="row">
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#!">Web Design</a></li>
+                                <li><a href="/listArticles/1">Античность</a></li>
                                 <li><a href="#!">HTML</a></li>
                                 <li><a href="#!">Freebies</a></li>
                             </ul>
@@ -225,8 +216,8 @@ session_start();
             <!-- Side widget-->
             <div class="card mb-4">
                 <div class="card-header">Side Widget</div>
-                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use,
-                    and feature the Bootstrap 5 card component!
+                <div class="card-body">
+                        <a href="/addArticle">Написать статью</a>
                 </div>
             </div>
         </div>

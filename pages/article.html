@@ -8,6 +8,7 @@
     const title = document.getElementById('title');
     const content = document.getElementById('content');
     const author = document.getElementById('author');
+    fetch('/article/' + articleId);
     fetch('/getArticle/' + articleId)
         .then(response => response.json())
         .then(result => {
