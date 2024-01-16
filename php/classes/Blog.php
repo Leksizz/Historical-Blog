@@ -1,7 +1,8 @@
 <?php
 
 namespace classes;
-use simple_html_dom\simple_html_dom;
+
+use KubAT\PhpSimple\HtmlDomParser;
 
 class Blog
 {
@@ -12,20 +13,20 @@ class Blog
         $title = $_POST['title'];
         $content = $_POST['content'];
         $author = $_SESSION['login'];
-        $html = new simple_html_dom();
-        $html->load($content);
-        var_dump($html);
-        $img = $html->getElementByTagName('img');
-        $meta = explode(',', $img->src)[0];
-        $base64 = explode(',', $img->src)[1];
-        $extension = explode(';', explode('/', $meta)[1])[0];
-        $filename = "img/blog/" . microtime() . "." . $extension;
-        $ifp = fopen($filename, 'wb');
-        fwrite($ifp, base64_decode($base64));
-        fclose($ifp);
-        $img->src = "/" . $filename;
-        $content = $html->save();
+        $html = HtmlDomParser::str_get_html($content);
+        $images = $html->find('img');
 
+        foreach ($images as $img) {
+            $meta = explode(',', $img->src)[0];
+            $base64 = explode(',', $img->src)[1];
+            $extension = explode(';', explode('/', $meta)[1])[0];
+            $filename = "img/blog/" . microtime() . "." . $extension;
+            $ifp = fopen($filename, 'wb');
+            fwrite($ifp, base64_decode($base64));
+            fclose($ifp);
+            $img->src = "/" . $filename;
+            $content = $html->save();
+        }
         switch (true) {
             case(empty($title) && empty($content)):
                 return json_encode(['result' => 'error']);

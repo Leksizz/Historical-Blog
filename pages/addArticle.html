@@ -31,7 +31,7 @@
         }).then(response => response.json())
             .then(result => {
                 const actions = {
-                    'success': () => location.href = '/listArticles',
+                    'success': () => location.href = '/listArticles/1',
                     'errorTitle': () => errorTitle.hidden = false,
                     'errorText': () => errorText.hidden = false,
                     'error': () => {

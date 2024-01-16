@@ -76,16 +76,23 @@
             for (let i = (currentPage - 1) * maxCountPage; i < currentPage * maxCountPage; i++) {
                 if (result[i].id !== null) {
                     let article = result[i];
-                    const a = document.createElement('a');
-                    const div = document.createElement('div');
-                    const p = document.createElement('p');
+                    const name = document.createElement('a');
+                    const content = document.createElement('div');
+                    const author = document.createElement('b');
+                    const iconView = document.createElement('i');
+                    iconView.classList.add('fa-solid', 'fa-eye');
+                    const containerViews = document.createElement('div');
+                    const views = document.createElement('b');
+                    containerViews.append(iconView, views);
                     const hr = document.createElement('hr');
-                    a.classList.add('h3');
-                    a.href = "/article/" + article.id;
-                    a.innerText = article.title;
-                    div.innerHTML = article.content;
-                    p.innerText = article.author;
-                    container.append(a, div, p, hr);
+
+                    name.classList.add('h3');
+                    name.href = "/article/" + article.id;
+                    name.innerText = article.title;
+                    content.innerHTML = article.content;
+                    author.innerText = article.author;
+                    views.innerText = article.views;
+                    container.append(name, content, author, containerViews, hr);
                 }
             }
         });

@@ -19,7 +19,6 @@ Route::get('/getArticle/{id}', function ($id){return Blog::getArticleById($id);}
 Route::get('/getArticles', function (){return Blog::getArticles();});
 Route::get('/getUserData', function (){return User::getUserData();});
 Route::get('/logout', function (){return User::logout();});
-// доделать счетчик просмотров
 Route::get('/article/{id}', function ($id){ Blog::updateViews($id);
 return Route::view('/article/{id}', 'pages/article.html');
 });

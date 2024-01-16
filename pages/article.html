@@ -2,22 +2,25 @@
     <h1 id="title"></h1>
     <div id="content"></div>
     <b id="author"></b>
+    <div>
+    <i class="fa-solid fa-eye"></i>
+    <b id="views"></b>
+    </div>
 </div>
 <script>
     const articleId = location.pathname.split('/')[2];
     const title = document.getElementById('title');
     const content = document.getElementById('content');
     const author = document.getElementById('author');
-    fetch('/article/' + articleId);
+    const views = document.getElementById('views');
     fetch('/getArticle/' + articleId)
         .then(response => response.json())
         .then(result => {
-            console.log(result);
             title.innerText = result.title;
             content.innerHTML = result.content;
             author.innerText = result.author;
+            views.innerText = result.views;
         })
-
     let pageTitle = "Статья";
     document.getElementById('pageTitle').innerText = pageTitle;
 </script>
