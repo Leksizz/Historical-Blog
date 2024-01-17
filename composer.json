@@ -1,0 +1,16 @@
+{
+    "name": "leksizz/historical",
+    "description": "This is a historical blog where people can chat, post their articles, and leave comments.",
+    "type": "project",
+    "require": {
+        "intervention/image": "^3.2.3",
+        "kub-at/php-simple-html-dom-parser": "^1.9"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Leksizz\\Historical\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

@@ -34,7 +34,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/gif" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/image" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kub-at/php-simple-html-dom-parser" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/components/jquery" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

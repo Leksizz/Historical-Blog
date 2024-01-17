@@ -9,20 +9,26 @@
             <div class="mb-3">
                 <textarea class="form-control" id="sample"></textarea><br/>
                 <p class="text-danger" id="errorText" hidden>Обязательно поле</p>
+                <p class="text-danger" id="errorImage" hidden>Слишком маленькое изображение (мин. 300х200)</p>
+                <p class="text-danger" id="errorTextTooLittleSymbols" hidden>Минимальное кол-во символов - 100</p>
+                <p class="text-danger" id="errorTextTooMuchSymbols" hidden>Максимальное кол-во символов - 5000</p>
+
             </div>
             <div class="mb-3">
                 <input type="submit" value="Отправить" class="form-control btn btn-secondary">
             </div>
+
         </form>
     </div>
 </div>
 <script>
     const errorText = document.getElementById('errorText');
     const errorTitle = document.getElementById('errorTitle');
+    const errorImage = document.getElementById('errorImage');
+    const errorTextTooMuchSymbols = document.getElementById('errorTextTooMuchSymbols');
+    const errorTextTooLittleSymbols = document.getElementById('errorTextTooLittleSymbols');
 
     function sendForm(form) {
-        errorText.hidden = true;
-        errorTitle.hidden = true;
         const formData = new FormData(form);
         formData.append("content", editor.getContents());
         fetch('/handlerAddArticle', {
@@ -34,6 +40,9 @@
                     'success': () => location.href = '/listArticles/1',
                     'errorTitle': () => errorTitle.hidden = false,
                     'errorText': () => errorText.hidden = false,
+                    'errorImage': () => errorImage.hidden = false,
+                    'errorTextTooMuchSymbols': () => errorTextTooMuchSymbols.hidden = false,
+                    'errorTextTooLittleSymbols': () => errorTextTooLittleSymbols.hidden = false,
                     'error': () => {
                         errorTitle.hidden = false;
                         errorText.hidden = false;
@@ -47,8 +56,9 @@
     let pageTitle = "Добавление статьи";
     document.getElementById('pageTitle').innerText = pageTitle;
 
-    // Текстовый редактор для статей
+
 </script>
+
 <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ru.js"></script>
@@ -56,20 +66,13 @@
     const editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'), {
         lang: SUNEDITOR_LANG['ru'],
         buttonList: [
-            ['undo', 'redo'],
-            ['font', 'fontSize', 'formatBlock'],
-            ['paragraphStyle', 'blockquote'],
+            ['fontSize', 'formatBlock'],
             ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-            ['fontColor', 'hiliteColor', 'textStyle'],
+            ['fontColor', 'hiliteColor'],
             ['removeFormat'],
-            '/', // Line break
-            ['outdent', 'indent'],
-            ['align', 'horizontalRule', 'list', 'lineHeight'],
-            ['table', 'link', 'image', 'video', 'audio' /** ,'math' */], // You must add the 'katex' library at options to use the 'math' plugin.
+            ['image'], // You must add the 'katex' library at options to use the 'math' plugin.
             /** ['imageGallery'] */ // You must add the "imageGalleryUrl".
-            ['fullScreen', 'showBlocks', 'codeView'],
-            ['preview', 'print'],
-            ['save', 'template'],
+            ['fullScreen'],
             /** ['dir', 'dir_ltr', 'dir_rtl'] */ // "dir": Toggle text direction, "dir_ltr": Right to Left, "dir_rtl": Left to Right
         ],
         height: "300px",

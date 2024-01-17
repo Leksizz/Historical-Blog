@@ -23,6 +23,14 @@ session_start();
             background-color: #B28C66 !important;
         }
 
+        .exit:hover {
+            background-color: #A60000;
+        }
+
+        .profile:hover {
+            background-color: #007929;
+        }
+
         body {
             display: flex;
             flex-direction: column;
@@ -37,13 +45,6 @@ session_start();
             margin-top: auto;
         }
 
-        .exit:hover {
-            background-color: #A60000;
-        }
-
-        .profile:hover {
-            background-color: #007929;
-        }
     </style>
 </head>
 <body>
@@ -95,6 +96,7 @@ session_start();
     <div class="row">
         <!-- Blog entries-->
         <div class="col-lg-8">
+            <?php if ($_SERVER['REQUEST_URI'] === '/'): ?>
             <!-- Featured blog post-->
             <div class="card mb-4">
                 <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
@@ -163,20 +165,6 @@ session_start();
                     </div>
                 </div>
             </div>
-            <!-- Pagination-->
-            <nav aria-label="Pagination">
-                <hr class="my-0"/>
-                <ul class="pagination justify-content-center my-4">
-                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a>
-                    </li>
-                    <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                    <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                </ul>
-            </nav>
         </div>
         <!-- Side widgets-->
         <div class="col-lg-4">
@@ -220,9 +208,11 @@ session_start();
                         <a href="/addArticle">Написать статью</a>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
+
 <!-- Footer-->
 <footer class="py-5 bg-dark">
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>

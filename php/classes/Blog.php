@@ -2,44 +2,65 @@
 
 namespace classes;
 
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 use KubAT\PhpSimple\HtmlDomParser;
 
 class Blog
 {
     public static function handlerAddArticle()
     {
-        // НАДО ДОДЕЛАТЬ ДЛЯ НЕСКОЛЬКИХ КАРТИНОК
         global $mysqli;
         $title = $_POST['title'];
         $content = $_POST['content'];
         $author = $_SESSION['login'];
         $html = HtmlDomParser::str_get_html($content);
+
+        $text = trim($html->find('p', 0)->plaintext);
+
         $images = $html->find('img');
+        $manager = new ImageManager(new Driver());
 
         foreach ($images as $img) {
             $meta = explode(',', $img->src)[0];
             $base64 = explode(',', $img->src)[1];
             $extension = explode(';', explode('/', $meta)[1])[0];
-            $filename = "img/blog/" . microtime() . "." . $extension;
-            $ifp = fopen($filename, 'wb');
-            fwrite($ifp, base64_decode($base64));
-            fclose($ifp);
-            $img->src = "/" . $filename;
-            $content = $html->save();
+            $filename = $manager->read($base64);
+            $width = $filename->width();
+            $height = $filename->height();
+            if ($width > 1500 && $height > 1000) {
+                $filename->resize(1500, 1000);
+            } elseif ($width > 1500) {
+                $filename->resize(Width: 1500);
+            } elseif ($height > 1000) {
+                $filename->resize(Height: 1000);
+            } elseif ($width < 300 && $height < 200) {
+                return json_encode(['result' => 'errorImage']);
+            }
+            $path = "img/blog/" . microtime() . "." . $extension;
+            $filename->save($path);
+            $img->src = "/" . $path;
         }
+        $content = $html->save();
+
         switch (true) {
-            case(empty($title) && empty($content)):
+            case(empty($title) && empty($text)):
                 return json_encode(['result' => 'error']);
             case(empty($title)):
                 return json_encode(['result' => 'errorTitle']);
-            case(empty($content)):
+            case(empty($text)):
                 return json_encode(['result' => 'errorText']);
+            case(strlen($text) < 100 && $text >= 1):
+                return json_encode(['result' => 'errorTextTooLittleSymbols']);
+            case (strlen($text) > 5000):
+                return json_encode(['result' => 'errorTextTooMuchSymbols']);
+            case (strlen($title) > 250):
+                return json_encode(['result' => 'errorTitleTooMuchSymbols']);
             default:
                 $mysqli->query("INSERT INTO articles(title, content, author) VALUES ('$title', '$content', '$author')");
                 return json_encode(['result' => 'success']);
         }
     }
-
 
     public static function getArticleById($articleId)
     {
