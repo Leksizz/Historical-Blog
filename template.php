@@ -170,7 +170,7 @@ session_start();
         <div class="col-lg-4">
             <!-- Search widget-->
             <div class="card mb-4">
-                <div class="card-header">Search</div>
+                <div class="card-header">Поиск</div>
                 <div class="card-body">
                     <div class="input-group">
                         <input class="form-control" type="text" placeholder="Enter search term..."
@@ -181,21 +181,21 @@ session_start();
             </div>
             <!-- Categories widget-->
             <div class="card mb-4">
-                <div class="card-header">Categories</div>
+                <div class="card-header">Темы</div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="/listArticles/1">Античность</a></li>
-                                <li><a href="#!">HTML</a></li>
-                                <li><a href="#!">Freebies</a></li>
+                                <li><a href="/antiquity/1">Античность</a></li>
+                                <li><a href="/middleAges/1">Средневековье</a></li>
+                                <li><a href="/primitiveSociety/1">Первобытное общество</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#!">JavaScript</a></li>
-                                <li><a href="#!">CSS</a></li>
-                                <li><a href="#!">Tutorials</a></li>
+                                <li><a href="/articles/ww1/1">WW1</a></li>
+                                <li><a href="/ww2/1">WW2</a></li>
+                                <li><a href="/newHistory/1">Новейшая история</a></li>
                             </ul>
                         </div>
                     </div>
@@ -203,7 +203,7 @@ session_start();
             </div>
             <!-- Side widget-->
             <div class="card mb-4">
-                <div class="card-header">Side Widget</div>
+                <div class="card-header">Написать статью</div>
                 <div class="card-body">
                         <a href="/addArticle">Написать статью</a>
                 </div>

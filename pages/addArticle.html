@@ -1,11 +1,31 @@
+<style>
+    select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+</style>
 <div class="container my-5">
-    <h1 class="text-center my-5">Новая тема:</h1>
+    <h1 class="text-center my-5">Новая статья:</h1>
     <div class="mx-auto col-sm-9">
         <form onsubmit="sendForm(this); return false" method="POST">
             <div class="mb-3">
                 <input type="text" name="title" placeholder="Заголовок" class="form-control">
                 <p class="text-danger" id="errorTitle" hidden>Обязательное поле</p>
             </div>
+                <div class="mb-3">
+                    <select id="topic">
+                        <option value="" selected disabled>Категория: Не выбрано</option>
+                        <option value="antiquity">Античность</option>
+                        <option value="middleAges">Средневековье</option>
+                        <option value="primitiveSociety">Первобытное общество</option>
+                        <option value="ww1">WW1</option>
+                        <option value="ww2">WW2</option>
+                        <option value="newHistory">Новейшая история</option>
+                    </select>
+                </div>
             <div class="mb-3">
                 <textarea class="form-control" id="sample"></textarea><br/>
                 <p class="text-danger" id="errorText" hidden>Обязательно поле</p>
@@ -30,14 +50,16 @@
 
     function sendForm(form) {
         const formData = new FormData(form);
+        const topic = document.getElementById('topic').value;
         formData.append("content", editor.getContents());
+        formData.append("topic", topic);
         fetch('/handlerAddArticle', {
             method: "POST",
             body: formData,
         }).then(response => response.json())
             .then(result => {
                 const actions = {
-                    'success': () => location.href = '/listArticles/1',
+                    'success': () => location.href = 'articles/' + topic + '/1',
                     'errorTitle': () => errorTitle.hidden = false,
                     'errorText': () => errorText.hidden = false,
                     'errorImage': () => errorImage.hidden = false,
@@ -49,7 +71,6 @@
                     },
                 };
                 actions[result.result]?.();
-                console.log();
             })
     }
 

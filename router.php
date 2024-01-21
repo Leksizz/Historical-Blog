@@ -12,9 +12,9 @@ require_once('php/classes/Route.php');
 require_once('vendor/autoload.php');
 
 Route::view('/', 'pages/main.html');
-Route::view('/category', 'pages/category.html');
-Route::view('/listArticles/{id}', 'pages/listArticles.html');
+Route::view('/articles/{topic}/{page}', 'pages/articles.html');
 
+Route::get('/getArticlesByTopic/{topic}/{page}', function ($topic, $page){return Blog::getArticlesByTopic($topic, $page);});
 Route::get('/getArticle/{id}', function ($id){return Blog::getArticleById($id);});
 Route::get('/getArticles', function (){return Blog::getArticles();});
 Route::get('/getUserData', function (){return User::getUserData();});

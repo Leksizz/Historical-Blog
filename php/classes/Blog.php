@@ -14,6 +14,7 @@ class Blog
         $title = $_POST['title'];
         $content = $_POST['content'];
         $author = $_SESSION['login'];
+        $topic = $_POST['topic'];
         $html = HtmlDomParser::str_get_html($content);
 
         $text = trim($html->find('p', 0)->plaintext);
@@ -57,7 +58,7 @@ class Blog
             case (strlen($title) > 250):
                 return json_encode(['result' => 'errorTitleTooMuchSymbols']);
             default:
-                $mysqli->query("INSERT INTO articles(title, content, author) VALUES ('$title', '$content', '$author')");
+                $mysqli->query("INSERT INTO articles(title, content, author, topic) VALUES ('$title', '$content', '$author', '$topic')");
                 return json_encode(['result' => 'success']);
         }
     }
@@ -66,7 +67,7 @@ class Blog
     {
         global $mysqli;
         $result = $mysqli->query("SELECT * FROM articles WHERE id  = '$articleId'");
-        return (json_encode($result->fetch_assoc()));
+        return json_encode($result->fetch_assoc());
     }
 
     public static function getArticles()
@@ -85,4 +86,19 @@ class Blog
         global $mysqli;
         $mysqli->query("UPDATE articles SET views = views + 1 WHERE id = '$articleId'");
     }
+    public static function getArticlesByTopic($topic, $page)
+    {
+        global $mysqli;
+        $limit = 5;
+        $offset = ($page - 1) * $limit;
+        $sql = "SELECT * FROM articles WHERE topic = '$topic' LIMIT $limit OFFSET $offset";
+        $result = $mysqli->query($sql);
+        $articles = [];
+        while (($row = $result->fetch_assoc()) !== null) {
+            $articles[] = $row;
+        }
+        return json_encode($articles);
+    }
+
 }
+
