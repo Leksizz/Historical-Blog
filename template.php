@@ -45,6 +45,12 @@ session_start();
             margin-top: auto;
         }
 
+        #container {
+            width: 1500px;
+            overflow-y: auto;
+            word-wrap: break-word; /* Добавьте это свойство */
+        }
+
     </style>
 </head>
 <body>
@@ -186,16 +192,16 @@ session_start();
                     <div class="row">
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="/antiquity/1">Античность</a></li>
-                                <li><a href="/middleAges/1">Средневековье</a></li>
-                                <li><a href="/primitiveSociety/1">Первобытное общество</a></li>
+                                <li><a href="/articles/antiquity/1">Античность</a></li>
+                                <li><a href="/articles/middleAges/1">Средневековье</a></li>
+                                <li><a href="/articles/primitiveSociety/1">Первобытное общество</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
                                 <li><a href="/articles/ww1/1">WW1</a></li>
-                                <li><a href="/ww2/1">WW2</a></li>
-                                <li><a href="/newHistory/1">Новейшая история</a></li>
+                                <li><a href="/articles/ww2/1">WW2</a></li>
+                                <li><a href="/articles/newHistory/1">Новейшая история</a></li>
                             </ul>
                         </div>
                     </div>

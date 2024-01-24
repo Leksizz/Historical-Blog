@@ -1,6 +1,6 @@
 <?php
 
-namespace classes;
+namespace Leksizz\Historical;
 class User
 {
     public static function handlerReg()

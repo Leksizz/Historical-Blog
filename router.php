@@ -1,14 +1,12 @@
 <?php
 
-use classes\Blog;
-use classes\User;
+use Leksizz\Historical\Blog;
+use Leksizz\Historical\Route;
+use Leksizz\Historical\User;
 
 session_start();
 
 $mysqli = new mysqli('localhost', 'root', '', 'blog');
-require_once('php/classes/User.php');
-require_once('php/classes/Blog.php');
-require_once('php/classes/Route.php');
 require_once('vendor/autoload.php');
 
 Route::view('/', 'pages/main.html');

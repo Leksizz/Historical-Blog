@@ -1,6 +1,6 @@
 <?php
 
-namespace classes;
+namespace Leksizz\Historical;
 
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
@@ -16,9 +16,7 @@ class Blog
         $author = $_SESSION['login'];
         $topic = $_POST['topic'];
         $html = HtmlDomParser::str_get_html($content);
-
         $text = trim($html->find('p', 0)->plaintext);
-
         $images = $html->find('img');
         $manager = new ImageManager(new Driver());
 
@@ -89,6 +87,7 @@ class Blog
     public static function getArticlesByTopic($topic, $page)
     {
         global $mysqli;
+        $total = $mysqli->query("SELECT * FROM articles WHERE topic = '$topic'")->num_rows;
         $limit = 5;
         $offset = ($page - 1) * $limit;
         $sql = "SELECT * FROM articles WHERE topic = '$topic' LIMIT $limit OFFSET $offset";
@@ -97,8 +96,8 @@ class Blog
         while (($row = $result->fetch_assoc()) !== null) {
             $articles[] = $row;
         }
+        $articles['total'] = $total;
         return json_encode($articles);
     }
-
 }
 
