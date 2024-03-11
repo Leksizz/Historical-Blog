@@ -1,0 +1,48 @@
+.container-fluid {
+    word-wrap: break-word;
+}
+
+.content {
+    padding-left: 200px;
+    padding-right: 200px;
+    padding-top: 25px;
+}
+
+.navbar {
+    padding-left: 190px;
+    padding-right: 190px;
+}
+
+.profile:hover {
+    background-color: forestgreen;
+}
+
+.exit:hover {
+    background-color: darkred;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
+.main-card {
+    height: auto;
+    margin-bottom: 25px;
+}
+
+.links {
+    font-size: 15px;
+    border: 1px solid silver;
+    border-radius: 7px;
+    margin-bottom: 25px;
+}
