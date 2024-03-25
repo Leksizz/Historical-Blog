@@ -38,7 +38,7 @@ class User
                 $_SESSION['lastname'] = $row['lastname'];
                 $_SESSION['login'] = $row['login'];
                 $_SESSION['email'] = $row['email'];
-                $_SESSION['img'] = $row['img'];
+                $_SESSION['images'] = $row['images'];
                 $_SESSION['id'] = $row['id'];
                 return json_encode(["result" => "success"]);
             } else {
@@ -67,16 +67,16 @@ class User
         $img = $_FILES['avatar'];
         $extension = explode('/', $img['type'])[1];
         $filename = time() . '.' . $extension;
-        $oldAvatar = $_SESSION['img'];
-        $defaultAvatar = '/img/user_avatar.png';
+        $oldAvatar = $_SESSION['images'];
+        $defaultAvatar = '/images/user_avatar.png';
         if ($extension == 'jpeg' || $extension == 'png' || $extension == 'jpg') {
-            $uploadDir = 'img/' . $filename;
+            $uploadDir = 'images/' . $filename;
             move_uploaded_file($img['tmp_name'], $uploadDir);
-            $mysqli->query("UPDATE `users` SET `img`= '/$uploadDir' WHERE id= '$userId'");
+            $mysqli->query("UPDATE `users` SET `images`= '/$uploadDir' WHERE id= '$userId'");
             if (file_exists($_SERVER['DOCUMENT_ROOT'] . $oldAvatar) && $oldAvatar !== $defaultAvatar) {
                 unlink($_SERVER['DOCUMENT_ROOT'] . $oldAvatar);
             }
-            $_SESSION['img'] = "/$uploadDir";
+            $_SESSION['images'] = "/$uploadDir";
             return json_encode(['result' => 'success']);
         } else {
             return json_encode(["result" => "errorChange"]);
@@ -87,15 +87,15 @@ class User
     {
         global $mysqli;
         $userId = $_SESSION['id'];
-        $oldAvatar = $_SESSION['img'];
-        $defaultAvatar = '/img/user_avatar.png';
+        $oldAvatar = $_SESSION['images'];
+        $defaultAvatar = '/images/user_avatar.png';
         if (file_exists($_SERVER['DOCUMENT_ROOT'] . $oldAvatar) && $oldAvatar !== $defaultAvatar) {
             unlink($_SERVER['DOCUMENT_ROOT'] . $oldAvatar);
         } else {
             return json_encode(['result' => 'error']);
         }
-        $mysqli->query("UPDATE users SET img = '$defaultAvatar' WHERE id = '$userId'");
-        $_SESSION['img'] = $defaultAvatar;
+        $mysqli->query("UPDATE users SET images = '$defaultAvatar' WHERE id = '$userId'");
+        $_SESSION['images'] = $defaultAvatar;
         return json_encode(['result' => 'success']);
     }
 

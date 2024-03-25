@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +8,7 @@ session_start();
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -25,13 +22,13 @@ session_start();
                             <?php echo $_SESSION['login'] ?>
                         </a>
                         <ul class="dropdown-menu bg-dark">
-                            <li><a class="profile dropdown-item text-light" href="/profile"><i
+                            <li><a class="profile dropdown-item text-light" href="../../index.php"><i
                                             class="fa-solid fa-user pe-2"></i>Профиль</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="exit dropdown-item text-light" href="/logout"><i
+                            <li><a class="exit dropdown-item text-light" href="../../index.php"><i
                                             class="fa-solid fa-door-open pe-2"></i>Выход</a>
                             </li>
                         </ul>
@@ -44,14 +41,14 @@ session_start();
                     <li class="nav-item">
                     </li>
                 </ul>
-                <a class="me-3 btn btn-secondary" href="/reg" role="button">Регистрация</a>
-                <a class="btn btn-secondary" href="/login" role="button">Вход</a>
+                <a class="me-3 btn btn-secondary" href="../../index.php" role="button">Регистрация</a>
+                <a class="btn btn-secondary" href="../../index.php" role="button">Вход</a>
             </div>
         <?php endif; ?>
     </div>
 </nav>
 <div class="container-fluid content">
-    <?= $content ?>
+    <?php require_once("application/views/$content"); ?>
 </div>
 <footer class="py-5 bg-dark">
     <div class="container">

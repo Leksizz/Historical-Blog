@@ -36,7 +36,7 @@ footer {
 }
 
 .main-card {
-    height: auto;
+    height: 300px;
     margin-bottom: 25px;
 }
 
@@ -45,4 +45,43 @@ footer {
     border: 1px solid silver;
     border-radius: 7px;
     margin-bottom: 25px;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 576px) {
+    .navbar {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .content {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+/* Стили для устройств среднего размера */
+@media (min-width: 577px) and (max-width: 768px) {
+    .navbar {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .content {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+/* Стили для устройств большого размера */
+@media (min-width: 769px) {
+    .navbar {
+        padding-left: 190px;
+        padding-right: 190px;
+    }
+
+    .content {
+        padding-left: 200px;
+        padding-right: 200px;
+    }
 }

@@ -1,2 +1,5 @@
 <?php
-require_once 'router.php';
+
+ini_set('display_errors', 1);
+
+require_once 'application/bootstrap.php';

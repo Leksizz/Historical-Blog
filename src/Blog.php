@@ -17,7 +17,7 @@ class Blog
         $topic = $_POST['topic'];
         $html = HtmlDomParser::str_get_html($content);
         $text = trim($html->find('p', 0)->plaintext);
-        $images = $html->find('img');
+        $images = $html->find('images');
         $manager = new ImageManager(new Driver());
 
         foreach ($images as $img) {
@@ -36,7 +36,7 @@ class Blog
             } elseif ($width < 300 && $height < 200) {
                 return json_encode(['result' => 'errorImage']);
             }
-            $path = "img/blog/" . microtime() . "." . $extension;
+            $path = "images/blog/" . microtime() . "." . $extension;
             $filename->save($path);
             $img->src = "/" . $path;
         }

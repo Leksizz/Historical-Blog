@@ -1,7 +1,7 @@
 <?php
 
 namespace Leksizz\Historical;
-class Route
+class OldRoute
 {
     public static function view($uri, $path)
     {
