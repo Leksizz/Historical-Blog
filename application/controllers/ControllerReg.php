@@ -3,20 +3,20 @@
 namespace controllers;
 
 use Core\Controller;
-use Core\View;
 use models\ModelReg;
 
 class ControllerReg extends Controller
 {
-    function __construct()
+    public function actionIndex()
     {
-        $this->model = new ModelReg($_POST);
-        $this->view = new View();
+        $this->view->generate('reg.html');
     }
 
-    function actionIndex()
+    public function actionReg()
     {
-//        $data = $this->model->;
-//        $this->view->generate('reg.html', $data);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->model = new ModelReg($_POST);
+            $this->model->register();
+        }
     }
 }

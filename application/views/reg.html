@@ -68,16 +68,17 @@
     function sendForm(form) {
         error.hidden = true;
         const formData = new FormData(form);
-        fetch('/handlerReg', {
+        fetch('/reg', {
             method: "POST",
             body: formData
-        }).then(response => response.json())
+        }).then(response => response.text())
             .then(result => {
                 if (result.result === "success") {
                     location.href = '/login';
                 } else {
                     error.hidden = false;
                 }
+                console.log(result)
             })
     }
 
