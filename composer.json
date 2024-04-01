@@ -10,7 +10,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Core\\": "application/core/"
+            "app\\": "."
         }
     },
     "minimum-stability": "stable"

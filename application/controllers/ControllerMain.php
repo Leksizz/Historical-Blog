@@ -6,8 +6,8 @@ use Core\Controller;
 
 class ControllerMain extends Controller
 {
-    function actionIndex()
+    public function actionIndex()
     {
-        $this->view->generate('main.html');
+        $this->view->render('Historium');
     }
 }

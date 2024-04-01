@@ -2,31 +2,33 @@
 
 namespace models;
 
-use Core\DataBase;
 use Core\Model;
+use lib\DataBase;
 
 class ModelReg extends Model
 {
-    private $user;
+    public $user;
+    public $email;
 
 
     public function __construct($user)
     {
-        parent::__construct();
         $user['password'] = password_hash($user['password'], PASSWORD_BCRYPT);
         $this->user = $user;
+        $this->email = ['email' => $user['email']];
     }
 
 
     public function register()
     {
         $db = DataBase::getInstance();
-//        if ($db->findAll( ) {
-//            return json_encode(['result' => 'error']);
-//        } else {
-//            $db->insert('users', $this->user);
-//        } // доделать проверку имейла
-        return json_encode(['result' => 'success']);
+        if ($db->selectAll('users', $this->email)) {
+            return json_encode(['result' => 'error']);
+        } else {
+            $db->insert('users', $this->user);
+            return json_encode(['result' => 'success']);
+        }
+
     }
 }
 

@@ -8,11 +8,11 @@ use Leksizz\Historical\User;
 //session_start();
 
 //require_once('vendor/autoload.php');
-//require_once('config.php');
+//require_once('db.php');
 //
 //$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-OldRoute::view('/', 'pages/main.html');
+OldRoute::view('/', 'pages/index.html');
 OldRoute::view('/articles/{topic}/{page}', 'pages/articles.html');
 
 OldRoute::get('/getArticlesByTopic/{topic}/{page}', function ($topic, $page){return Blog::getArticlesByTopic($topic, $page);});

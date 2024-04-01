@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Core;
+namespace lib;
 
 use PDO;
 
@@ -36,13 +36,10 @@ class DataBase
                 $stmt->bindValue($key, $value);
             }
             $stmt->execute();
-            if ($query === 'find') {
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($query === 'select') {
+                return ($stmt->fetchAll(PDO::FETCH_ASSOC));
             }
 
-            if ($query === 'insert') {
-                return json_encode(['result' => 'success']);
-            }
 
         } catch (\PDOException $exception) {
             error_log('DataBase error: ' . $exception->getMessage());
@@ -50,37 +47,31 @@ class DataBase
         return false;
     }
 
-    private function buildSelectQuery($table, $param, $where)
+
+    private  function selectBuilder($table, $param, $where = null)
     {
         $sql = "SELECT " . $param . " FROM " . $table;
         if ($where) {
-            $sql .= " WHERE $where = :value";
+            $value = key($where);
+            $sql .= " WHERE $value = :$value";
         }
         return $sql;
     }
 
-//    public function emailExists($email)
-//    {
-//        $this->findAll('users', 'email');
-//    } доделать проверку имейла
-
-    public function find($table, $param, $where = null)
+    public function select($table, $param, $where = null)
     {
-        $sql = $this->buildSelectQuery($table, $param, $where);
-        return $this->executeQuery($sql, ['value' => $where], 'find');
     }
 
-    public function findAll($table, $where = null)
+    public function selectAll($table, $where = null)
     {
-        $sql = $this->buildSelectQuery($table, '*', $where);
-        return $this->executeQuery($sql, ['value' => $where], 'find');
+        $sql = $this->selectBuilder($table, '*', $where);
+        return $this->executeQuery($sql, $where, 'select');
     }
 
     public function insert($table, $data)
     {
         $columns = implode(', ', array_keys($data));
         $values = ':' . implode(', :', array_keys($data));
-
         $sql = "INSERT INTO" . " $table " . "($columns) VALUES ($values)";
         $params = [];
         foreach ($data as $key => $value) {
@@ -97,4 +88,3 @@ class DataBase
     {
     }
 }
-

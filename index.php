@@ -1,5 +1,8 @@
 <?php
 
-ini_set('display_errors', 1);
+use Core\Router;
+require_once('vendor/autoload.php');
+require_once('application/config/db.php');
 
-require_once 'application/bootstrap.php';
+$router = new Router();
+$router->start();

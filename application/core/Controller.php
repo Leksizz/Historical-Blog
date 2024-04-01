@@ -7,13 +7,8 @@ abstract class Controller
     public $model;
     public $view;
 
-    public function __construct()
+    public function __construct($route)
     {
-        $this->view = new View();
-    }
-
-    public function actionIndex()
-    {
-
+        $this->view = new View($route);
     }
 }
