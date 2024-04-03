@@ -1,7 +1,7 @@
 <div class="container my-5 ">
     <h1 class="text-center my-4">Регистрация на сайте</h1>
     <div class="col-md-5 mx-auto border p-3 border-secondary rounded shadow">
-        <form onsubmit="sendForm(this); return false">
+        <form action="/reg" method="POST">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3 input-group">
@@ -63,25 +63,4 @@
     </div>
 </div>
 <script>
-    const error = document.getElementById('error');
-
-    function sendForm(form) {
-        error.hidden = true;
-        const formData = new FormData(form);
-        fetch('/reg', {
-            method: "POST",
-            body: formData
-        }).then(response => response.text())
-            .then(result => {
-                if (result.result === "success") {
-                    location.href = '/login';
-                } else {
-                    error.hidden = false;
-                }
-                console.log(result)
-            })
-    }
-
-    // let pageTitle = "Регистрация";
-    // document.getElementById('pageTitle').innerText = pageTitle;
 </script>

@@ -1,6 +1,7 @@
 <?php
 
-namespace Core;
+namespace application\core;
+
 class Router
 {
     private $routes = [];
@@ -35,20 +36,20 @@ class Router
     public function start()
     {
         if ($this->match()) {
-            $controller = 'controllers\\'.'Controller'. ucfirst($this->params['controller']);
+            $controller = 'application\controllers\\'.'Controller'. ucfirst($this->params['controller']);
             if (class_exists($controller)) {
                 $action = 'action' . ucfirst($this->params['action']);
                 if (method_exists($controller, $action)) {
                     $controller = new $controller($this->params);
                     $controller->$action();
                 } else {
-                    return "Не найден action";
+                    View::errorCode(404);
                 }
             } else {
-                return "Не найден controller";
+                View::errorCode(404);
             }
         } else {
-            return "Не найден маршрут";
+            View::errorCode(404);
         }
     }
 }

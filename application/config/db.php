@@ -1,6 +1,5 @@
 <?php
 
-// Подключение к БД
 const DB_USER = 'root';
 const DB_PASS = '';
 const DB_HOST = 'localhost';

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace lib;
+namespace application\lib;
 
 use PDO;
 
@@ -15,6 +15,11 @@ class DataBase
         $this->db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
     }
 
+    public function connection()
+    {
+        return $this->db;
+    }
+
     public static function getInstance()
     {
         if (self::$instance == null) {
@@ -23,32 +28,20 @@ class DataBase
         return self::$instance;
     }
 
-    public function getConnection()
+
+
+    private function query($sql, $params)
     {
-        return $this->db;
-    }
-
-    private function executeQuery($sql, $params, $query)
-    {
-        try {
-            $stmt = $this->db->prepare($sql);
-            foreach ($params as $key => $value) {
-                $stmt->bindValue($key, $value);
-            }
-            $stmt->execute();
-            if ($query === 'select') {
-                return ($stmt->fetchAll(PDO::FETCH_ASSOC));
-            }
-
-
-        } catch (\PDOException $exception) {
-            error_log('DataBase error: ' . $exception->getMessage());
+        $stmt = $this->db->prepare($sql);
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
         }
-        return false;
+        $stmt->execute();
+        return $stmt;
     }
 
 
-    private  function selectBuilder($table, $param, $where = null)
+    private function selectBuilder($table, $param, $where = null)
     {
         $sql = "SELECT " . $param . " FROM " . $table;
         if ($where) {
@@ -65,7 +58,8 @@ class DataBase
     public function selectAll($table, $where = null)
     {
         $sql = $this->selectBuilder($table, '*', $where);
-        return $this->executeQuery($sql, $where, 'select');
+        $result = $this->query($sql, $where);
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function insert($table, $data)
@@ -77,7 +71,7 @@ class DataBase
         foreach ($data as $key => $value) {
             $params[':' . $key] = $value;
         }
-        return $this->executeQuery($sql, $params, 'insert');
+        return $this->query($sql, $params);
     }
 
     public function update()

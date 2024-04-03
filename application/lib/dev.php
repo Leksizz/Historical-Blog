@@ -3,10 +3,10 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-function debug($str)
+function debug($value)
 {
     echo '<pre>';
-    var_dump($str);
+    var_dump($value);
     echo '</pre>';
     exit();
 }

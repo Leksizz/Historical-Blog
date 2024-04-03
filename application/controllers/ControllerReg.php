@@ -1,18 +1,17 @@
 <?php
 
-namespace controllers;
+namespace application\controllers;
 
-use Core\Controller;
-use models\ModelReg;
+use application\core\Controller;
 
 class ControllerReg extends Controller
 {
-    public function actionIndex()
+    public function actionReg()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->model = new ModelReg($_POST);
-            $this->model->register();
+        if ($this->isPost()) {
+//            $this->model = $this->loadModel($this->route['controller'], $_POST)->register();
+//            exit($this->view->location('/'));
         }
-        $this->view->generate('reg.html');
+        $this->view->render('Регистрация');
     }
 }
