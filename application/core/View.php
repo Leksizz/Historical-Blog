@@ -8,7 +8,7 @@ class View
 
     public function __construct($route)
     {
-        $this->path = 'application/views/' . $route['action'] . '.html';
+        $this->path = 'application/views/' . $route['controller'] . '/' . $route['action'] . '.html';
     }
 
     public function render($title, $data = null)
@@ -36,18 +36,18 @@ class View
     public static function errorCode($code)
     {
         http_response_code($code);
-        require_once 'application/views/' . $code . '.html';
+        require_once 'application/views/errors/' . $code . '.html';
         exit();
     }
 
     public function message($status, $message)
     {
-        exit(json_encode(['status' => $status], ['message' => $message]));
+        return exit(json_encode(['status' => $status, 'message' => $message]));
     }
 
     public function location($url)
     {
-        exit(json_encode(['url' => $url]));
+       return exit(json_encode(['url' => $url]));
     }
 
 }

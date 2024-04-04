@@ -36,7 +36,7 @@ class Router
     public function start()
     {
         if ($this->match()) {
-            $controller = 'application\controllers\\'.'Controller'. ucfirst($this->params['controller']);
+            $controller = 'application\controllers\\' . 'Controller' . ucfirst($this->params['controller']);
             if (class_exists($controller)) {
                 $action = 'action' . ucfirst($this->params['action']);
                 if (method_exists($controller, $action)) {

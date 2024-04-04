@@ -10,7 +10,7 @@ abstract class Model
 
     public function __construct()
     {
-        $this->db = DataBase::getInstance()->connection();
+        $this->db = DataBase::getInstance();
     }
 }
 

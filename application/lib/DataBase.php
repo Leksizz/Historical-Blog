@@ -12,12 +12,12 @@ class DataBase
 
     private function __construct()
     {
-        $this->db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+        $this->db = $this->connection();
     }
 
-    public function connection()
+    private function connection()
     {
-        return $this->db;
+        return new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
     }
 
     public static function getInstance()
@@ -27,8 +27,6 @@ class DataBase
         }
         return self::$instance;
     }
-
-
 
     private function query($sql, $params)
     {

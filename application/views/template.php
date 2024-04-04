@@ -45,7 +45,7 @@
                     <li class="nav-item">
                     </li>
                 </ul>
-                <a class="me-3 btn btn-secondary" href="/reg" role="button">Регистрация</a>
+                <a class="me-3 btn btn-secondary" href="/register" role="button">Регистрация</a>
                 <a class="btn btn-secondary" href="/login" role="button">Вход</a>
             </div>
         <?php endif; ?>
