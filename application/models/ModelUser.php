@@ -8,6 +8,7 @@ class ModelUser extends Model
 {
     private $user;
     private $email;
+    private $login;
 
     public function __construct($user)
     {
@@ -15,12 +16,16 @@ class ModelUser extends Model
         $this->user = $user;
         $this->user['password'] = password_hash($this->user['password'], PASSWORD_BCRYPT);
         $this->email = ['email' => $user['email']];
+        $this->login = ['login' => $user['login']];
     }
 
 
-    public function register(): bool
+    public function register()
     {
-        if ($this->userExists()) {
+        // Дописать, чтобы выводилось сообщение о том, что никнейм занят
+        if ($this->exists($this->email)) {
+            return false;
+        } elseif ($this->exists($this->login)) {
             return false;
         } else {
             $this->db->insert('users', $this->user);
@@ -28,13 +33,14 @@ class ModelUser extends Model
         }
     }
 
-    public function userExists()
+    private function exists($value)
     {
-        if (empty($this->db->selectAll('users', $this->email))) {
+        if (empty($this->db->selectAll('users', $value))) {
             return false;
         } else {
             return true;
         }
     }
+
 }
 

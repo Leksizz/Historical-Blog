@@ -60,7 +60,7 @@ footer {
     }
 }
 
-/* Стили для устройств среднего размера */
+
 @media (min-width: 577px) and (max-width: 768px) {
     .navbar {
         padding-left: 50px;
@@ -73,7 +73,7 @@ footer {
     }
 }
 
-/* Стили для устройств большого размера */
+
 @media (min-width: 769px) {
     .navbar {
         padding-left: 190px;

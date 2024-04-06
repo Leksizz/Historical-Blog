@@ -1,4 +1,31 @@
 <?php
+
+$stylesDir = 'public/css';
+$scriptsDir = 'public/js';
+
+function getFiles($dir, $files = [])
+{
+    $dir = scandir($dir);
+    foreach ($dir as $file) {
+        if (pathinfo($file, PATHINFO_EXTENSION) === 'css' || (pathinfo($file, PATHINFO_EXTENSION) === 'js')) {
+            $files[] = $file;
+        }
+    }
+    return $files;
+}
+
+function loadFiles($files, $dir)
+{
+    foreach ($files as $file) {
+        if (pathinfo($file, PATHINFO_EXTENSION) === 'css') {
+            echo '<link rel="stylesheet" href="' . $dir . '/' . $file . '">';
+        } else {
+            echo '<script type="text/javascript" src="' . $dir . '/' . $file . '"></script>';
+        }
+    }
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,9 +37,10 @@
     <title id="title"><?= $title ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../public/css/style.css">
     <script type="text/javascript" src="/public/js/jquery.js"></script>
-    <script type="text/javascript" src="/public/js/form.js"></script>
+    <?php
+    loadFiles(getFiles($stylesDir), $stylesDir);
+    ?>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -23,7 +51,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 dropstart">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <?php echo $_SESSION['login'] ?>
+                            <?= $_SESSION['login'] ?>
                         </a>
                         <ul class="dropdown-menu bg-dark">
                             <li><a class="profile dropdown-item text-light" href="../../index.php"><i

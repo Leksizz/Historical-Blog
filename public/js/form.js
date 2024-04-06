@@ -13,9 +13,12 @@ $(document).ready(function () {
                 json = jQuery.parseJSON(result);
                 if (json.url) {
                     window.location.href = json.url;
-                } else {
-                    console.log(json);
                 }
+                if (json.status === 'error') {
+                    const error = document.getElementById('error');
+                    error.textContent = json.message;
+                }
+                console.log(json);
             }
         });
     });

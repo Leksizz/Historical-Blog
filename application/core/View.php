@@ -42,7 +42,7 @@ class View
 
     public function message($status, $message)
     {
-        return exit(json_encode(['status' => $status, 'message' => $message]));
+        return (json_encode(['status' => $status, 'message' => $message]));
     }
 
     public function location($url)

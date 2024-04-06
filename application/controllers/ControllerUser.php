@@ -20,14 +20,12 @@ class ControllerUser extends Controller
 
     public function actionRegister()
     {
-        // подумать над подключением модели + сделать вывод ошибок на фронте
         if ($this->isPost()) {
-            $this->model = $this->loadModel($_POST);
             if ($this->model->register()) {
                 $this->view->message('success', 'Регистрация прошла успешно');
-//                $this->view->location('/');
+                $this->view->location('/login');
             } else {
-                $this->view->message('error', 'Такой пользователь уже существует');
+                exit($this->view->message('error', 'Такой пользователь уже существует'));
             }
         }
         $this->view->render('Регистрация');
