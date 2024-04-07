@@ -10,6 +10,8 @@ class ModelUser extends Model
     private $email;
     private $login;
 
+    public $message;
+
     public function __construct($user)
     {
         parent::__construct();
@@ -22,24 +24,22 @@ class ModelUser extends Model
 
     public function register()
     {
-        // Дописать, чтобы выводилось сообщение о том, что никнейм занят
         if ($this->exists($this->email)) {
+            $this->message = 'Такой email уже занят';
             return false;
         } elseif ($this->exists($this->login)) {
+            $this->message = 'Такой никнейм уже занят';
             return false;
         } else {
+            $this->message = 'Регистрация прошла успешно';
             $this->db->insert('users', $this->user);
             return true;
         }
     }
 
-    private function exists($value)
+    private function sendMessage($message)
     {
-        if (empty($this->db->selectAll('users', $value))) {
-            return false;
-        } else {
-            return true;
-        }
+        return $this->message = $message;
     }
 
 }

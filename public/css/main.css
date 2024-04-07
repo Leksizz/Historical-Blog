@@ -1,0 +1,12 @@
+.main-card {
+    height: 300px;
+    margin-bottom: 25px;
+}
+
+.links {
+    font-size: 15px;
+    border: 1px solid silver;
+    border-radius: 7px;
+    margin-bottom: 25px;
+}
+

@@ -7,6 +7,8 @@ use application\core\Controller;
 class ControllerUser extends Controller
 {
 
+    public $message;
+
     public function __construct($route)
     {
         parent::__construct($route);
@@ -22,10 +24,10 @@ class ControllerUser extends Controller
     {
         if ($this->isPost()) {
             if ($this->model->register()) {
-                $this->view->message('success', 'Регистрация прошла успешно');
+                $this->view->message('success', $this->model->message);
                 $this->view->location('/login');
             } else {
-                exit($this->view->message('error', 'Такой пользователь уже существует'));
+                exit($this->view->message('error', $this->model->message));
             }
         }
         $this->view->render('Регистрация');

@@ -47,7 +47,6 @@ footer {
     margin-bottom: 25px;
 }
 
-/* Стили для мобильных устройств */
 @media (max-width: 576px) {
     .navbar {
         padding-left: 10px;

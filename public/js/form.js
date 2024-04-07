@@ -18,7 +18,6 @@ $(document).ready(function () {
                     const error = document.getElementById('error');
                     error.textContent = json.message;
                 }
-                console.log(json);
             }
         });
     });

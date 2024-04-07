@@ -7,6 +7,7 @@ class Router
     private $routes = [];
     private $params = [];
 
+
     public function __construct()
     {
         $routes = require_once 'application/config/routes.php';

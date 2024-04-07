@@ -12,5 +12,15 @@ abstract class Model
     {
         $this->db = DataBase::getInstance();
     }
+
+    protected function exists($value)
+    {
+        if (empty($this->db->selectAll('users', $value))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }
 
