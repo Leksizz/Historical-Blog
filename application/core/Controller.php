@@ -14,7 +14,7 @@ abstract class Controller
         $this->view = new View($this->route);
     }
 
-    protected function loadModel($data = null)
+    private function loadModel($data = null)
     {
         $this->model = 'application\models\\' . 'Model' . ucfirst($this->route['controller']);
         if (class_exists($this->model)) {

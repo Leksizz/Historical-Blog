@@ -33,31 +33,21 @@ class DataBase
         $stmt = $this->db->prepare($sql);
         foreach ($params as $key => $value) {
             $stmt->bindValue($key, $value);
+
         }
         $stmt->execute();
         return $stmt;
     }
 
-
-    private function selectBuilder($table, $param, $where = null)
+    public function select($table, $param, $where = null)
     {
         $sql = "SELECT " . $param . " FROM " . $table;
         if ($where) {
             $value = key($where);
             $sql .= " WHERE $value = :$value";
         }
-        return $sql;
-    }
-
-    public function select($table, $param, $where = null)
-    {
-    }
-
-    public function selectAll($table, $where = null)
-    {
-        $sql = $this->selectBuilder($table, '*', $where);
         $result = $this->query($sql, $where);
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+        return $result->fetch(PDO::FETCH_ASSOC);
     }
 
     public function insert($table, $data)

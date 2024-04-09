@@ -15,7 +15,7 @@ abstract class Model
 
     protected function exists($value)
     {
-        if (empty($this->db->selectAll('users', $value))) {
+        if (empty($this->db->select('users', '*', $value))) {
             return false;
         } else {
             return true;

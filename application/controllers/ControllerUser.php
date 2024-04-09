@@ -30,6 +30,12 @@ class ControllerUser extends Controller
 
     public function actionLogin()
     {
+        if ($this->isPost()) {
+            if ($this->model->login()) {
+                $this->view->message('success', $this->model->message);
+                $this->view->location('/');
+            }
+        }
         $this->view->render('Авторизация');
     }
 
