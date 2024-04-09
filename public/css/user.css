@@ -1,0 +1,27 @@
+
+.empty {
+    box-shadow: 0 0 5px 1px red;
+}
+
+.empty:focus {
+    box-shadow: none;
+}
+
+#errorPassword {
+    display: none;
+}
+
+#errorEmail {
+    display: none;
+}
+
+#errorLogin {
+    display: none;
+}
+
+.error {
+    display: block !important;
+    font-size: 12px;
+    color: chocolate;
+}
+

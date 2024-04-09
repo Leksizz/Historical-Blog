@@ -9,11 +9,6 @@ class ControllerUser extends Controller
 
     public $message;
 
-    public function __construct($route)
-    {
-        parent::__construct($route);
-
-    }
 
     public function actionIndex()
     {

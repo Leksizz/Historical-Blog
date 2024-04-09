@@ -25,22 +25,17 @@ class ModelUser extends Model
     public function register()
     {
         if ($this->exists($this->email)) {
-            $this->message = 'Такой email уже занят';
+            $this->message = 'Такой имейл уже зарегистрирован';
             return false;
-        } elseif ($this->exists($this->login)) {
-            $this->message = 'Такой никнейм уже занят';
-            return false;
-        } else {
-            $this->message = 'Регистрация прошла успешно';
-            $this->db->insert('users', $this->user);
-            return true;
         }
-    }
+        if ($this->exists($this->login)) {
+            $this->message = 'Никнейм уже занят';
+            return false;
+        }
 
-    private function sendMessage($message)
-    {
-        return $this->message = $message;
+        $this->message = 'Регистрация прошла успешно';
+        $this->db->insert('users', $this->user);
+        return true;
     }
-
 }
 
