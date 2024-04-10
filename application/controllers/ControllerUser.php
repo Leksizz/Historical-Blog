@@ -10,11 +10,6 @@ class ControllerUser extends Controller
     public $message;
 
 
-    public function actionIndex()
-    {
-
-    }
-
     public function actionRegister()
     {
         if ($this->isPost()) {
@@ -34,6 +29,8 @@ class ControllerUser extends Controller
             if ($this->model->login()) {
                 $this->view->message('success', $this->model->message);
                 $this->view->location('/');
+            } else {
+                exit($this->view->message('error', $this->model->message));
             }
         }
         $this->view->render('Авторизация');
@@ -41,5 +38,6 @@ class ControllerUser extends Controller
 
     public function actionProfile()
     {
+
     }
 }

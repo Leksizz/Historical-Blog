@@ -1,34 +1,39 @@
 <?php
 
-namespace application\models;
+namespace application\models\user;
 
 use application\core\Model;
+use application\interfaces\user\setUserDataInterface;
 
-class ModelUser extends Model
+class ModelRegister extends Model implements setUserDataInterface
 {
     private $user;
-    private $table;
     private $email;
+    private $login;
     public $message;
 
     public function __construct($user)
     {
         parent::__construct();
+        $this->setUserData($user);
+        $this->setTable('users');
+    }
+
+    public function setUserData($user)
+    {
         $this->user = $user;
         $this->email = ['email' => $this->user['email']];
-        $this->table = 'users';
+        $this->login = ['login' => $this->user['login']];
     }
 
     public function register()
     {
-        $login = ['login' => $this->user['login']];
-
-        if ($this->exists($this->email)) {
+        if ($this->isExist($this->email)) {
             $this->message = 'Такой имейл уже зарегистрирован';
             return false;
         }
 
-        if ($this->exists($login)) {
+        if ($this->isExist($this->login)) {
             $this->message = 'Никнейм уже занят';
             return false;
         }
@@ -39,18 +44,5 @@ class ModelUser extends Model
         return true;
 
     }
-
-    public function login()
-    {
-        if ($this->exists($this->email)) {
-            $row = $this->db->select($this->table, 'password', $this->email);
-            if (password_verify($this->user['password'], $row['password'])) {
-                $this->message = 'Авторизация прошла успешно';
-                return true;
-            }
-            // Дописать авторизацию
-        }
-    }
-
 }
 

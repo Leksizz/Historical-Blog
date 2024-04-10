@@ -7,19 +7,25 @@ use application\lib\DataBase;
 abstract class Model
 {
     protected $db;
+    protected $table;
 
     public function __construct()
     {
         $this->db = DataBase::getInstance();
     }
 
-    protected function exists($value)
+    protected function isExist($value)
     {
         if (empty($this->db->select('users', '*', $value))) {
             return false;
         } else {
             return true;
         }
+    }
+
+    protected function setTable($table)
+    {
+        $this->table = $table;
     }
 
 }
