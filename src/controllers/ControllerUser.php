@@ -1,8 +1,8 @@
 <?php
 
-namespace application\controllers;
+namespace App\controllers;
 
-use application\core\Controller;
+use App\core\Controller;
 
 class ControllerUser extends Controller
 {
@@ -28,7 +28,7 @@ class ControllerUser extends Controller
         if ($this->isPost()) {
             if ($this->model->login()) {
                 $this->view->message('success', $this->model->message);
-                $this->view->location('/');
+                $this->view->location('/profile');
             } else {
                 exit($this->view->message('error', $this->model->message));
             }
@@ -38,6 +38,9 @@ class ControllerUser extends Controller
 
     public function actionProfile()
     {
-
+        $this->loadModel();
+        $_SESSION = $this->model->getSession();
+        $this->view->render($_SESSION['login'], $_SESSION);
+        // разобраться с выводом сессии на фронте
     }
 }

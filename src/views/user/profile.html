@@ -1,0 +1,25 @@
+<div class="container">
+    <h1 class="text-center mb-4">Ваши данные:</h1>
+    <div class="row">
+        <div class="col-sm-3 text-center">
+            <img width="80% text-center" id="userAvatar" src="" alt="">
+            <form onsubmit="changeAvatar(this); return false">
+                <input type="file" name="avatar" class="form-control mt-5">
+                <input type="submit" value="загрузить" class="form-control btn btn-secondary mt-2">
+            </form>
+            <p class="text-danger" id="errorChange" hidden>Недопустимый формат файла</p>
+            <p class="text-danger" id="errorNoUploadFile" hidden>Отсутствует файл для загрузки</p>
+            <form onsubmit="deleteAvatar(this); return false">
+                <input type="submit" value="удалить" class="form-control btn btn-secondary mt-2">
+            </form>
+            <p class="text-danger" id="errorDelete" hidden>Нету аватара для удаления</p>
+        </div>
+        <div class="col-sm-9">
+            <p><strong>Имя: </strong><span id="name"></span></p>
+            <p><strong>Фамилия: </strong><span id="lastname"></span></p>
+            <p><strong>Никнейм: </strong><span id="login"></span></p>
+            <p><strong>Email: </strong><span id="email"></span></p>
+            <p><strong>ID: </strong><span id="userId"></span></p>
+        </div>
+    </div>
+</div>

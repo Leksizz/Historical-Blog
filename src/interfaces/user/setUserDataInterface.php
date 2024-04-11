@@ -1,6 +1,6 @@
 <?php
 
-namespace application\interfaces\user;
+namespace App\interfaces\user;
 
 interface setUserDataInterface
 {

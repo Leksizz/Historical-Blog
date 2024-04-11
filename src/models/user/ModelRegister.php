@@ -1,9 +1,9 @@
 <?php
 
-namespace application\models\user;
+namespace App\models\user;
 
-use application\core\Model;
-use application\interfaces\user\setUserDataInterface;
+use App\core\Model;
+use App\interfaces\user\setUserDataInterface;
 
 class ModelRegister extends Model implements setUserDataInterface
 {

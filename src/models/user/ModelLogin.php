@@ -1,9 +1,9 @@
 <?php
 
-namespace application\models\user;
+namespace App\models\user;
 
-use application\core\Model;
-use application\interfaces\user\setUserDataInterface;
+use App\core\Model;
+use App\interfaces\user\setUserDataInterface;
 
 class ModelLogin extends Model implements setUserDataInterface
 {
@@ -28,8 +28,8 @@ class ModelLogin extends Model implements setUserDataInterface
         if ($this->isExist($this->email)) {
             $row = $this->db->select($this->table, 'password', $this->email);
             if (password_verify($this->user['password'], $row['password'])) {
+                $_SESSION['email'] = $row['email'];
                 $this->message = 'Авторизация прошла успешно';
-                $_SESSION = $this->user;
                 return true;
             }
         } else {

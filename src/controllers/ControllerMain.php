@@ -1,12 +1,12 @@
 <?php
 
-namespace application\controllers;
+namespace App\controllers;
 
-use application\core\Controller;
+use App\core\Controller;
 
 class ControllerMain extends Controller
 {
-    public function actionIndex()
+    public function actionIndex(): void
     {
         $this->view->render('Historium');
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace application\core;
+namespace App\core;
 
 abstract class Controller
 {
@@ -15,7 +15,7 @@ abstract class Controller
     }
 
 
-    private function loadModel($data = null)
+    protected function loadModel($data = null)
     {
         $this->model = 'application\models\\' . $this->route['controller'] . '\\Model' . ucfirst($this->route['action']);
         if (class_exists($this->model)) {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace application\lib;
+namespace App\lib;
 
 use PDO;
 
