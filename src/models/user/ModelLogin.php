@@ -2,7 +2,7 @@
 
 namespace App\models\user;
 
-use App\core\Model;
+use App\Core\Model\Model;
 use App\interfaces\user\setUserDataInterface;
 
 class ModelLogin extends Model implements setUserDataInterface

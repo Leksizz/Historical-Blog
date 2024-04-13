@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Kernel\Router;
+namespace App\Core\Router;
 
-use App\core\View;
+use App\Core\View\View;
 
 class Router
 {
 
-    public function __construct()
+
+    public function __construct(private readonly View $view)
     {
         $this->initRoutes();
     }
@@ -31,7 +32,10 @@ class Router
 
             $controller = new $controller();
 
+            call_user_func([$controller, 'setView'], $this->view);
             call_user_func([$controller, $action]);
+        } else {
+            call_user_func($route->getAction());
         }
     }
 
@@ -46,16 +50,10 @@ class Router
     private function initRoutes()
     {
         $routes = $this->getRoutes();
-
         foreach ($routes as $route) {
             $this->routes[$route->getMethod()][$route->getUri()] = $route;
         }
-
     }
-
-    /**
-     * @return Route[]
-     */
 
     private function getRoutes(): array
     {

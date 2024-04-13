@@ -2,12 +2,13 @@
 
 namespace App\controllers;
 
-use App\core\Controller;
+use App\Core\Controller\Controller;
 
 class ControllerMain extends Controller
 {
-    public function actionIndex(): void
+    public function index(): void
     {
-        $this->view->render('Historium');
+        $this->view('index');
+//        $this->view->render('Historium');
     }
 }

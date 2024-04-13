@@ -2,7 +2,7 @@
 
 namespace App\controllers;
 
-use App\core\Controller;
+use App\Core\Controller\Controller;
 
 class ControllerUser extends Controller
 {

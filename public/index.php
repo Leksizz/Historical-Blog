@@ -6,7 +6,7 @@ require_once(APP_PATH . '/vendor/autoload.php');
 
 require_once(APP_PATH . '/config/db.php');
 
-use App\Kernel\App;
+use App\Core\App;
 
 session_start();
 

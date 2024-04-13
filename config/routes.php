@@ -1,8 +1,8 @@
 <?php
 
 use App\controllers\ControllerMain;
-use App\Kernel\Router\Route;
+use App\Core\Router\Route;
 
 return [
-    Route::get('/', [ControllerMain::class, 'actionIndex']),
+    Route::get('/', [ControllerMain::class, 'index']),
 ];
