@@ -2,6 +2,8 @@
 
 namespace App\Core\View;
 
+use App\Core\Exceptions\ViewNotFoundException;
+
 class View
 {
 //    private $path;
@@ -11,16 +13,15 @@ class View
 //        $this->path = 'application/views/' . $route['controller'] . '/' . $route['action'] . '.html';
 //    }
 
-    public function render($path): void
+    public function render(string $path): void
     {
         $path = APP_PATH . "/views/$path.html";
 
         if (!file_exists($path)) {
-            throw new \Exception("View $path not found");
+            throw new ViewNotFoundException("View $path not found");
         }
 
-        $content = file_get_contents("$path");
-        $GLOBALS['content'] = $content;
+        $GLOBALS['content'] = file_get_contents("$path");
 
         require_once APP_PATH . '/views/template/template.php';
     }
