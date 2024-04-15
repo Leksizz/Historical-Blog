@@ -3,9 +3,10 @@
 namespace App\controllers;
 
 use App\Core\Controller\Controller;
+use App\Core\Http\Redirect;
 use App\Core\Validator\Validator;
 
-class ControllerMain extends Controller
+class MainController extends Controller
 {
     public function index(): void
     {

@@ -21,7 +21,7 @@ function cssLoader(path) {
                 $('<link>', {
                     rel: 'stylesheet',
                     type: 'text/css',
-                    href: '/public/css/' + folder + '.css'
+                    href: '/assets/css/' + folder + '.css'
                 }).appendTo('head');
                 console.log();
             }

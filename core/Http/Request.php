@@ -2,8 +2,9 @@
 
 namespace App\Core\Http;
 
-class Request
+class Request implements RequestInterface
 {
+
     public function __construct(
         public readonly array $get,
         public readonly array $post,
@@ -33,5 +34,4 @@ class Request
     {
         return $this->post[$key] ?? $this->get[$key] ?? $default;
     }
-
 }

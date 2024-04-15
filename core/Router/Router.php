@@ -2,16 +2,24 @@
 
 namespace App\Core\Router;
 
-use App\Core\Http\Request;
-use App\Core\View\View;
 
-class Router
+use App\Core\DataBase\DataBaseInterface;
+use App\Core\Http\RedirectInterface;
+use App\Core\Http\RequestInterface;
+use App\Core\Session\SessionInterface;
+use App\Core\View\ViewInterface;
+
+class Router implements RouterInterface
 {
 
 
     public function __construct(
-        private readonly View    $view,
-        private readonly Request $request)
+        private readonly ViewInterface     $view,
+        private readonly RequestInterface  $request,
+        private readonly RedirectInterface $redirect,
+        private readonly SessionInterface  $session,
+        private readonly DataBaseInterface $dataBase,
+    )
     {
         $this->initRoutes();
     }
@@ -22,13 +30,12 @@ class Router
         'POST' => []
     ];
 
-    public
-    function dispatch(string $uri, string $method): void
+    public function dispatch(string $uri, string $method): void
     {
         $route = $this->findRoute($uri, $method);
 
         if (!$route) {
-            View::errorCode('404');
+            ViewInterface::errorCode('404');
         }
 
         if (is_array($route->getAction())) {
@@ -39,14 +46,16 @@ class Router
 
             call_user_func([$controller, 'setView'], $this->view);
             call_user_func([$controller, 'setRequest'], $this->request);
+            call_user_func([$controller, 'setRedirect'], $this->redirect);
+            call_user_func([$controller, 'setSession'], $this->session);
+            call_user_func([$controller, 'setDataBase'], $this->dataBase);
             call_user_func([$controller, $action]);
         } else {
             call_user_func($route->getAction());
         }
     }
 
-    private
-    function findRoute(string $uri, string $method): Route|false
+    private function findRoute(string $uri, string $method): Route|false
     {
         if (!isset($this->routes[$method][$uri])) {
             return false;
@@ -54,8 +63,7 @@ class Router
         return $this->routes[$method][$uri];
     }
 
-    private
-    function initRoutes(): void
+    private function initRoutes(): void
     {
         $routes = $this->getRoutes();
         foreach ($routes as $route) {
@@ -63,8 +71,7 @@ class Router
         }
     }
 
-    private
-    function getRoutes(): array
+    private function getRoutes(): array
     {
         return require_once APP_PATH . '/config/routes.php';
     }

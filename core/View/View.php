@@ -4,7 +4,7 @@ namespace App\Core\View;
 
 use App\Core\Exceptions\ViewNotFoundException;
 
-class View
+class View implements ViewInterface
 {
 //    private $path;
 

@@ -5,8 +5,8 @@ namespace App\Core\Router;
 class Route
 {
     public function __construct(
-        private string $uri,
-        private string $method,
+        private readonly string $uri,
+        private readonly string $method,
         private        $action
     )
     {

@@ -2,34 +2,70 @@
 
 namespace App\Core\Controller;
 
-use App\Core\Http\Request;
-use App\Core\View\View;
+use App\Core\DataBase\DataBaseInterface;
+use App\Core\Http\RedirectInterface;
+use App\Core\Http\RequestInterface;
+use App\Core\Session\SessionInterface;
+use App\Core\View\ViewInterface;
 
 abstract class Controller
 {
-    private View $view;
-    private Request $request;
+    private ViewInterface $view;
+    private RequestInterface $request;
+    private RedirectInterface $redirect;
+    private SessionInterface $session;
+    private DataBaseInterface $dataBase;
+
 
     public function view(string $path): void
     {
         $this->view->render($path);
     }
 
-    public function setView(View $view): void
+    public function setView(ViewInterface $view): void
     {
         $this->view = $view;
     }
 
-    public function request(): Request
+    public function request(): RequestInterface
     {
         return $this->request;
     }
 
-    public function setRequest(Request $request): void
+    public function setRequest(RequestInterface $request): void
     {
         $this->request = $request;
     }
 
+    public function setRedirect(RedirectInterface $redirect): void
+    {
+        $this->redirect = $redirect;
+    }
+
+    public function redirect(string $url): void
+    {
+        $this->redirect->to($url);
+    }
+
+    public function setSession(SessionInterface $session): void
+    {
+        $this->session = $session;
+    }
+
+    public function session(): SessionInterface
+    {
+        return $this->session;
+    }
+
+    public function setDataBase(DataBaseInterface $dataBase): void
+    {
+        $this->dataBase = $dataBase;
+    }
+
+    public function db(): DataBaseInterface
+    {
+        return $this->dataBase;
+    }
 
 //    public function __construct($route)
 //    {
