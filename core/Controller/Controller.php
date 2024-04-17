@@ -2,9 +2,12 @@
 
 namespace App\Core\Controller;
 
+use App\Core\Auth\AuthInterface;
 use App\Core\DataBase\DataBaseInterface;
-use App\Core\Http\RedirectInterface;
-use App\Core\Http\RequestInterface;
+use App\Core\Http\Redirect\RedirectInterface;
+use App\Core\Http\Request\RequestInterface;
+use App\Core\Http\Response\Response;
+use App\Core\Http\Response\ResponseInterface;
 use App\Core\Session\SessionInterface;
 use App\Core\View\ViewInterface;
 
@@ -15,7 +18,8 @@ abstract class Controller
     private RedirectInterface $redirect;
     private SessionInterface $session;
     private DataBaseInterface $dataBase;
-
+    private AuthInterface $auth;
+    private ResponseInterface $response;
 
     public function view(string $path): void
     {
@@ -25,6 +29,16 @@ abstract class Controller
     public function setView(ViewInterface $view): void
     {
         $this->view = $view;
+    }
+
+    public function setResponse(ResponseInterface $response): void
+    {
+        $this->response = $response;
+    }
+
+    public function response(): ResponseInterface
+    {
+        return $this->response;
     }
 
     public function request(): RequestInterface
@@ -65,6 +79,16 @@ abstract class Controller
     public function db(): DataBaseInterface
     {
         return $this->dataBase;
+    }
+
+    public function setAuth(AuthInterface $auth)
+    {
+        $this->auth = $auth;
+    }
+
+    public function auth(): AuthInterface
+    {
+        return $this->auth;
     }
 
 //    public function __construct($route)

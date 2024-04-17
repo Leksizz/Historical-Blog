@@ -34,12 +34,12 @@ class View implements ViewInterface
 //        exit();
 //    }
 //
-//    public static function errorCode($code)
-//    {
-//        http_response_code($code);
-//        require_once 'application/views/errors/' . $code . '.html';
-//        exit();
-//    }
+    public static function errorCode(string $code): void
+    {
+        http_response_code($code);
+        require_once 'application/views/errors/' . $code . '.html';
+        exit();
+    }
 //
 //    public function message($status, $message)
 //    {

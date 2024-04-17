@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Core\Http;
+namespace App\Core\Http\Request;
+
+use App\Core\Validator\ValidatorInterface;
 
 class Request implements RequestInterface
 {
+
+    private ValidatorInterface $validator;
 
     public function __construct(
         public readonly array $get,
@@ -34,4 +38,20 @@ class Request implements RequestInterface
     {
         return $this->post[$key] ?? $this->get[$key] ?? $default;
     }
+
+    public function setValidator(ValidatorInterface $validator): void
+    {
+        $this->validator = $validator;
+    }
+
+    public function validate(array $data): bool
+    {
+        foreach ($data as $key) {
+            $data[$key] = $this->input($key);
+        }
+        return $this->validator->validate($data);
+    }
+
+
+
 }

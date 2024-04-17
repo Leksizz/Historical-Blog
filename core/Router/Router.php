@@ -3,9 +3,11 @@
 namespace App\Core\Router;
 
 
+use App\Core\Auth\AuthInterface;
 use App\Core\DataBase\DataBaseInterface;
-use App\Core\Http\RedirectInterface;
-use App\Core\Http\RequestInterface;
+use App\Core\Http\Redirect\RedirectInterface;
+use App\Core\Http\Request\RequestInterface;
+use App\Core\Http\Response\ResponseInterface;
 use App\Core\Session\SessionInterface;
 use App\Core\View\ViewInterface;
 
@@ -17,8 +19,10 @@ class Router implements RouterInterface
         private readonly ViewInterface     $view,
         private readonly RequestInterface  $request,
         private readonly RedirectInterface $redirect,
+        private readonly ResponseInterface $response,
         private readonly SessionInterface  $session,
         private readonly DataBaseInterface $dataBase,
+        private readonly AuthInterface     $auth,
     )
     {
         $this->initRoutes();
@@ -34,9 +38,9 @@ class Router implements RouterInterface
     {
         $route = $this->findRoute($uri, $method);
 
-        if (!$route) {
-            ViewInterface::errorCode('404');
-        }
+//        if (!$route) {
+//            View::errorCode('404');
+//        }
 
         if (is_array($route->getAction())) {
 
@@ -46,9 +50,11 @@ class Router implements RouterInterface
 
             call_user_func([$controller, 'setView'], $this->view);
             call_user_func([$controller, 'setRequest'], $this->request);
+            call_user_func([$controller, 'setResponse'], $this->response);
             call_user_func([$controller, 'setRedirect'], $this->redirect);
             call_user_func([$controller, 'setSession'], $this->session);
             call_user_func([$controller, 'setDataBase'], $this->dataBase);
+            call_user_func([$controller, 'setAuth'], $this->auth);
             call_user_func([$controller, $action]);
         } else {
             call_user_func($route->getAction());

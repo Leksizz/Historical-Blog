@@ -11,12 +11,14 @@ $(document).ready(function () {
             processData: false,
             success: function (result) {
                 json = jQuery.parseJSON(result);
-                if (json.url) {
-                    window.location.href = json.url;
-                }
+                console.log(result);
+                // if (json.url) {
+                //     window.location.href = json.url;
+                // }
                 if (json.status === 'error') {
-                    const error = document.getElementById('error');
-                    error.textContent = json.message;
+                    // const error = document.getElementById('error');
+                    // error.textContent = json.message;
+                    console.log(json.status);
                 }
             }
         });

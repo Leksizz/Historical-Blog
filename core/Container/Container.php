@@ -2,18 +2,24 @@
 
 namespace App\Core\Container;
 
+use App\Core\Auth\Auth;
+use App\Core\Auth\AuthInterface;
 use App\Core\Config\Config;
 use App\Core\Config\ConfigInterface;
 use App\Core\DataBase\DataBase;
 use App\Core\DataBase\DataBaseInterface;
-use App\Core\Http\Redirect;
-use App\Core\Http\RedirectInterface;
-use App\Core\Http\Request;
-use App\Core\Http\RequestInterface;
+use App\Core\Http\Redirect\Redirect;
+use App\Core\Http\Redirect\RedirectInterface;
+use App\Core\Http\Request\Request;
+use App\Core\Http\Request\RequestInterface;
+use App\Core\Http\Response\Response;
+use App\Core\Http\Response\ResponseInterface;
 use App\Core\Router\Router;
 use App\Core\Router\RouterInterface;
 use App\Core\Session\Session;
 use App\Core\Session\SessionInterface;
+use App\Core\Validator\Validator;
+use App\Core\Validator\ValidatorInterface;
 use App\Core\View\View;
 use App\Core\View\ViewInterface;
 
@@ -26,6 +32,9 @@ class Container
     public readonly SessionInterface $session;
     public readonly ConfigInterface $config;
     public readonly DataBaseInterface $dataBase;
+    public readonly AuthInterface $auth;
+    public readonly ValidatorInterface $validator;
+    public readonly ResponseInterface $response;
 
     public function __construct()
     {
@@ -34,12 +43,16 @@ class Container
 
     private function registerServices(): void
     {
+        $this->validator = new Validator();
         $this->request = Request::createFromGlobals();
+        $this->request->setValidator($this->validator);
         $this->view = new View();
         $this->redirect = new Redirect();
         $this->session = new Session();
         $this->config = new Config();
         $this->dataBase = new DataBase($this->config);
-        $this->router = new Router($this->view, $this->request, $this->redirect, $this->session, $this->dataBase);
+        $this->auth = new Auth($this->dataBase, $this->session);
+        $this->response = new Response();
+        $this->router = new Router($this->view, $this->request, $this->redirect, $this->response, $this->session, $this->dataBase, $this->auth);
     }
 }

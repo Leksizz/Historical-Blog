@@ -1,76 +1,94 @@
-<!--<script type="text/javascript" src="/assets/js/validator.js"></script>-->
+<!--&lt;!&ndash;<script type="text/javascript" src="/assets/js/validator.js"></script>&ndash;&gt;-->
 <!--<script type="text/javascript" src="/assets/js/form.js"></script>-->
-<div class="container my-5 ">
-    <h1 class="text-center my-4">Регистрация на сайте</h1>
-    <div class="col-md-5 mx-auto border p-3 border-secondary rounded shadow">
-        <form action="/reg" method="POST">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="mb-3 input-group">
-                        <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
-                        <input name="name" type="text" class="form-control" placeholder="Имя" maxlength="16">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="mb-3 input-group">
-                        <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
-                        <input name="lastname" type="text" class="form-control" placeholder="Фамилия" maxlength="16"
-                        >
-                    </div>
-                </div>
-                <div class="mb-3 input-group">
-                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                    <input
-                            name="login"
-                            type="text"
-                            class="form-control"
-                            placeholder="Логин"
-                            maxlength="16"
-                    />
-                </div>
-                <div id="errorLogin" class="mb-3">Никнейм может содержать: буквы латинского алфавита, цифры и знаки
-                    подчеркивания
-                </div>
-            </div>
-            <div class="mb-3 input-group">
-                <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
-                <input
-                        name="email"
-                        type="email"
-                        class="form-control"
-                        placeholder="E-mail"
-                        maxlength="32"
-                />
+<!--<div class="container my-5 ">-->
+<!--    <h1 class="text-center my-4">Регистрация на сайте</h1>-->
+<!--    <div class="col-md-5 mx-auto border p-3 border-secondary rounded shadow">-->
+<!--        <form action="/register" method="POST">-->
+<!--            <div class="row">-->
+<!--                <div class="col-sm-6">-->
+<!--                    <div class="mb-3 input-group">-->
+<!--                        <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>-->
+<!--                        <input name="name" type="text" class="form-control" placeholder="Имя" maxlength="16">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-sm-6">-->
+<!--                    <div class="mb-3 input-group">-->
+<!--                        <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>-->
+<!--                        <input name="lastname" type="text" class="form-control" placeholder="Фамилия" maxlength="16"-->
+<!--                        >-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="mb-3 input-group">-->
+<!--                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>-->
+<!--                    <input-->
+<!--                            name="login"-->
+<!--                            type="text"-->
+<!--                            class="form-control"-->
+<!--                            placeholder="Логин"-->
+<!--                            maxlength="16"-->
+<!--                    />-->
+<!--                </div>-->
+<!--                <div id="errorLogin" class="mb-3">Никнейм может содержать только: буквы латинского алфавита, цифры и знаки-->
+<!--                    подчеркивания-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="mb-3 input-group">-->
+<!--                <span class="input-group-text"><i class="fa-solid fa-at"></i></span>-->
+<!--                <input-->
+<!--                        name="email"-->
+<!--                        type="email"-->
+<!--                        class="form-control"-->
+<!--                        placeholder="E-mail"-->
+<!--                        maxlength="32"-->
+<!--                />-->
 
-            </div>
-            <div id="errorEmail" class="mb-3">Некорректный имейл</div>
-            <div class="mb-3 input-group">
-            <span class="input-group-text"
-            ><i class="fa-solid fa-lock"></i
-            ></span>
-                <input
-                        name="password"
-                        type="password"
-                        class="form-control"
-                        placeholder="Пароль"
-                        maxlength="16"
-                />
-            </div>
-            <div id="errorPassword" class="mb-3">Пароль: от 8-15 символов, с минимум одной цифрой, одной заглавной и
-                одной строчной буквой.
-            </div>
-            <div class="mb-3">
-                <input
-                        type="submit"
-                        class="form-control btn btn-secondary"
-                        value="Зарегистрироваться"
-                />
-            </div>
-            <div class="col-md-12  d-flex justify-content-center">
-                <p>Есть аккаунт? <a href="/login" class="link-success link-underline link-underline-opacity-0">-
-                    Авторизируйтесь!</a></p>
-            </div>
-            <div class="col-md-12  d-flex justify-content-center text-danger" id="error"></div>
-        </form>
-    </div>
-</div>
+<!--            </div>-->
+<!--            <div id="errorEmail" class="mb-3">Некорректный имейл</div>-->
+<!--            <div class="mb-3 input-group">-->
+<!--            <span class="input-group-text"-->
+<!--            ><i class="fa-solid fa-lock"></i-->
+<!--            ></span>-->
+<!--                <input-->
+<!--                        name="password"-->
+<!--                        type="password"-->
+<!--                        class="form-control"-->
+<!--                        placeholder="Пароль"-->
+<!--                        maxlength="16"-->
+<!--                />-->
+<!--            </div>-->
+<!--            <div id="errorPassword" class="mb-3">Пароль: от 8-15 символов, с минимум одной цифрой, одной заглавной и-->
+<!--                одной строчной буквой.-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <input-->
+<!--                        type="submit"-->
+<!--                        class="form-control btn btn-secondary"-->
+<!--                        value="Зарегистрироваться"-->
+<!--                />-->
+<!--            </div>-->
+<!--            <div class="col-md-12  d-flex justify-content-center">-->
+<!--                <p>Есть аккаунт? <a href="/login" class="link-success link-underline link-underline-opacity-0">- -->
+<!--                    Авторизируйтесь!</a></p>-->
+<!--            </div>-->
+<!--            <div class="col-md-12  d-flex justify-content-center text-danger" id="error"></div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Form</title>
+</head>
+<body>
+<h1>Register</h1>
+</body>
+</html>
+<script>
+    fetch('/register')
+        .then(response => response.json())
+        .then(result => {
+            console.log(result);
+        });
+</script>

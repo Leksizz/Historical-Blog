@@ -36,17 +36,6 @@ class DataBase implements DataBaseInterface
 
     }
 
-//    private function execute(string $sql, array $params): string
-//    {
-//        $stmt = $this->pdo->prepare($sql);
-//        foreach ($params as $key => $value) {
-//            $stmt->bindValue($key, $value);
-//
-//        }
-//        $stmt->execute();
-//        return $stmt;
-//    }
-
     public function insert(string $table, array $data): false|int
     {
         $columns = implode(', ', array_keys($data));

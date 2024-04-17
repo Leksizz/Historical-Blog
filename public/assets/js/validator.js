@@ -1,19 +1,21 @@
 const validationRules = {
-    password: {
-        regex: /((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})/,
-        errorMessageId: 'errorPassword'
+    login: {
+        regex: /[a-zA-Z_0-9]{1,16}$/,
+        errorMessageId: 'errorLogin'
     },
     email: {
         regex: /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/,
         errorMessageId: 'errorEmail'
     },
-    login: {
-        regex: /[a-zA-Z_0-9]{1,16}$/,
-        errorMessageId: 'errorLogin'
-    }
+    password: {
+        regex: /((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})/,
+        errorMessageId: 'errorPassword'
+    },
+
+
 };
 
-function addErrors() {
+function validate()  {
     $('input[type="submit"]').on('click', function (event) {
 
         let isValid = true;
@@ -42,7 +44,7 @@ function addErrors() {
     });
 }
 
-function resetErrors() {
+function reset() {
     $('form input').on('input', function () {
         if ($(this).val().trim() !== '') {
             $(this).removeClass('empty');
@@ -53,6 +55,6 @@ function resetErrors() {
 }
 
 $(document).ready(function () {
-    addErrors();
-    resetErrors();
+    validate();
+    reset();
 });
