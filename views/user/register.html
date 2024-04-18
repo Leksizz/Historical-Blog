@@ -74,21 +74,31 @@
 <!--        </form>-->
 <!--    </div>-->
 <!--</div>-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Form</title>
-</head>
-<body>
-<h1>Register</h1>
-</body>
-</html>
+<div class="container my-5">
+    <h1 class="text-center my-5">Новая статья:</h1>
+    <div class="mx-auto col-sm-9">
+        <form onsubmit="sendForm(this); return false" method="POST">
+            <div class="mb-3">
+                <input type="text" name="name" placeholder="Имя" class="form-control">
+                <p class="text-danger" id="errorTitle" hidden>Обязательное поле</p>
+            </div>
+            <input type="email" name="email" placeholder="Имейл" class="form-control">
+            <div class="mb-3">
+                <input type="submit" value="Отправить" class="form-control btn btn-secondary">
+            </div>
+
+        </form>
+    </div>
+</div>
 <script>
-    fetch('/register')
-        .then(response => response.json())
-        .then(result => {
-            console.log(result);
-        });
+    function sendForm(form) {
+        const formData = new FormData(form);
+        fetch('/register', {
+            method: "POST",
+            body: formData,
+        }).then(response => response.text())
+            .then(result => {
+                console.log(result);
+            })
+    }
 </script>

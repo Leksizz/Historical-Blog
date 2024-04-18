@@ -17,4 +17,8 @@ interface RequestInterface
     public function setValidator(ValidatorInterface $validator): void;
 
     public function validate(array $data): bool;
+
+    public function all($default = null): mixed;
+
+    public function errors(): array;
 }

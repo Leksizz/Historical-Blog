@@ -4,24 +4,18 @@ namespace App\Core\Validator;
 
 class Validator implements ValidatorInterface
 {
-
-    private array $data;
     private array $errors = [];
 
     public function validate(array $data): bool
     {
-        $this->data = $data;
+        foreach ($data as $key => $value) {
 
-        foreach ($this->data as $key) {
-
-            $error = $this->validateRule($key);
-
-            if ($error) {
+            $error = $this->validateRule($value, $key);
+            if (!$error) {
                 $this->errors[] = $error;
             }
 
         }
-
         return empty($this->errors);
 
     }
@@ -32,11 +26,8 @@ class Validator implements ValidatorInterface
     }
 
 
-    private function validateRule($key): string|false
+    public function validateRule(mixed $value, string $key): string|false
     {
-        $value = $this->data[$key];
-
-
         $patterns = [
             'name' => "/^.+$/",
             'lastname' => "/^.+$/",

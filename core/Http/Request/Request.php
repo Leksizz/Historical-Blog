@@ -2,6 +2,7 @@
 
 namespace App\Core\Http\Request;
 
+use App\Core\DTO\User\CreateUserDTOFactory;
 use App\Core\Validator\ValidatorInterface;
 
 class Request implements RequestInterface
@@ -39,6 +40,11 @@ class Request implements RequestInterface
         return $this->post[$key] ?? $this->get[$key] ?? $default;
     }
 
+    public function all($default = null): mixed // 1
+    {
+        return $this->post ?? $this->get ?? $default;
+    }
+
     public function setValidator(ValidatorInterface $validator): void
     {
         $this->validator = $validator;
@@ -46,12 +52,11 @@ class Request implements RequestInterface
 
     public function validate(array $data): bool
     {
-        foreach ($data as $key) {
-            $data[$key] = $this->input($key);
-        }
         return $this->validator->validate($data);
     }
 
-
-
+    public function errors(): array
+    {
+        return $this->validator->errors();
+    }
 }
