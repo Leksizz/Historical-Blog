@@ -81,7 +81,7 @@ abstract class Controller
         return $this->dataBase;
     }
 
-    public function setAuth(AuthInterface $auth)
+    public function setAuth(AuthInterface $auth): void
     {
         $this->auth = $auth;
     }
@@ -90,30 +90,4 @@ abstract class Controller
     {
         return $this->auth;
     }
-
-//    public function __construct($route)
-//    {
-//        $this->route = $route;
-//        $this->view = new View($this->route);
-//    }
-//
-//
-//    protected function loadModel($data = null)
-//    {
-//        $this->model = 'application\models\\' . $this->route['controller'] . '\\Model' . ucfirst($this->route['action']);
-//        if (class_exists($this->model)) {
-//            return new $this->model($data);
-//        }
-//    }
-//
-//    protected function isPost()
-//    {
-//        if (empty($_POST)) {
-//            return false;
-//        } else {
-//            $this->model = $this->loadModel($_POST);
-//            return true;
-//        }
-//    }
-//
 }

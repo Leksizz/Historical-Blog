@@ -1,104 +1,76 @@
-<!--&lt;!&ndash;<script type="text/javascript" src="/assets/js/validator.js"></script>&ndash;&gt;-->
-<!--<script type="text/javascript" src="/assets/js/form.js"></script>-->
-<!--<div class="container my-5 ">-->
-<!--    <h1 class="text-center my-4">Регистрация на сайте</h1>-->
-<!--    <div class="col-md-5 mx-auto border p-3 border-secondary rounded shadow">-->
-<!--        <form action="/register" method="POST">-->
-<!--            <div class="row">-->
-<!--                <div class="col-sm-6">-->
-<!--                    <div class="mb-3 input-group">-->
-<!--                        <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>-->
-<!--                        <input name="name" type="text" class="form-control" placeholder="Имя" maxlength="16">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col-sm-6">-->
-<!--                    <div class="mb-3 input-group">-->
-<!--                        <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>-->
-<!--                        <input name="lastname" type="text" class="form-control" placeholder="Фамилия" maxlength="16"-->
-<!--                        >-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="mb-3 input-group">-->
-<!--                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>-->
-<!--                    <input-->
-<!--                            name="login"-->
-<!--                            type="text"-->
-<!--                            class="form-control"-->
-<!--                            placeholder="Логин"-->
-<!--                            maxlength="16"-->
-<!--                    />-->
-<!--                </div>-->
-<!--                <div id="errorLogin" class="mb-3">Никнейм может содержать только: буквы латинского алфавита, цифры и знаки-->
-<!--                    подчеркивания-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="mb-3 input-group">-->
-<!--                <span class="input-group-text"><i class="fa-solid fa-at"></i></span>-->
-<!--                <input-->
-<!--                        name="email"-->
-<!--                        type="email"-->
-<!--                        class="form-control"-->
-<!--                        placeholder="E-mail"-->
-<!--                        maxlength="32"-->
-<!--                />-->
-
-<!--            </div>-->
-<!--            <div id="errorEmail" class="mb-3">Некорректный имейл</div>-->
-<!--            <div class="mb-3 input-group">-->
-<!--            <span class="input-group-text"-->
-<!--            ><i class="fa-solid fa-lock"></i-->
-<!--            ></span>-->
-<!--                <input-->
-<!--                        name="password"-->
-<!--                        type="password"-->
-<!--                        class="form-control"-->
-<!--                        placeholder="Пароль"-->
-<!--                        maxlength="16"-->
-<!--                />-->
-<!--            </div>-->
-<!--            <div id="errorPassword" class="mb-3">Пароль: от 8-15 символов, с минимум одной цифрой, одной заглавной и-->
-<!--                одной строчной буквой.-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <input-->
-<!--                        type="submit"-->
-<!--                        class="form-control btn btn-secondary"-->
-<!--                        value="Зарегистрироваться"-->
-<!--                />-->
-<!--            </div>-->
-<!--            <div class="col-md-12  d-flex justify-content-center">-->
-<!--                <p>Есть аккаунт? <a href="/login" class="link-success link-underline link-underline-opacity-0">- -->
-<!--                    Авторизируйтесь!</a></p>-->
-<!--            </div>-->
-<!--            <div class="col-md-12  d-flex justify-content-center text-danger" id="error"></div>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
-<div class="container my-5">
-    <h1 class="text-center my-5">Новая статья:</h1>
-    <div class="mx-auto col-sm-9">
-        <form onsubmit="sendForm(this); return false" method="POST">
-            <div class="mb-3">
-                <input type="text" name="name" placeholder="Имя" class="form-control">
-                <p class="text-danger" id="errorTitle" hidden>Обязательное поле</p>
+<script type="text/javascript" src="/assets/js/validator.js"></script>
+<script type="text/javascript" src="/assets/js/form.js"></script>
+<div class="container my-5 ">
+    <h1 class="text-center my-4">Регистрация на сайте</h1>
+    <div class="col-md-5 mx-auto border p-3 border-secondary rounded shadow">
+        <form action="/register" method="POST">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
+                        <input name="name" type="text" class="form-control" placeholder="Имя" maxlength="16">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
+                        <input name="lastname" type="text" class="form-control" placeholder="Фамилия" maxlength="16"
+                        >
+                    </div>
+                </div>
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                    <input
+                            name="nickname"
+                            type="text"
+                            class="form-control"
+                            placeholder="Логин"
+                            maxlength="16"
+                    />
+                </div>
+                <div id="errorNickname" class="mb-3">Никнейм может содержать только: буквы латинского алфавита, цифры и знаки
+                    подчеркивания
+                </div>
             </div>
-            <input type="email" name="email" placeholder="Имейл" class="form-control">
-            <div class="mb-3">
-                <input type="submit" value="Отправить" class="form-control btn btn-secondary">
-            </div>
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
+                <input
+                        name="email"
+                        type="email"
+                        class="form-control"
+                        placeholder="E-mail"
+                        maxlength="32"
+                />
 
+            </div>
+            <div id="errorEmail" class="mb-3">Некорректный имейл</div>
+            <div class="mb-3 input-group">
+            <span class="input-group-text"
+            ><i class="fa-solid fa-lock"></i
+            ></span>
+                <input
+                        name="password"
+                        type="password"
+                        class="form-control"
+                        placeholder="Пароль"
+                        maxlength="16"
+                />
+            </div>
+            <div id="errorPassword" class="mb-3">Пароль: от 8-15 символов, с минимум одной цифрой, одной заглавной и
+                одной строчной буквой.
+            </div>
+            <div class="mb-3">
+                <input
+                        type="submit"
+                        class="form-control btn btn-secondary"
+                        value="Зарегистрироваться"
+                />
+            </div>
+            <div class="col-md-12  d-flex justify-content-center">
+                <p>Есть аккаунт? <a href="/login" class="link-success link-underline link-underline-opacity-0">-
+                    Авторизируйтесь!</a></p>
+            </div>
+            <div class="col-md-12  d-flex justify-content-center text-danger" id="error"></div>
         </form>
     </div>
 </div>
-<script>
-    function sendForm(form) {
-        const formData = new FormData(form);
-        fetch('/register', {
-            method: "POST",
-            body: formData,
-        }).then(response => response.text())
-            .then(result => {
-                console.log(result);
-            })
-    }
-</script>

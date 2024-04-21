@@ -11,13 +11,12 @@ class Validator implements ValidatorInterface
         foreach ($data as $key => $value) {
 
             $error = $this->validateRule($value, $key);
-            if (!$error) {
+
+            if ($error) {
                 $this->errors[] = $error;
             }
-
         }
         return empty($this->errors);
-
     }
 
     public function errors(): array|string
@@ -31,7 +30,7 @@ class Validator implements ValidatorInterface
         $patterns = [
             'name' => "/^.+$/",
             'lastname' => "/^.+$/",
-            'login' => "/[a-zA-Z_0-9]{1,16}$/",
+            'nickname' => "/[a-zA-Z_0-9]{1,16}$/",
             'email' => "/(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/",
             'password' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})/',
         ];
@@ -45,9 +44,8 @@ class Validator implements ValidatorInterface
             'password' => "Ошибка при обработке данных на сервере: пароль: от 8-15 символов, с минимум одной цифрой, одной заглавной и
                 одной строчной буквой."
         ];
-
         if (preg_match($patterns[$key], $value)) {
-            return true;
+            return false;
         } else {
             return $errors[$key];
         }

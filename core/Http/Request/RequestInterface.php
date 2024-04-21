@@ -13,12 +13,11 @@ interface RequestInterface
     public function method(): string;
 
     public function input(string $key, $default = null): mixed;
+    public function all($default = null): mixed;
 
     public function setValidator(ValidatorInterface $validator): void;
 
     public function validate(array $data): bool;
-
-    public function all($default = null): mixed;
 
     public function errors(): array;
 }

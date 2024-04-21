@@ -36,7 +36,7 @@ class DataBase implements DataBaseInterface
 
     }
 
-    public function insert(string $table, array $data): false|int
+    public function insert(string $table, array $data): int
     {
         $columns = implode(', ', array_keys($data));
         $values = ':' . implode(', :', array_keys($data));
@@ -48,9 +48,33 @@ class DataBase implements DataBaseInterface
         try {
             $stmt->execute($data);
         } catch (\PDOException $exception) {
-            return false;
+            exit("Insert failed: {$exception->getMessage()}");
         }
         return (int)$this->pdo->lastInsertId();
     }
 
+    public function first(string $table, array $params = []): ?array
+    {
+        $where = '';
+
+        $keys = array_keys($params);
+
+        if (count($params) > 0) {
+            $where = 'WHERE ' . implode(' AND ', array_map(fn($field) => "field =: $field", $keys));
+        }
+
+        $sql = "SELECT " . "*" . " FROM $table $where LIMIT 1";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        try {
+            $stmt->execute($params);
+        } catch (\PDOException $exception) {
+            exit("Find first failed: {$exception->getMessage()}");
+        }
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ?: null;
+    }
 }

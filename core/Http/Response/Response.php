@@ -2,6 +2,8 @@
 
 namespace App\Core\Http\Response;
 
+use JetBrains\PhpStorm\NoReturn;
+
 class Response implements ResponseInterface
 {
     private int $code = 200;
@@ -9,7 +11,7 @@ class Response implements ResponseInterface
     private string $content = '';
 
 
-    public function setResponseCode(int $code): void
+    protected function setResponseCode(int $code): void
     {
         $this->code = $code;
         http_response_code($code);
@@ -20,7 +22,7 @@ class Response implements ResponseInterface
         return $this->code;
     }
 
-    public function setHeaders(array $headers): void
+    protected function setHeaders(array $headers): void
     {
         $this->headers = $headers;
     }
@@ -30,7 +32,7 @@ class Response implements ResponseInterface
         return $this->headers;
     }
 
-    public function setContent(string $content): void
+    protected function setContent(string $content): void
     {
         $this->content = $content;
     }
@@ -44,4 +46,10 @@ class Response implements ResponseInterface
     {
         return new JsonResponse($data, $code, $options);
     }
+
+    #[NoReturn] public function send(): void
+    {
+        exit($this->getContent());
+    }
+
 }

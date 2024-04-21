@@ -1,7 +1,7 @@
 const validationRules = {
     login: {
-        regex: /[a-zA-Z_0-9]{1,16}$/,
-        errorMessageId: 'errorLogin'
+        regex: /^[a-zA-Z0-9_]+$/,
+        errorMessageId: 'errorNickname'
     },
     email: {
         regex: /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/,

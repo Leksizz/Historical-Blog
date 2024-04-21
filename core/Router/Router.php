@@ -38,9 +38,16 @@ class Router implements RouterInterface
     {
         $route = $this->findRoute($uri, $method);
 
-//        if (!$route) {
-//            View::errorCode('404');
-//        }
+        if (!$route) {
+            $this->notFound();
+        }
+
+        if ($route->hasMiddlewares()) {
+            foreach ($route->getMiddlewares() as $middleware) {
+                $middleware = new $middleware($this->request, $this->auth, $this->redirect);
+                $middleware->handle();
+            }
+        }
 
         if (is_array($route->getAction())) {
 
@@ -80,6 +87,12 @@ class Router implements RouterInterface
     private function getRoutes(): array
     {
         return require_once APP_PATH . '/config/routes.php';
+    }
+
+    private function notFound(): void
+    {
+        echo '404';
+        exit();
     }
 
 }
