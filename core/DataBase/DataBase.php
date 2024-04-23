@@ -53,28 +53,43 @@ class DataBase implements DataBaseInterface
         return (int)$this->pdo->lastInsertId();
     }
 
-    public function first(string $table, array $params = []): ?array
+    public function select(string $table, array $params = []): ?array
     {
         $where = '';
 
-        $keys = array_keys($params);
-
         if (count($params) > 0) {
-            $where = 'WHERE ' . implode(' AND ', array_map(fn($field) => "field =: $field", $keys));
+            $where = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($params)));
         }
 
         $sql = "SELECT " . "*" . " FROM $table $where LIMIT 1";
-
         $stmt = $this->pdo->prepare($sql);
 
         try {
             $stmt->execute($params);
         } catch (\PDOException $exception) {
-            exit("Find first failed: {$exception->getMessage()}");
+            exit("Find one failed: {$exception->getMessage()}");
         }
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $result ?: null;
     }
+
+//    public function all(string $table): ?array
+//    {
+//
+//        $sql = "SELECT " . "*" . " FROM $table";
+//
+//        $stmt = $this->pdo->prepare($sql);
+//
+//        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//
+//        return $result ?: null;
+//    }
+
+    public function update(string $table,)
+    {
+
+    }
+
 }

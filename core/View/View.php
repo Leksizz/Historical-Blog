@@ -13,7 +13,7 @@ class View implements ViewInterface
 //        $this->path = 'application/views/' . $route['controller'] . '/' . $route['action'] . '.html';
 //    }
 
-    public function render(string $path): void
+    public function render(string $path, string $title): void
     {
         $path = APP_PATH . "/views/$path.html";
 
@@ -22,6 +22,7 @@ class View implements ViewInterface
         }
 
         $GLOBALS['content'] = file_get_contents("$path");
+        $GLOBALS['title'] = $title;
 
         require_once APP_PATH . '/views/template/template.php';
     }

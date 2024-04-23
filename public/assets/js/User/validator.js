@@ -11,8 +11,6 @@ const validationRules = {
         regex: /((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})/,
         errorMessageId: 'errorPassword'
     },
-
-
 };
 
 function validate()  {

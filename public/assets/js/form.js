@@ -10,15 +10,13 @@ $(document).ready(function () {
             cache: false,
             processData: false,
             success: function (result) {
-                // json = jQuery.parseJSON(result);
-                console.log(result);
-                // if (json.url) {
-                //     window.location.href = json.url;
-                // }
+                json = jQuery.parseJSON(result);
                 if (json.status === 'error') {
-                    // const error = document.getElementById('error');
-                    // error.textContent = json.message;
-                    console.log(json.status);
+                    const error = document.getElementById('error');
+                    error.innerText = json.result;
+                }
+                if (json.href) {
+                    window.location.href = json.href;
                 }
             }
         });

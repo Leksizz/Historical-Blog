@@ -2,7 +2,6 @@
 
 namespace App\Core\Http\Request;
 
-use App\Core\DTO\User\CreateUserDTOFactory;
 use App\Core\Validator\ValidatorInterface;
 
 class Request implements RequestInterface

@@ -32,9 +32,9 @@ class Container
     public readonly SessionInterface $session;
     public readonly ConfigInterface $config;
     public readonly DataBaseInterface $dataBase;
-    public readonly AuthInterface $auth;
     public readonly ValidatorInterface $validator;
     public readonly ResponseInterface $response;
+    public readonly AuthInterface $auth;
 
     public function __construct()
     {
@@ -51,8 +51,8 @@ class Container
         $this->session = new Session();
         $this->config = new Config();
         $this->dataBase = new DataBase($this->config);
-        $this->auth = new Auth($this->dataBase, $this->session, $this->config);
         $this->response = new Response();
+        $this->auth = new Auth($this->dataBase, $this->session, $this->config);
         $this->router = new Router($this->view, $this->request, $this->redirect, $this->response, $this->session, $this->dataBase, $this->auth);
     }
 }

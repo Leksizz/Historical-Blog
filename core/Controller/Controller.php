@@ -6,7 +6,6 @@ use App\Core\Auth\AuthInterface;
 use App\Core\DataBase\DataBaseInterface;
 use App\Core\Http\Redirect\RedirectInterface;
 use App\Core\Http\Request\RequestInterface;
-use App\Core\Http\Response\Response;
 use App\Core\Http\Response\ResponseInterface;
 use App\Core\Session\SessionInterface;
 use App\Core\View\ViewInterface;
@@ -21,9 +20,9 @@ abstract class Controller
     private AuthInterface $auth;
     private ResponseInterface $response;
 
-    public function view(string $path): void
+    public function view(string $path, string $title): void
     {
-        $this->view->render($path);
+        $this->view->render($path, $title);
     }
 
     public function setView(ViewInterface $view): void
@@ -90,4 +89,5 @@ abstract class Controller
     {
         return $this->auth;
     }
+
 }

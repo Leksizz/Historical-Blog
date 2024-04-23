@@ -20,7 +20,7 @@ class Auth implements AuthInterface
 
     public function attempt(string $email, string $password): bool
     {
-        $user = $this->db->first($this->table(), [
+        $user = $this->db->select($this->table(), [
             $this->email() => $email,
         ]);
 
@@ -53,7 +53,7 @@ class Auth implements AuthInterface
             return null;
         }
 
-        return $this->db->first($this->table(), [
+        return $this->db->select($this->table(), [
             'id' => $this->session->get($this->sessionField()),
         ]);
     }

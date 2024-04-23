@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Middlewares;
+namespace App\Src\Middlewares;
 
 use App\Core\Middleware\Middleware;
 
