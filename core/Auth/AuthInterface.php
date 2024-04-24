@@ -2,10 +2,10 @@
 
 namespace App\Core\Auth;
 
+use App\Src\Repositories\UserRepository;
+
 interface AuthInterface
 {
-    public function attempt(string $email, string $password): bool;
-
     public function logout(): void;
 
     public function check(): bool;

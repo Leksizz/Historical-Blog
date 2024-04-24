@@ -82,7 +82,7 @@ abstract class Controller
 
     public function setAuth(AuthInterface $auth): void
     {
-        $this->auth = $auth;
+         $this->auth = $auth;
     }
 
     public function auth(): AuthInterface

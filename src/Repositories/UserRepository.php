@@ -11,6 +11,11 @@ class UserRepository extends Repository
         return $this->get($table, ['id' => $id]);
     }
 
+    public function getUserByEmail(string $table, string $email): ?array
+    {
+        return $this->get($table, ['email' => $email]);
+    }
+
     public function has(string $table, string $field, string $email): bool
     {
         if ($this->get($table, [$field => $email])) {

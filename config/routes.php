@@ -8,7 +8,9 @@ use App\Src\Middlewares\GuestMiddleware;
 
 return [
     Route::get('/', [MainController::class, 'index']),
+    Route::get('/getSession', [MainController::class, 'sendSession']),
     Route::get('/register', [RegisterController::class, 'index'], [GuestMiddleware::class]),
     Route::post('/register', [RegisterController::class, 'register']),
     Route::get('/login', [LoginController::class, 'index'], [GuestMiddleware::class]),
+    Route::post('/login', [LoginController::class, 'login']),
 ];

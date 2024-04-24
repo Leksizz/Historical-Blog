@@ -5,6 +5,7 @@ namespace App\Core\Auth;
 use App\Core\Config\ConfigInterface;
 use App\Core\DataBase\DataBaseInterface;
 use App\Core\Session\SessionInterface;
+use App\Src\Repositories\UserRepository;
 
 class Auth implements AuthInterface
 {
@@ -17,26 +18,6 @@ class Auth implements AuthInterface
     {
 
     }
-
-    public function attempt(string $email, string $password): bool
-    {
-        $user = $this->db->select($this->table(), [
-            $this->email() => $email,
-        ]);
-
-        if (!$user) {
-            return false;
-        }
-
-        if (!password_verify($password, $user[$this->password()])) {
-            return false;
-        }
-
-        $this->session->set($this->sessionField(), $user['id']);
-
-        return true;
-    }
-
     public function logout(): void
     {
         $this->session->remove($this->sessionField());
@@ -82,5 +63,4 @@ class Auth implements AuthInterface
     {
         return $this->session->get($this->sessionField());
     }
-
 }

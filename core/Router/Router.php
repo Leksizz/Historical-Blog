@@ -9,7 +9,9 @@ use App\Core\Http\Redirect\RedirectInterface;
 use App\Core\Http\Request\RequestInterface;
 use App\Core\Http\Response\ResponseInterface;
 use App\Core\Session\SessionInterface;
+use App\Core\View\View;
 use App\Core\View\ViewInterface;
+use JetBrains\PhpStorm\NoReturn;
 
 class Router implements RouterInterface
 {
@@ -60,8 +62,8 @@ class Router implements RouterInterface
             call_user_func([$controller, 'setResponse'], $this->response);
             call_user_func([$controller, 'setRedirect'], $this->redirect);
             call_user_func([$controller, 'setSession'], $this->session);
-            call_user_func([$controller, 'setDataBase'], $this->dataBase);
             call_user_func([$controller, 'setAuth'], $this->auth);
+            call_user_func([$controller, 'setDataBase'], $this->dataBase);
             call_user_func([$controller, $action]);
         } else {
             call_user_func($route->getAction());
@@ -89,10 +91,9 @@ class Router implements RouterInterface
         return require_once APP_PATH . '/config/routes.php';
     }
 
-    private function notFound(): void
+    #[NoReturn] private function notFound(): void
     {
-        echo '404';
-        exit();
+        View::errorCode('404');
     }
 
 }

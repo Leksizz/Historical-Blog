@@ -26,11 +26,11 @@ class DTOFactory
     {
         $dto = new UserDTO();
         $dto->id = $request->input('id') ?? null;
-        $dto->name = $request->input('name');
-        $dto->lastname = $request->input('lastname');
-        $dto->nickname = $request->input('nickname');
-        $dto->email = $request->input('email');
-        $dto->password = password_hash($request->input('password'), PASSWORD_BCRYPT);
+        $dto->name = $request->input('name') ?? null;
+        $dto->lastname = $request->input('lastname') ?? null;
+        $dto->nickname = $request->input('nickname') ?? null;
+        $dto->email = $request->input('email') ?? null;
+        $dto->password = $request->input('password') ?? null;
 
         return $dto;
     }

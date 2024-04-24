@@ -4,8 +4,10 @@ namespace App\Src\Controllers;
 
 use App\Core\Controller\Controller;
 use App\Core\DTO\DTOFactory;
+use App\Core\Exceptions\DTOException;
 use App\Core\Repository\RepositoryFactory;
-use App\Src\Services\RegisterService\RegisterService;
+use App\Src\Services\User\RegisterService\RegisterService;
+use JetBrains\PhpStorm\NoReturn;
 
 class RegisterController extends Controller
 {
@@ -14,7 +16,10 @@ class RegisterController extends Controller
         $this->view('user/register', 'Регистрация');
     }
 
-    public function register(): void
+    /**
+     * @throws DTOException
+     */
+    #[NoReturn] public function register(): void
     {
         $dto = DTOFactory::createFromRequest($this->request(), 'user');
         $user = RepositoryFactory::getRepository('user', $this->db());

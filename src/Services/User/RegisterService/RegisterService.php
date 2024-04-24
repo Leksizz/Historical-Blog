@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Src\Services\RegisterService;
+namespace App\Src\Services\User\RegisterService;
 
 use App\Core\DTO\User\UserDTO;
 use App\Core\Http\Response\ResponseInterface;
 use App\Core\Repository\RepositoryInterface;
 use App\Src\Models\User;
-use App\Src\Repositories\UserRepository;
 use JetBrains\PhpStorm\NoReturn;
 
 class RegisterService
@@ -15,14 +14,15 @@ class RegisterService
     private User $user;
 
     public function __construct(
-        private readonly RepositoryInterface    $userRepository,
-        private readonly UserDTO|array     $userDTO,
-        private readonly ResponseInterface $response
+        private readonly RepositoryInterface $userRepository,
+        private readonly UserDTO|array       $userDTO,
+        private readonly ResponseInterface   $response
     )
     {
         if (is_array($userDTO)) {
             $this->response->json(['status' => 'error', 'result' => $userDTO])->send();
         }
+
         $this->user = new User($this->userDTO);
         $this->setTable();
     }
@@ -32,7 +32,7 @@ class RegisterService
         $this->table = 'users';
     }
 
-    public function table(): string
+    private function table(): string
     {
         return $this->table;
     }
@@ -53,6 +53,6 @@ class RegisterService
         }
 
         $this->userRepository->save($this->table(), $this->user->get());
-        $this->response->json(['status' => 'success', 'href' => '/login'])->send();
+        $this->response->json(['href' => '/login'])->send();
     }
 }

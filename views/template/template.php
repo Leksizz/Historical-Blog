@@ -16,37 +16,8 @@
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Historium</a>
-        <?php if (isset($_SESSION['id'])): ?>
-            <div class="d-flex ms-auto" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 dropstart">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <?= $_SESSION['login'] ?>
-                        </a>
-                        <ul class="dropdown-menu bg-dark">
-                            <li><a class="profile dropdown-item text-light" href="/index.php"><i
-                                            class="fa-solid fa-user pe-2"></i>Профиль</a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="exit dropdown-item text-light" href="/index.php"><i
-                                            class="fa-solid fa-door-open pe-2"></i>Выход</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        <?php else: ?>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                    </li>
-                </ul>
-                <a class="me-3 btn btn-secondary" href="/register" role="button">Регистрация</a>
-                <a class="btn btn-secondary" href="/login" role="button">Вход</a>
-            </div>
-        <?php endif; ?>
+        <div class="d-flex ms-auto" id="navbarSupportedContent">
+        </div>
     </div>
 </nav>
 <div class="container-fluid content">
@@ -73,3 +44,62 @@
 </body>
 </html>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        getSessionData();
+        updateNavbar();
+    });
+
+    async function getSessionData() {
+        try {
+            const response = await fetch('/getSession');
+            if (!response.ok) {
+                // Доделать отображение кнопок
+            }
+            const result = await response.json();
+            if (result.session && result.session.id) {
+                return result.session
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    }
+
+    async function updateNavbar(session) {
+        let navbarContent;
+        session = await getSessionData();
+        console.log(session)
+        if (session.id) {
+            const nickname = document.getElementById('nickname');
+            nickname.innerText = session.nickname
+            navbarContent = `
+            <div class="d-flex ms-auto" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 dropstart">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="nickname" href="#" role="button" data-bs-toggle="dropdown">
+                        </a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li><a class="profile dropdown-item text-light" href="/"><i class="fa-solid fa-user pe-2"></i>Профиль</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="exit dropdown-item text-light" href="/"><i class="fa-solid fa-door-open pe-2"></i>Выход</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        `;
+            document.getElementById('navbarSupportedContent').innerHTML = navbarContent;
+        } else {
+            navbarContent = `
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"></li>
+                </ul>
+                <a class="me-3 btn btn-secondary" href="/register" role="button">Регистрация</a>
+                <a class="btn btn-secondary" href="/login" role="button">Вход</a>
+            </div>
+        `;
+            document.getElementById('navbarSupportedContent').innerHTML = navbarContent;
+        }
+    }
+
+</script>

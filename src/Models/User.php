@@ -7,11 +7,11 @@ use App\Core\DTO\User\UserDTO;
 class User
 {
     private ?int $id;
-    private string $name;
-    private string $lastname;
-    private string $nickname;
-    private string $email;
-    private string $password;
+    private ?string $name;
+    private ?string $lastname;
+    private ?string $nickname;
+    private ?string $email;
+    private ?string $password;
 
     public function __construct(UserDTO $userDTO)
     {
@@ -20,7 +20,7 @@ class User
         $this->lastname = $userDTO->lastname;
         $this->nickname = $userDTO->nickname;
         $this->email = $userDTO->email;
-        $this->password = $userDTO->password;
+        $this->password = password_hash($userDTO->password, PASSWORD_BCRYPT);
     }
 
     public function id(): int
