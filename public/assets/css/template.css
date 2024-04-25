@@ -84,3 +84,13 @@ footer {
         padding-right: 200px;
     }
 }
+
+.fa-github {
+    font-size: 20px;
+    color: white;
+}
+
+.fa-telegram {
+    font-size: 20px;
+    color:  #0088cc;
+}

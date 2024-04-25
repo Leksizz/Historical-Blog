@@ -2,6 +2,8 @@
 
 namespace App\Core\Http\Request;
 
+use App\Core\Upload\FileUploader;
+use App\Core\Upload\FileUploaderInterface;
 use App\Core\Validator\ValidatorInterface;
 
 class Request implements RequestInterface
@@ -37,6 +39,20 @@ class Request implements RequestInterface
     public function input(string $key, $default = null): mixed
     {
         return $this->post[$key] ?? $this->get[$key] ?? $default;
+    }
+
+    public function file(string $key): ?FileUploaderInterface
+    {
+        if (!isset($this->files[$key])) {
+            return null;
+        }
+        return new FileUploader(
+            $this->files[$key]['name'],
+            $this->files[$key]['type'],
+            $this->files[$key]['tmp_name'],
+            $this->files[$key]['error'],
+            $this->files[$key]['size'],
+        );
     }
 
     public function all($default = null): mixed // 1

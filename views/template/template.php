@@ -9,8 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/css/template.css">
-    <script type="text/javascript" src="/assets/js/jquery.js"></script>
-    <script type="text/javascript" src="/assets/js/cssLoader.js"></script>
+    <script type="text/javascript" src="/assets/js/template/jquery.js"></script>
+    <script type="text/javascript" src="/assets/js/template/cssLoader.js"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -25,7 +26,10 @@
 </div>
 <footer class="py-5 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">&copy; Алексей Никитенко 2023</p>
+        <div class="m-0 text-center text-white">&copy; Алексей Никитенко 2023
+            <a href="https://github.com/Leksizz"><i class="ms-2 fa-brands fa-github"></i></a>
+            <a href="https://t.me/leksizzz"><i class="ms-2 fa-brands fa-telegram"></i></a>
+        </div>
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -41,65 +45,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+<script type="text/javascript" src="/assets/js/template/updateNavbar.js"></script>
 </body>
 </html>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        getSessionData();
-        updateNavbar();
-    });
-
-    async function getSessionData() {
-        try {
-            const response = await fetch('/getSession');
-            if (!response.ok) {
-                // Доделать отображение кнопок
-            }
-            const result = await response.json();
-            if (result.session && result.session.id) {
-                return result.session
-            }
-        } catch (error) {
-            console.error('Ошибка:', error);
-        }
-    }
-
-    async function updateNavbar(session) {
-        let navbarContent;
-        session = await getSessionData();
-        console.log(session)
-        if (session.id) {
-            const nickname = document.getElementById('nickname');
-            nickname.innerText = session.nickname
-            navbarContent = `
-            <div class="d-flex ms-auto" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 dropstart">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="nickname" href="#" role="button" data-bs-toggle="dropdown">
-                        </a>
-                        <ul class="dropdown-menu bg-dark">
-                            <li><a class="profile dropdown-item text-light" href="/"><i class="fa-solid fa-user pe-2"></i>Профиль</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="exit dropdown-item text-light" href="/"><i class="fa-solid fa-door-open pe-2"></i>Выход</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        `;
-            document.getElementById('navbarSupportedContent').innerHTML = navbarContent;
-        } else {
-            navbarContent = `
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"></li>
-                </ul>
-                <a class="me-3 btn btn-secondary" href="/register" role="button">Регистрация</a>
-                <a class="btn btn-secondary" href="/login" role="button">Вход</a>
-            </div>
-        `;
-            document.getElementById('navbarSupportedContent').innerHTML = navbarContent;
-        }
-    }
-
-</script>

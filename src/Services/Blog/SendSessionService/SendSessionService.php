@@ -18,7 +18,7 @@ class SendSessionService
     public function sendSession(): void
     {
         if ($this->session->has('user')) {
-            $this->response->json(['session' => $this->session->get('user'), 'href' => '/'])->send();
+            $this->response->json(['session' => $this->session->get('user')])->send();
         }
     }
 }

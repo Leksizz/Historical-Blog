@@ -13,10 +13,15 @@ class MainController extends Controller
 
     }
 
-
     public function sendSession(): void
     {
         $service = new SendSessionService($this->session(), $this->response());
         $service->sendSession();
+    }
+
+    public function logout(): void
+    {
+        $this->auth()->logout();
+        $this->redirect('/');
     }
 }

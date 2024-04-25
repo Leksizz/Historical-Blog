@@ -2,6 +2,7 @@
 
 namespace App\Core\Http\Request;
 
+use App\Core\Upload\FileUploaderInterface;
 use App\Core\Validator\ValidatorInterface;
 
 interface RequestInterface
@@ -13,6 +14,7 @@ interface RequestInterface
     public function method(): string;
 
     public function input(string $key, $default = null): mixed;
+
     public function all($default = null): mixed;
 
     public function setValidator(ValidatorInterface $validator): void;
@@ -20,4 +22,6 @@ interface RequestInterface
     public function validate(array $data): bool;
 
     public function errors(): array;
+
+    public function file(string $key): ?FileUploaderInterface;
 }

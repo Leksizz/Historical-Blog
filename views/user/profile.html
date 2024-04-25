@@ -1,9 +1,15 @@
 <div class="container">
-    <h1 class="text-center mb-4">Ваши данные:</h1>
-    <div class="row">
-        <div class="col-sm-3 text-center">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 text-center">
+            <h1 class="text-center mt-4 mb-4" id="nickname"></h1>
+        </div>
+        <div class="col-sm-12 text-center nameAndLastname">
+            <strong id="name"></strong>
+            <strong id="lastname"></strong>
+        </div>
+        <div class=" col-sm-12 text-center img">
             <img width="80% text-center" id="userAvatar" src="" alt="">
-            <form onsubmit="changeAvatar(this); return false">
+            <form action="/file" method="post" enctype="multipart/form-data">
                 <input type="file" name="avatar" class="form-control mt-5">
                 <input type="submit" value="загрузить" class="form-control btn btn-secondary mt-2">
             </form>
@@ -13,13 +19,8 @@
                 <input type="submit" value="удалить" class="form-control btn btn-secondary mt-2">
             </form>
             <p class="text-danger" id="errorDelete" hidden>Нету аватара для удаления</p>
-        </div>
-        <div class="col-sm-9">
-            <p><strong>Имя: </strong><span id="name"></span></p>
-            <p><strong>Фамилия: </strong><span id="lastname"></span></p>
-            <p><strong>Никнейм: </strong><span id="login"></span></p>
-            <p><strong>Email: </strong><span id="email"></span></p>
-            <p><strong>ID: </strong><span id="userId"></span></p>
+
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/assets/js/user/profile.js"></script>
