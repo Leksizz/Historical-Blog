@@ -5,7 +5,6 @@ namespace App\Core\Auth;
 use App\Core\Config\ConfigInterface;
 use App\Core\DataBase\DataBaseInterface;
 use App\Core\Session\SessionInterface;
-use App\Src\Repositories\UserRepository;
 
 class Auth implements AuthInterface
 {

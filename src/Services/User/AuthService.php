@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Src\Services\User\AuthService;
+namespace App\Src\Services\User;
 
 use App\Core\Auth\Auth;
 use App\Core\DTO\User\UserDTO;
 use App\Core\Http\Response\ResponseInterface;
 use App\Core\Repository\RepositoryInterface;
 use App\Core\Session\SessionInterface;
-use App\Src\Models\User;
+use App\Src\Models\User\User;
 use JetBrains\PhpStorm\NoReturn;
 
 class AuthService

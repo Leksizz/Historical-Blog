@@ -33,6 +33,7 @@ class Validator implements ValidatorInterface
             'nickname' => "/[a-zA-Z_0-9]{1,16}$/",
             'email' => "/(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/",
             'password' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})/',
+            'type' => '/^image\/(jpeg|jpg|gif|png|bmp|webp|svg|ico)$/i',
         ];
 
         $errors = [
@@ -42,7 +43,8 @@ class Validator implements ValidatorInterface
                     подчеркивания",
             'email' => "Ошибка при обработке данных на сервере: Некорректный имейл",
             'password' => "Ошибка при обработке данных на сервере: пароль: от 8-15 символов, с минимум одной цифрой, одной заглавной и
-                одной строчной буквой."
+                одной строчной буквой.",
+            'type' => "Ошибка при обработке данных на сервере: недопустимый формат файла",
         ];
         if (preg_match($patterns[$key], $value)) {
             return false;

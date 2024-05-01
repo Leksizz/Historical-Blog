@@ -10,4 +10,5 @@ class UserDTO
     public ?string $nickname;
     public ?string $email;
     public ?string $password;
+    public ?string $avatar;
 }

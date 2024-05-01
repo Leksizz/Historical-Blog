@@ -6,9 +6,10 @@ use App\Core\Controller\Controller;
 use App\Core\DTO\DTOFactory;
 use App\Core\Exceptions\DTOException;
 use App\Core\Repository\RepositoryFactory;
-use App\Src\Services\User\AuthService\AuthService;
+use App\Src\Services\User\AuthService;
+use JetBrains\PhpStorm\NoReturn;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
     public function index(): void
     {
@@ -18,12 +19,18 @@ class LoginController extends Controller
     /**
      * @throws DTOException
      */
-    public function login(): void
+    #[NoReturn] public function login(): void
     {
         $dto = DTOFactory::createFromRequest($this->request(), 'user');
         $user = RepositoryFactory::getRepository('user', $this->db());
         $service = new AuthService($user, $dto, $this->response(), $this->auth(), $this->session());
         $service->authentication();
+    }
+
+    public function logout(): void
+    {
+        $this->auth()->logout();
+        $this->redirect('/');
     }
 
 }

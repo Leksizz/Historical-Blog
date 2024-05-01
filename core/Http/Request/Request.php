@@ -41,21 +41,21 @@ class Request implements RequestInterface
         return $this->post[$key] ?? $this->get[$key] ?? $default;
     }
 
-    public function file(string $key): ?FileUploaderInterface
-    {
-        if (!isset($this->files[$key])) {
-            return null;
-        }
-        return new FileUploader(
-            $this->files[$key]['name'],
-            $this->files[$key]['type'],
-            $this->files[$key]['tmp_name'],
-            $this->files[$key]['error'],
-            $this->files[$key]['size'],
-        );
-    }
+//    public function file(string $key): ?FileUploaderInterface
+//    {
+//        if (!isset($this->files[$key])) {
+//            return null;
+//        }
+//        return new FileUploader(
+//            $this->files[$key]['name'],
+//            $this->files[$key]['type'],
+//            $this->files[$key]['tmp_name'],
+//            $this->files[$key]['error'],
+//            $this->files[$key]['size'],
+//        );
+//    }
 
-    public function all($default = null): mixed // 1
+    public function all($default = null): mixed
     {
         return $this->post ?? $this->get ?? $default;
     }
@@ -74,4 +74,10 @@ class Request implements RequestInterface
     {
         return $this->validator->errors();
     }
+
+    public function file(string $key): array
+    {
+        return $this->files[$key];
+    }
+
 }

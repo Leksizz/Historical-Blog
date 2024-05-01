@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/assets/css/template.css">
     <script type="text/javascript" src="/assets/js/template/jquery.js"></script>
     <script type="text/javascript" src="/assets/js/template/cssLoader.js"></script>
-
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">

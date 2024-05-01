@@ -3,6 +3,9 @@
 namespace App\Src\Controllers;
 
 use App\Core\Controller\Controller;
+use App\Core\DTO\DTOFactory;
+use App\Core\Repository\RepositoryFactory;
+use App\Src\Services\User\UpdateAvatarService;
 
 class ProfileController extends Controller
 {
@@ -13,8 +16,9 @@ class ProfileController extends Controller
 
     public function file()
     {
-        $file = $this->request()->file('avatar');
-        dd($file->move('user'));
+        dd(DTOFactory::createFromRequest($this->request(), 'avatar'));
+        $user = RepositoryFactory::getRepository('user', $this->db());
+        $service = new UpdateAvatarService($user, $dto, $this->response());
+    // доделать вывод и обновление картинки
     }
-
 }

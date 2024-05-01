@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Src\Models;
+namespace App\Src\Models\User;
 
 use App\Core\DTO\User\UserDTO;
 

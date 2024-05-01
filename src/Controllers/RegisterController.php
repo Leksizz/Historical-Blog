@@ -6,7 +6,7 @@ use App\Core\Controller\Controller;
 use App\Core\DTO\DTOFactory;
 use App\Core\Exceptions\DTOException;
 use App\Core\Repository\RepositoryFactory;
-use App\Src\Services\User\RegisterService\RegisterService;
+use App\Src\Services\User\RegisterService;
 use JetBrains\PhpStorm\NoReturn;
 
 class RegisterController extends Controller

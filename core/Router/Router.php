@@ -9,6 +9,7 @@ use App\Core\Http\Redirect\RedirectInterface;
 use App\Core\Http\Request\RequestInterface;
 use App\Core\Http\Response\ResponseInterface;
 use App\Core\Session\SessionInterface;
+use App\Core\Storage\StorageInterface;
 use App\Core\View\View;
 use App\Core\View\ViewInterface;
 use JetBrains\PhpStorm\NoReturn;
@@ -25,6 +26,7 @@ class Router implements RouterInterface
         private readonly SessionInterface  $session,
         private readonly DataBaseInterface $dataBase,
         private readonly AuthInterface     $auth,
+        private readonly StorageInterface  $storage,
     )
     {
         $this->initRoutes();
@@ -64,6 +66,7 @@ class Router implements RouterInterface
             call_user_func([$controller, 'setSession'], $this->session);
             call_user_func([$controller, 'setAuth'], $this->auth);
             call_user_func([$controller, 'setDataBase'], $this->dataBase);
+            call_user_func([$controller, 'setStorage'], $this->storage);
             call_user_func([$controller, $action]);
         } else {
             call_user_func($route->getAction());

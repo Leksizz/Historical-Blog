@@ -19,6 +19,8 @@ class SendSessionService
     {
         if ($this->session->has('user')) {
             $this->response->json(['session' => $this->session->get('user')])->send();
+        } else {
+            $this->response->json(['session' => false])->send();
         }
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Src\Services\User\RegisterService;
+namespace App\Src\Services\User;
 
 use App\Core\DTO\User\UserDTO;
 use App\Core\Http\Response\ResponseInterface;
 use App\Core\Repository\RepositoryInterface;
-use App\Src\Models\User;
+use App\Src\Models\User\User;
 use JetBrains\PhpStorm\NoReturn;
 
 class RegisterService

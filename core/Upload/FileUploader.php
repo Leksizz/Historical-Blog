@@ -28,7 +28,7 @@ class FileUploader implements FileUploaderInterface
         $filePath = "$storage/$fileName";
 
         if (move_uploaded_file($this->tmpName, $filePath)) {
-            return "storage/$path/$fileName";
+            return "$path/$fileName";
         }
         return false;
     }
@@ -37,12 +37,10 @@ class FileUploader implements FileUploaderInterface
     {
         $name = microtime();
         return "$name." . $this->extension();
-        // подумать над доступам к файлам
     }
 
     private function extension(): string
     {
         return pathinfo($this->name, PATHINFO_EXTENSION);
     }
-
 }

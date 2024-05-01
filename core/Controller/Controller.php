@@ -8,6 +8,7 @@ use App\Core\Http\Redirect\RedirectInterface;
 use App\Core\Http\Request\RequestInterface;
 use App\Core\Http\Response\ResponseInterface;
 use App\Core\Session\SessionInterface;
+use App\Core\Storage\StorageInterface;
 use App\Core\View\ViewInterface;
 
 abstract class Controller
@@ -19,6 +20,7 @@ abstract class Controller
     private DataBaseInterface $dataBase;
     private AuthInterface $auth;
     private ResponseInterface $response;
+    private StorageInterface $storage;
 
     public function view(string $path, string $title): void
     {
@@ -82,12 +84,22 @@ abstract class Controller
 
     public function setAuth(AuthInterface $auth): void
     {
-         $this->auth = $auth;
+        $this->auth = $auth;
     }
 
     public function auth(): AuthInterface
     {
         return $this->auth;
+    }
+
+    public function setStorage(StorageInterface $storage): void
+    {
+        $this->storage = $storage;
+    }
+
+    public function storage(): StorageInterface
+    {
+        return $this->storage;
     }
 
 }
