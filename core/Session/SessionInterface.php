@@ -15,4 +15,8 @@ interface SessionInterface
     public function remove(string $key): void;
 
     public function destroy(): void;
+
+    public function setColumn(string $key, string $column, mixed $value): void;
+
+    public function getColumn(string $key, string $column, $default = null): mixed;
 }

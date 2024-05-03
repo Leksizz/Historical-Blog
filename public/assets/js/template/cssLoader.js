@@ -10,7 +10,9 @@ const links = {
     'errors': [
         '/404'
     ],
-    'blog': []
+    'post': [
+        '/addPost',
+    ]
 };
 
 function cssLoader(path) {

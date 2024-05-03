@@ -2,7 +2,7 @@
 
 namespace App\Core\DTO;
 
-use App\Core\DTO\Blog\BlogDTO;
+use App\Core\DTO\Post\PostDTO;
 use App\Core\DTO\User\AvatarDTO;
 use App\Core\DTO\User\UserDTO;
 use App\Core\Exceptions\DTOException;
@@ -13,8 +13,11 @@ class DTOFactory
     /**
      * @throws DTOException
      */
-    public static function createFromRequest(RequestInterface $request, string $type): UserDTO|BlogDTO|AvatarDTO|array
+    public static function createFromRequest(RequestInterface $request, string $type): UserDTO|PostDTO|AvatarDTO|array
     {
+        if (!$request->validate($request->all())) {
+            return $request->errors();
+        }
         return match ($type) {
             'user' => self::createUserDTO($request),
             'article' => self::createBlogDTO($request),
@@ -42,12 +45,11 @@ class DTOFactory
 
     private static function createUserDTO(RequestInterface $request): UserDTO|array
     {
-        if (!$request->validate($request->all())) {
-            return $request->errors();
-        }
+
 
         $dto = new UserDTO();
 
+        $dto->id = null;
         $dto->name = $request->input('name') ?? null;
         $dto->lastname = $request->input('lastname') ?? null;
         $dto->nickname = $request->input('nickname') ?? null;
@@ -57,9 +59,9 @@ class DTOFactory
         return $dto;
     }
 
-    private static function createBlogDTO(RequestInterface $request): BlogDTO
+    private static function createBlogDTO(RequestInterface $request): PostDTO
     {
-        $dto = new BlogDTO();
+        $dto = new PostDTO();
 //        $dto->id = $request->input('id');
 //        $dto->name = $request->input('name');
 //        $dto->lastname = $request->input('lastname');

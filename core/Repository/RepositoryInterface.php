@@ -8,7 +8,7 @@ interface RepositoryInterface
 
     public function get(string $table, array $params = []);
 
-    public function edit();
+    public function edit(string $table, array $params, array $where);
 
     public function delete();
 

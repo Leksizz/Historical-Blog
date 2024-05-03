@@ -8,6 +8,7 @@ use App\Core\Http\Response\ResponseInterface;
 use App\Core\Repository\RepositoryInterface;
 use App\Core\Session\SessionInterface;
 use App\Src\Models\User\User;
+use App\Src\Services\User\traits\SetTable;
 use JetBrains\PhpStorm\NoReturn;
 
 class AuthService
@@ -32,15 +33,7 @@ class AuthService
         $this->setTable();
     }
 
-    private function setTable(): void
-    {
-        $this->table = 'users';
-    }
-
-    private function table(): string
-    {
-        return $this->table;
-    }
+    use setTable;
 
     private function attempt(): bool
     {

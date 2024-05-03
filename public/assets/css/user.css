@@ -32,3 +32,8 @@
 .nameAndLastname {
     font-size: 30px;
 }
+
+#avatar {
+    height: 300px;
+    width: 300px;
+}

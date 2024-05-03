@@ -24,9 +24,9 @@ abstract class Repository implements RepositoryInterface
         return $this->db->select($table, $params);
     }
 
-    public function edit()
+    public function edit(string $table, array $params, array $where): bool
     {
-        // TODO: Implement edit() method.
+        return $this->db->update($table, $params, $where);
     }
 
     public function delete()

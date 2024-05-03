@@ -67,7 +67,7 @@ class DataBase implements DataBaseInterface
         try {
             $stmt->execute($params);
         } catch (\PDOException $exception) {
-            exit("Find one failed: {$exception->getMessage()}");
+            exit("Select: {$exception->getMessage()}");
         }
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -75,21 +75,53 @@ class DataBase implements DataBaseInterface
         return $result ?: null;
     }
 
-//    public function all(string $table): ?array
-//    {
-//
-//        $sql = "SELECT " . "*" . " FROM $table";
-//
-//        $stmt = $this->pdo->prepare($sql);
-//
-//        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//
-//        return $result ?: null;
-//    }
-
-    public function update(string $table,)
+    public function update(string $table, array $params, array $where): bool
     {
+        $set = '';
+        $whereClause = '';
 
+        if (count($params) > 0) {
+            $set = 'SET ' . implode(' , ', array_map(fn($field) => "$field = :$field", array_keys($params)));
+        }
+
+        if (count($where) > 0) {
+            $whereClause = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($where)));
+        }
+
+        $sql = "UPDATE $table $set $whereClause";
+        $stmt = $this->pdo->prepare($sql);
+
+        try {
+            $params = array_merge($params, $where);
+            $stmt->execute($params);
+            return true;
+        } catch (\PDOException $exception) {
+            exit("Update failed: {$exception->getMessage()}");
+        }
     }
 
+    public function delete(string $table, array $params = [], array $where = []): bool
+    {
+        $set = '';
+        $whereClause = '';
+
+        if (count($params) > 0) {
+            $set = 'SET ' . implode(' , ', array_map(fn($field) => "$field = :$field", array_keys($params)));
+        }
+
+        if (count($where) > 0) {
+            $whereClause = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($where)));
+        }
+
+        $sql = "DELETE $table $set $whereClause";
+        $stmt = $this->pdo->prepare($sql);
+
+        try {
+            $params = array_merge($params, $where);
+            $stmt->execute($params);
+            return true;
+        } catch (\PDOException $exception) {
+            exit("Delete failed: {$exception->getMessage()}");
+        }
+    }
 }

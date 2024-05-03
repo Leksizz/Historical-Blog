@@ -25,7 +25,7 @@
 </div>
 <footer class="py-5 bg-dark">
     <div class="container">
-        <div class="m-0 text-center text-white">&copy; Алексей Никитенко 2023
+        <div class="m-0 text-center text-white">&copy; Алексей Никитенко 2024
             <a href="https://github.com/Leksizz"><i class="ms-2 fa-brands fa-github"></i></a>
             <a href="https://t.me/leksizzz"><i class="ms-2 fa-brands fa-telegram"></i></a>
         </div>

@@ -1,0 +1,73 @@
+<div class="container my-5">
+    <h1 class="text-center my-5">Новая статья:</h1>
+    <div class="mx-auto col-sm-9">
+        <form action="/addPost" method="POST">
+            <div class="fieldName mb-3">
+                <strong>Заголовок:</strong>
+            </div>
+            <div class="mb-3">
+                <input type="text" name="title" placeholder="Заголовок" class="form-control">
+            </div>
+            <div class="fieldName mb-3">
+                <strong>Превью:</strong>
+            </div>
+            <div class="mb-3">
+                <input type="file" name="preview" class="form-control">
+            </div>
+            <div class="fieldName mb-3">
+                <strong>Содержание:</strong>
+            </div>
+            <div class="mb-3">
+                <textarea class="form-control" id="sample"></textarea>
+                <input type="hidden" name="content" id="content">
+            </div>
+            <div class="fieldName mb-3">
+                <strong>Основное изображение:</strong>
+            </div>
+            <div class="mb-3">
+                <input type="file" name="mainImage" class="form-control">
+            </div>
+            <div class="fieldName mb-3">
+                <strong>Категория:</strong>
+            </div>
+            <div class="mb-3">
+                <select name="topic" id="topic">
+                    <option value="" selected disabled>Не выбрано</option>
+                    <option value="antiquity">Античность</option>
+                    <option value="middleAges">Средневековье</option>
+                    <option value="primitiveSociety">Первобытное общество</option>
+                    <option value="ww1">WW1</option>
+                    <option value="ww2">WW2</option>
+                    <option value="newHistory">Новейшая история</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="Отправить" class="form-control btn btn-secondary">
+            </div>
+        </form>
+    </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ru.js"></script>
+<script>
+    const editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'), {
+        lang: SUNEDITOR_LANG['ru'],
+        buttonList: [
+            ['fontSize', 'formatBlock'],
+            ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+            ['fontColor', 'hiliteColor'],
+            ['removeFormat'],
+            ['fullScreen'],
+            /** ['dir', 'dir_ltr', 'dir_rtl'] */ // "dir": Toggle text direction, "dir_ltr": Right to Left, "dir_rtl": Left to Right
+        ],
+        height: "300px",
+        width: "100%",
+        onChange: function () {
+            document.getElementById('content').value = this.getContents(); // Разобраться с получением содержимого на сервере
+        }
+    });
+</script>
+<!--<script type="text/javascript" src="/assets/js/post/setPostFormData.js"></script>-->
+<!--<script type="text/javascript" src="/assets/js/form/form.js"></script>-->

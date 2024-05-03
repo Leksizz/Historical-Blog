@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/assets/js/form/form.js"></script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm-12 text-center">
@@ -7,19 +8,19 @@
             <strong id="name"></strong>
             <strong id="lastname"></strong>
         </div>
+        <div class="col-sm-12 text-center mt-3">
+            <img src="" alt="" id="avatar">
+        </div>
         <div class=" col-sm-12 text-center img">
             <img width="80% text-center" id="userAvatar" src="" alt="">
-            <form action="/file" method="post" enctype="multipart/form-data">
+            <form action="/changeAvatar" method="post" enctype="multipart/form-data">
                 <input type="file" name="avatar" class="form-control mt-5">
-                <input type="submit" value="загрузить" class="form-control btn btn-secondary mt-2">
+                <input type="submit" value="Загрузить" class="form-control btn btn-secondary mt-2">
             </form>
-            <p class="text-danger" id="errorChange" hidden>Недопустимый формат файла</p>
-            <p class="text-danger" id="errorNoUploadFile" hidden>Отсутствует файл для загрузки</p>
-            <form onsubmit="deleteAvatar(this); return false">
-                <input type="submit" value="удалить" class="form-control btn btn-secondary mt-2">
+            <form action="/deleteAvatar" method="post" enctype="multipart/form-data">
+                <input type="submit" value="Удалить" class="form-control btn btn-danger mt-2">
             </form>
-            <p class="text-danger" id="errorDelete" hidden>Нету аватара для удаления</p>
-
+            <p class="text-danger" id="error"></p>
         </div>
     </div>
 </div>

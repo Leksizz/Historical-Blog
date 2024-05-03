@@ -6,6 +6,7 @@ use App\Core\DTO\User\UserDTO;
 use App\Core\Http\Response\ResponseInterface;
 use App\Core\Repository\RepositoryInterface;
 use App\Src\Models\User\User;
+use App\Src\Services\User\traits\SetTable;
 use JetBrains\PhpStorm\NoReturn;
 
 class RegisterService
@@ -27,15 +28,7 @@ class RegisterService
         $this->setTable();
     }
 
-    private function setTable(): void
-    {
-        $this->table = 'users';
-    }
-
-    private function table(): string
-    {
-        return $this->table;
-    }
+    use SetTable;
 
     #[NoReturn] public function register(): void
     {

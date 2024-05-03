@@ -9,7 +9,7 @@ class Session implements SessionInterface
         session_start();
     }
 
-    public function set(string $key, $value): void
+    public function set(string $key, mixed $value): void
     {
         $_SESSION[$key] = $value;
     }
@@ -17,6 +17,16 @@ class Session implements SessionInterface
     public function get(string $key, $default = null): mixed
     {
         return $_SESSION[$key] ?? $default;
+    }
+
+    public function setColumn(string $key, string $column, mixed $value): void
+    {
+        $_SESSION[$key][$column] = $value;
+    }
+
+    public function getColumn(string $key, string $column, $default = null): mixed
+    {
+        return $_SESSION[$key][$column];
     }
 
     public function getFlash(string $key, $default = null): mixed

@@ -4,11 +4,14 @@ async function getUser() {
         method: 'GET',
         dataType: 'json'
     });
-    document.getElementById('nickname').innerHTML = response.session.nickname;
-    document.getElementById('name').innerHTML = response.session.name;
-    document.getElementById('lastname').innerHTML = response.session.lastname;
-    document.getElementById('userAvatar').innerHTML = response.session.img;
+    if (response.status === 'success') {
+        document.getElementById('nickname').innerHTML = response.user.nickname;
+        document.getElementById('name').innerHTML = response.user.name;
+        document.getElementById('lastname').innerHTML = response.user.lastname;
+        document.getElementById('avatar').src = '/storage/' + response.user.avatar;
+    }
 }
+
 $(document).ready(function () {
     getUser();
 });

@@ -12,7 +12,7 @@ class RepositoryFactory
     {
         return match ($type) {
             'user' => new UserRepository($db),
-            'blog' => new BlogRepository($db),
+            'post' => new BlogRepository($db),
         };
     }
 
