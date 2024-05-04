@@ -1,4 +1,0 @@
-function render(type)
-{
-    
-}

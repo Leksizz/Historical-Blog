@@ -6,8 +6,6 @@ use App\Core\DTO\User\AvatarDTO;
 use App\Core\Http\Response\ResponseInterface;
 use App\Core\Repository\RepositoryInterface;
 use App\Core\Session\SessionInterface;
-use App\Core\Upload\FileUploader;
-use App\Core\Upload\FileUploaderInterface;
 use App\Src\Models\User\Avatar;
 use App\Src\Services\User\traits\SetTable;
 
@@ -19,19 +17,20 @@ class UpdateAvatarService
     private string $oldAvatar;
     private int $id;
 
+
     public function __construct(
         private readonly RepositoryInterface $userRepository,
-        private readonly AvatarDTO|array     $avatarDTO,
+        private readonly AvatarDTO|array     $dto,
         private readonly ResponseInterface   $response,
         private readonly SessionInterface    $session,
     )
     {
-        if (is_array($avatarDTO)) {
-            $this->response->json(['status' => 'error', 'result' => $this->avatarDTO])->send();
+        if (is_array($dto)) {
+            $this->response->json(['status' => 'error', 'result' => $this->dto])->send();
         }
 
         $this->id = $this->session->get('user')['id'];
-        $this->avatar = new Avatar($this->avatarDTO);
+        $this->avatar = new Avatar($this->dto);
         $this->defaultAvatar = '../storage/user/user_avatar.jpg';
         $this->oldAvatar = '../storage/' . $this->session->getColumn('user', 'avatar');
         $this->setTable();
@@ -44,7 +43,7 @@ class UpdateAvatarService
     public function updateAvatar(): void
     {
         $this->removeAvatar();
-        $avatar = $this->avatar()->move('user');
+        $avatar = $this->avatar->get();
         if ($this->userRepository->edit('users', ['avatar' => $avatar], ['id' => $this->id])) {
             $this->session->setColumn('user', 'avatar', $avatar);
             $this->response->json(['status' => 'success', 'href' => '/profile'])->send();
@@ -53,22 +52,11 @@ class UpdateAvatarService
 
     private function removeAvatar(): bool
     {
-        if (file_exists($this->oldAvatar) && $this->oldAvatar !== $this->defaultAvatar) {
-            unlink($this->oldAvatar);
+        $path = '../storage/';
+        if (file_exists($path . $this->oldAvatar) && $this->oldAvatar !== $this->defaultAvatar) {
+            unlink($path . $this->oldAvatar);
             return true;
         }
         return false;
     }
-
-    private function avatar(): ?FileUploaderInterface
-    {
-        return new FileUploader(
-            $this->avatar->name,
-            $this->avatar->type,
-            $this->avatar->tmpName,
-            $this->avatar->error,
-            $this->avatar->size,
-        );
-    }
-
 }

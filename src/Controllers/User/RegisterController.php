@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Src\Controllers;
+namespace App\Src\Controllers\User;
 
 use App\Core\Controller\Controller;
 use App\Core\DTO\DTOFactory;

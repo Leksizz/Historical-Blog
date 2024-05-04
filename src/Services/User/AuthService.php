@@ -19,17 +19,17 @@ class AuthService
 
     public function __construct(
         private readonly RepositoryInterface $userRepository,
-        private readonly UserDTO|array       $userDTO,
+        private readonly UserDTO|array       $dto,
         private readonly ResponseInterface   $response,
         private readonly Auth                $auth,
         private readonly SessionInterface    $session,
     )
     {
-        if (is_array($userDTO)) {
-            $this->response->json(['status' => 'error', 'result' => $userDTO])->send();
+        if (is_array($dto)) {
+            $this->response->json(['status' => 'error', 'result' => $dto])->send();
         }
 
-        $this->user = new User($this->userDTO);
+        $this->user = new User($this->dto);
         $this->setTable();
     }
 
@@ -43,7 +43,7 @@ class AuthService
             return false;
         }
 
-        if (!password_verify($this->userDTO->password, $user['password'])) {
+        if (!password_verify($this->dto->password, $user['password'])) {
             return false;
         }
 

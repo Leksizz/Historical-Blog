@@ -15,13 +15,10 @@ class DTOFactory
      */
     public static function createFromRequest(RequestInterface $request, string $type): UserDTO|PostDTO|AvatarDTO|array
     {
-        if (!$request->validate($request->all())) {
-            return $request->errors();
-        }
         return match ($type) {
             'user' => self::createUserDTO($request),
-            'article' => self::createBlogDTO($request),
             'avatar' => self::createAvatarDTO($request),
+            'post' => self::createPostDTO($request),
             default => throw new DTOException("Несуществующий тип DTO"),
         };
     }
@@ -45,11 +42,12 @@ class DTOFactory
 
     private static function createUserDTO(RequestInterface $request): UserDTO|array
     {
-
+        if (!$request->validate($request->all())) {
+            return $request->errors();
+        }
 
         $dto = new UserDTO();
 
-        $dto->id = null;
         $dto->name = $request->input('name') ?? null;
         $dto->lastname = $request->input('lastname') ?? null;
         $dto->nickname = $request->input('nickname') ?? null;
@@ -59,15 +57,19 @@ class DTOFactory
         return $dto;
     }
 
-    private static function createBlogDTO(RequestInterface $request): PostDTO
+    private static function createPostDTO(RequestInterface $request): PostDTO|array
     {
+        if (!$request->validate(['type' => $request->file('preview')['type']]) ||
+            !$request->validate(['type' => $request->file('mainImage')['type']])) {
+            return $request->errors();
+        }
+
         $dto = new PostDTO();
-//        $dto->id = $request->input('id');
-//        $dto->name = $request->input('name');
-//        $dto->lastname = $request->input('lastname');
-//        $dto->nickname = $request->input('nickname');
-//        $dto->email = $request->input('email');
-//        $dto->password = $request->input('password');
+        $dto->title = $request->input('title');
+        $dto->preview = $request->file('preview');
+        $dto->content = $request->input('content');
+        $dto->mainImage = $request->file('mainImage');
+        $dto->category = $request->input('category');
 
         return $dto;
     }

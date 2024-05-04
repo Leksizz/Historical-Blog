@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Src\Controllers;
+namespace App\Src\Controllers\Blog;
 
 use App\Core\Controller\Controller;
 use App\Src\Services\Blog\SendSessionService\SendSessionService;

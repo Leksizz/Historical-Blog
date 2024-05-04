@@ -3,22 +3,23 @@
 namespace App\Src\Models\User;
 
 use App\Core\DTO\User\AvatarDTO;
+use App\Core\Upload\FileUploader;
 
 class Avatar
 {
-    public string $name;
-    public string $type;
-    public string $tmpName;
-    public int $error;
-    public int $size;
+    private string $name;
+    private string $type;
+    private string $tmpName;
+    private int $error;
+    private int $size;
 
-    public function __construct(AvatarDTO $avatarDTO)
+    public function __construct(AvatarDTO $dto)
     {
-        $this->name = $avatarDTO->name;
-        $this->type = $avatarDTO->type;
-        $this->tmpName = $avatarDTO->tmpName;
-        $this->error = $avatarDTO->error;
-        $this->size = $avatarDTO->size;
+        $this->name = $dto->name;
+        $this->type = $dto->type;
+        $this->tmpName = $dto->tmpName;
+        $this->error = $dto->error;
+        $this->size = $dto->size;
     }
 
     public function name(): string
@@ -44,5 +45,17 @@ class Avatar
     public function size(): int
     {
         return $this->size;
+    }
+
+    public function get(): string
+    {
+        $avatar = new FileUploader(
+            $this->name(),
+            $this->type(),
+            $this->tmpName(),
+            $this->error(),
+            $this->size(),
+        );
+        return $avatar->move('user');
     }
 }

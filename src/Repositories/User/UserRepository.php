@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Src\Repositories;
+namespace App\Src\Repositories\User;
 
 use App\Core\Repository\Repository;
 
@@ -16,9 +16,9 @@ class UserRepository extends Repository
         return $this->get($table, ['id' => $id]);
     }
 
-    public function has(string $table, string $field, string $email): bool
+    public function has(string $table, string $field, string $value): bool
     {
-        if ($this->get($table, [$field => $email])) {
+        if ($this->get($table, [$field => $value])) {
             return true;
         }
         return false;

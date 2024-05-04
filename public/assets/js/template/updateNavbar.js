@@ -1,4 +1,4 @@
-async function updateNavbar() {
+$(document).ready(async function () {
     try {
         const response = await $.ajax({
             url: '/getSession',
@@ -35,9 +35,6 @@ async function updateNavbar() {
         }
     } catch (error) {
         console.error('Ошибка при выполнении запроса:', error);
-    }
-}
 
-$(document).ready(function () {
-    updateNavbar();
+    }
 });

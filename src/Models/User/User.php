@@ -6,28 +6,20 @@ use App\Core\DTO\User\UserDTO;
 
 class User
 {
-    private ?int $id;
     private ?string $name;
     private ?string $lastname;
     private ?string $nickname;
     private ?string $email;
     private ?string $password;
 
-    public function __construct(UserDTO $userDTO)
+    public function __construct(UserDTO $dto)
     {
-        $this->id = $userDTO->id;
-        $this->name = $userDTO->name;
-        $this->lastname = $userDTO->lastname;
-        $this->nickname = $userDTO->nickname;
-        $this->email = $userDTO->email;
-        $this->password = password_hash($userDTO->password, PASSWORD_BCRYPT);
+        $this->name = $dto->name;
+        $this->lastname = $dto->lastname;
+        $this->nickname = $dto->nickname;
+        $this->email = $dto->email;
+        $this->password = password_hash($dto->password, PASSWORD_BCRYPT);
     }
-
-    public function id(): int
-    {
-        return $this->id;
-    }
-
     public function name(): string
     {
         return $this->name;
@@ -56,7 +48,6 @@ class User
     public function get(): array
     {
         return [
-            'id' => $this->id,
             'name' => $this->name,
             'lastname' => $this->lastname,
             'nickname' => $this->nickname,

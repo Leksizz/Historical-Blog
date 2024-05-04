@@ -1,14 +1,15 @@
 <?php
 
 use App\Core\Router\Route;
-use App\Src\Controllers\AuthController;
-use App\Src\Controllers\MainController;
-use App\Src\Controllers\ProfileController;
-use App\Src\Controllers\RegisterController;
-use App\Src\Controllers\SessionController;
+use App\Src\Controllers\Blog\MainController;
+use App\Src\Controllers\Blog\SessionController;
+use App\Src\Controllers\Post\AddPostController;
+use App\Src\Controllers\Post\PostController;
+use App\Src\Controllers\User\AuthController;
+use App\Src\Controllers\User\ProfileController;
+use App\Src\Controllers\User\RegisterController;
 use App\Src\Middlewares\AuthMiddleware;
 use App\Src\Middlewares\GuestMiddleware;
-use App\Src\Controllers\AddPostController;
 
 return [
     Route::get('/', [MainController::class, 'index']),
@@ -22,6 +23,7 @@ return [
     Route::get('/getUser', [ProfileController::class, 'getUser'], [AuthMiddleware::class]),
     Route::post('/changeAvatar', [ProfileController::class, 'changeAvatar']),
     Route::post('/deleteAvatar', [ProfileController::class, 'deleteAvatar']),
-    Route::get('/addPost', [AddPostController::class, 'index']),
+    Route::get('/addPost', [AddPostController::class, 'index'], [AuthMiddleware::class]),
     Route::post('/addPost', [AddPostController::class, 'addPost']),
+    Route::get('/post/\d+', [PostController::class, 'index']),
 ];

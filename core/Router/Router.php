@@ -75,10 +75,12 @@ class Router implements RouterInterface
 
     private function findRoute(string $uri, string $method): Route|false
     {
-        if (!isset($this->routes[$method][$uri])) {
-            return false;
+        foreach ($this->routes[$method] as $pattern => $route) {
+            if (preg_match("#^$pattern$#", $uri)) {
+                return $route;
+            }
         }
-        return $this->routes[$method][$uri];
+        return false;
     }
 
     private function initRoutes(): void

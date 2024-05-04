@@ -3,16 +3,16 @@
 namespace App\Core\Repository;
 
 use App\Core\DataBase\DataBaseInterface;
-use App\Src\Repositories\BlogRepository;
-use App\Src\Repositories\UserRepository;
+use App\Src\Repositories\Post\PostRepository;
+use App\Src\Repositories\User\UserRepository;
 
 class RepositoryFactory
 {
-    public static function getRepository(string $type, DataBaseInterface $db): UserRepository|BlogRepository
+    public static function getRepository(string $type, DataBaseInterface $db): UserRepository|PostRepository
     {
         return match ($type) {
             'user' => new UserRepository($db),
-            'post' => new BlogRepository($db),
+            'post' => new PostRepository($db),
         };
     }
 

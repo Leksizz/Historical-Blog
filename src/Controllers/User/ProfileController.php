@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Src\Controllers;
+namespace App\Src\Controllers\User;
 
 
 use App\Core\Controller\Controller;
@@ -8,7 +8,7 @@ use App\Core\DTO\DTOFactory;
 use App\Core\Exceptions\DTOException;
 use App\Core\Repository\RepositoryFactory;
 use App\Core\Repository\RepositoryInterface;
-use App\Src\Repositories\UserRepository;
+use App\Src\Repositories\User\UserRepository;
 use App\Src\Services\User\DeleteAvatarService;
 use App\Src\Services\User\GetUserService;
 use App\Src\Services\User\UpdateAvatarService;

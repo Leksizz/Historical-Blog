@@ -1,17 +1,9 @@
-async function getUser() {
-    const response = await $.ajax({
-        url: '/getUser',
-        method: 'GET',
-        dataType: 'json'
-    });
-    if (response.status === 'success') {
-        document.getElementById('nickname').innerHTML = response.user.nickname;
-        document.getElementById('name').innerHTML = response.user.name;
-        document.getElementById('lastname').innerHTML = response.user.lastname;
-        document.getElementById('avatar').src = '/storage/' + response.user.avatar;
-    }
-}
+import {fetchData} from '../get/get.js';
 
-$(document).ready(function () {
-    getUser();
+$(document).ready(async function () {
+    const result = await fetchData('/getUser');
+    document.getElementById('nickname').innerHTML = result.nickname;
+    document.getElementById('name').innerHTML = result.name;
+    document.getElementById('lastname').innerHTML = result.lastname;
+    document.getElementById('avatar').src = '/storage/' + result.avatar;
 });

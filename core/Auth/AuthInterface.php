@@ -2,8 +2,6 @@
 
 namespace App\Core\Auth;
 
-use App\Src\Repositories\UserRepository;
-
 interface AuthInterface
 {
     public function logout(): void;

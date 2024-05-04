@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Src\Services\User\traits;
+namespace App\Src\Services\Post\traits;
 
 trait SetTable
 {
     private function setTable(): void
     {
-        $this->table = 'users';
+        $this->table = 'posts';
     }
 
     private function table(): string

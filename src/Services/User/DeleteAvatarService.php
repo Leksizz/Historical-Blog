@@ -2,10 +2,10 @@
 
 namespace App\Src\Services\User;
 
-use App\Src\Services\User\traits\SetTable;
 use App\Core\Http\Response\ResponseInterface;
 use App\Core\Repository\RepositoryInterface;
 use App\Core\Session\SessionInterface;
+use App\Src\Services\User\traits\SetTable;
 
 class DeleteAvatarService
 {
@@ -22,8 +22,8 @@ class DeleteAvatarService
     {
 
         $this->id = $this->session->get('user')['id'];
-        $this->defaultAvatar = '../storage/user/user_avatar.jpg';
-        $this->oldAvatar = '../storage/' . $this->session->getColumn('user', 'avatar');
+        $this->defaultAvatar = 'user/user_avatar.jpg';
+        $this->oldAvatar = $this->session->getColumn('user', 'avatar');
         $this->setTable();
 
     }
@@ -44,8 +44,9 @@ class DeleteAvatarService
 
     private function removeAvatar(): bool
     {
-        if (file_exists($this->oldAvatar) && $this->oldAvatar !== $this->defaultAvatar) {
-            unlink($this->oldAvatar);
+        $path = '../storage/';
+        if (file_exists($path . $this->oldAvatar) && $this->oldAvatar !== $this->defaultAvatar) {
+            unlink($path . $this->oldAvatar);
             return true;
         }
         return false;
