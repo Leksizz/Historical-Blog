@@ -27,7 +27,10 @@ class GetUserService
     #[NoReturn] public function getUser(): void
     {
         $id = $this->session->get('user')['id'];
-        $user = $this->userRepository->getUserById($this->table(), $id);
+        $user = $this->userRepository->getById([
+            'table' => $this->table(),
+            'where' => ['id' => $id]
+        ]);
         $this->response->json(['status' => 'success', 'result' => $user])->send();
     }
 

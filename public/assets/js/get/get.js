@@ -4,5 +4,10 @@ export async function fetchData(url) {
         method: 'GET',
         dataType: 'json'
     });
-    return response.result;
+    if (response.result !== null && Object.keys(response.result).length - 1 > 0) {
+        return response.result;
+    } else {
+        window.location.href = '/404';
+    }
+
 }

@@ -25,7 +25,7 @@ function cssLoader(path) {
                     type: 'text/css',
                     href: '/assets/css/' + folder + '.css'
                 }).appendTo('head');
-                console.log();
+                return;
             }
         }
     }
@@ -34,3 +34,4 @@ function cssLoader(path) {
 $(document).ready(function () {
     cssLoader(window.location.pathname);
 });
+

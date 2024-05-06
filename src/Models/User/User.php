@@ -3,6 +3,7 @@
 namespace App\Src\Models\User;
 
 use App\Core\DTO\User\UserDTO;
+use App\Core\Session\SessionInterface;
 
 class User
 {
@@ -20,6 +21,7 @@ class User
         $this->email = $dto->email;
         $this->password = password_hash($dto->password, PASSWORD_BCRYPT);
     }
+
     public function name(): string
     {
         return $this->name;

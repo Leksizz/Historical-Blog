@@ -13,7 +13,6 @@ use JetBrains\PhpStorm\NoReturn;
 
 class AuthService
 {
-    private string $table;
     private User $user;
 
 
@@ -37,8 +36,10 @@ class AuthService
 
     private function attempt(): bool
     {
-        $user = $this->userRepository->getUserByEmail($this->table(), $this->user->email());
-
+        $user = $this->userRepository->getUserByEmail([
+            'table' => $this->table(),
+            'where' => ['email' => $this->user->email()]
+        ]);
         if (!$user) {
             return false;
         }

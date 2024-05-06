@@ -36,12 +36,15 @@ class DataBase implements DataBaseInterface
 
     }
 
-    public function insert(string $table, array $data): int
+    public function insert(array $params): int
     {
+        $table = $params['table'];
+        $data = $params['data'];
+
         $columns = implode(', ', array_keys($data));
         $values = ':' . implode(', :', array_keys($data));
 
-        $sql = "INSERT INTO" . " $table " . "($columns) VALUES ($values)";
+        $sql = "INSERT INTO" . " $table ($columns) VALUES ($values)";
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -53,46 +56,117 @@ class DataBase implements DataBaseInterface
         return (int)$this->pdo->lastInsertId();
     }
 
-    public function select(string $table, array $params = []): ?array
-    {
-        $where = '';
 
-        if (count($params) > 0) {
-            $where = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($params)));
+    public function selectOne(array $params): ?array
+    {
+        $table = $params['table'];
+        $where = $params['where'] ?? [];
+        $columns = $params['columns'] ?? ['*'];
+
+        $whereClause = '';
+        $columnsClause = '';
+
+        if (!empty($where)) {
+            $whereClause = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($where)));
         }
 
-        $sql = "SELECT " . "*" . " FROM $table $where LIMIT 1";
+        if (!in_array('*', $columns)) {
+            $columnsClause = 'SELECT ' . implode(', ', $columns);
+        } else {
+            $columnsClause = 'SELECT *';
+        }
+
+        $sql = "$columnsClause FROM $table $whereClause";
+
         $stmt = $this->pdo->prepare($sql);
 
         try {
+            $params = [];
+            foreach ($where as $key => $value) {
+                $params[":$key"] = $value;
+            }
+            $stmt->execute($params);
+        } catch (\PDOException $exception) {
+            exit("Select: {$exception->getMessage()}");
+        }
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ?: null;
+    }
+
+    public function select(array $params): ?array
+    {
+        $table = $params['table'];
+        $where = $params['where'] ?? [];
+        $limit = $params['limit'] ?? null;
+        $offset = $params['offset'] ?? null;
+        $columns = $params['columns'] ?? ['*'];
+
+        $whereClause = '';
+        $columnsClause = '';
+        $limitClause = '';
+        $offsetClause = '';
+
+        if (!empty($where)) {
+            $whereClause = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($where)));
+        }
+
+        if (!in_array('*', $columns)) {
+            $columnsClause = 'SELECT ' . implode(', ', $columns);
+        } else {
+            $columnsClause = 'SELECT *';
+        }
+
+        $sql = "$columnsClause FROM $table $whereClause";
+
+        if ($limit !== null) {
+            $limitClause = " LIMIT $limit";
+            $sql .= $limitClause;
+        }
+
+        if ($offset !== null) {
+            $offsetClause = " OFFSET $offset";
+            $sql .= $offsetClause;
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+
+        try {
+            $params = [];
+            foreach ($where as $key => $value) {
+                $params[":$key"] = $value;
+            }
             $stmt->execute($params);
         } catch (\PDOException $exception) {
             exit("Select: {$exception->getMessage()}");
         }
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result ?: null;
     }
 
-    public function update(string $table, array $params, array $where): bool
+
+    public function update(array $params): bool
     {
-        $set = '';
+        $table = $params['table'];
+        $set = $params['set'] ?? [];
+        $where = $params['where'] ?? [];
+
+        $setClause = '';
         $whereClause = '';
 
-        if (count($params) > 0) {
-            $set = 'SET ' . implode(' , ', array_map(fn($field) => "$field = :$field", array_keys($params)));
+        if (!empty($set)) {
+            $setClause = 'SET ' . implode(', ', array_map(fn($field) => "$field = :$field", array_keys($set)));
         }
 
-        if (count($where) > 0) {
+        if (!empty($where)) {
             $whereClause = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($where)));
         }
 
-        $sql = "UPDATE $table $set $whereClause";
+        $sql = "UPDATE $table $setClause $whereClause";
         $stmt = $this->pdo->prepare($sql);
 
         try {
-            $params = array_merge($params, $where);
+            $params = array_merge($set, $where);
             $stmt->execute($params);
             return true;
         } catch (\PDOException $exception) {
@@ -100,28 +174,52 @@ class DataBase implements DataBaseInterface
         }
     }
 
-    public function delete(string $table, array $params = [], array $where = []): bool
+    public function countColumn(array $params): int
     {
-        $set = '';
+        $table = $params['table'];
+        $where = $params['where'] ?? [];
+
         $whereClause = '';
 
-        if (count($params) > 0) {
-            $set = 'SET ' . implode(' , ', array_map(fn($field) => "$field = :$field", array_keys($params)));
-        }
-
-        if (count($where) > 0) {
+        if (!empty($where)) {
             $whereClause = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($where)));
         }
 
-        $sql = "DELETE $table $set $whereClause";
+        $sql = "SELECT " . "COUNT(*) FROM $table $whereClause";
+
         $stmt = $this->pdo->prepare($sql);
 
         try {
-            $params = array_merge($params, $where);
-            $stmt->execute($params);
-            return true;
+            $stmt->execute($where);
         } catch (\PDOException $exception) {
-            exit("Delete failed: {$exception->getMessage()}");
+            exit("GetCountColumn: {$exception->getMessage()}");
         }
+
+        return $stmt->fetchColumn();
     }
+
+//    public function delete(string $table, array $params = [], array $where = []): bool
+//    {
+//        $set = '';
+//        $whereClause = '';
+//
+//        if (count($params) > 0) {
+//            $set = 'SET ' . implode(' , ', array_map(fn($field) => "$field = :$field", array_keys($params)));
+//        }
+//
+//        if (count($where) > 0) {
+//            $whereClause = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($where)));
+//        }
+//
+//        $sql = "DELETE $table $set $whereClause";
+//        $stmt = $this->pdo->prepare($sql);
+//
+//        try {
+//            $params = array_merge($params, $where);
+//            $stmt->execute($params);
+//            return true;
+//        } catch (\PDOException $exception) {
+//            exit("Delete failed: {$exception->getMessage()}");
+//        }
+//    }
 }

@@ -6,19 +6,14 @@ use App\Core\Repository\Repository;
 
 class UserRepository extends Repository
 {
-    public function getUserByEmail(string $table, string $email): ?array
+    public function getUserByEmail(array $params): ?array
     {
-        return $this->get($table, ['email' => $email]);
+        return $this->one($params);
     }
 
-    public function getUserById(string $table, string $id): ?array
+    public function has(array $params): bool
     {
-        return $this->get($table, ['id' => $id]);
-    }
-
-    public function has(string $table, string $field, string $value): bool
-    {
-        if ($this->get($table, [$field => $value])) {
+        if ($this->one($params)) {
             return true;
         }
         return false;

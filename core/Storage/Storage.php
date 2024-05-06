@@ -13,6 +13,11 @@ class Storage implements StorageInterface
     {
     }
 
+    public function relativePath(string $path): string
+    {
+        return "../storage/$path";
+    }
+
     public function url(string $path): string
     {
         $url = $this->config->get('app.url', 'http://localhost');

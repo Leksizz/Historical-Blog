@@ -10,3 +10,19 @@ select {
 .fieldName {
     font-size: 25px;
 }
+
+
+img {
+    height: 500px;
+    width: 700px;
+}
+
+.author {
+    font-size: 30px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

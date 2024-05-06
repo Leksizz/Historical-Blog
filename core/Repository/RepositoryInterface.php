@@ -4,13 +4,20 @@ namespace App\Core\Repository;
 
 interface RepositoryInterface
 {
-    public function save(string $table, array $data);
+    public function save(array $params): int|false;
 
-    public function get(string $table, array $params = []);
 
-    public function edit(string $table, array $params, array $where);
+    public function one(array $params): ?array;
+
+    public function get(array $params): ?array;
+
+    public function all(array $params): ?array;
+
+    public function edit(array $params): bool;
 
     public function delete();
 
-    public function exists();
+    public function getById(array $params): ?array;
+
+    public function countColumn(array $params): int;
 }

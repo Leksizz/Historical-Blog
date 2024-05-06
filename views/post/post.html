@@ -1,26 +1,23 @@
-<div class="container my-5" id="container">
-    <h1 id="title"></h1>
-    <div id="content"></div>
-    <b id="author"></b>
-    <div>
-    <i class="fa-solid fa-eye" ></i>
-    <b id="views"></b>
+<script type="module" src="/assets/js/post/post.js"></script>
+<link rel="stylesheet" href="/assets/css/post.css">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 text-center">
+            <h1 class=" mt-4 mb-4" id="title"></h1>
+        </div>
+        <div class="col-sm-12 text-center mt-3 ">
+            <img src="" alt="" id="preview">
+        </div>
+        <div class="col-sm-12 text-center mt-4 mb-4" id="content">
+        </div>
+        <div class="col-sm-12 text-center mt-3 ">
+            <img src="" alt="" id="mainImage">
+        </div>
+        <div class="col-sm-12 text-center mt-3 mb-3 author"><strong>Автор:</strong>
+            <strong class="text-center mt-4 mb-4" id="author"></strong>
+        </div>
+        <div class="col-sm-12 text-center mt-3 mb-3" id="views">
+            <i class="fa-solid fa-eye"></i>
+        </div>
     </div>
 </div>
-<!--<script>-->
-<!--    const articleId = location.pathname.split('/')[2];-->
-<!--    const title = document.getElementById('title');-->
-<!--    const content = document.getElementById('content');-->
-<!--    const author = document.getElementById('author');-->
-<!--    const views = document.getElementById('views');-->
-<!--    fetch('/getArticle/' + articleId)-->
-<!--        .then(response => response.json())-->
-<!--        .then(result => {-->
-<!--            title.innerText = result.title;-->
-<!--            content.innerHTML = result.content;-->
-<!--            author.innerText = result.author;-->
-<!--            views.innerText = result.views;-->
-<!--        });-->
-<!--    let pageTitle = "Статья";-->
-<!--    document.getElementById('pageTitle').innerText = pageTitle;-->
-<!--</script>-->

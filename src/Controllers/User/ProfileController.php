@@ -29,13 +29,13 @@ class ProfileController extends Controller
     public function changeAvatar(): void
     {
         $dto = DTOFactory::createFromRequest($this->request(), 'avatar');
-        $service = new UpdateAvatarService($this->getUserRepository(), $dto, $this->response(), $this->session());
+        $service = new UpdateAvatarService($this->getUserRepository(), $dto, $this->response(), $this->session(), $this->storage());
         $service->updateAvatar();
     }
 
     public function deleteAvatar(): void
     {
-        $service = new DeleteAvatarService($this->getUserRepository(), $this->response(), $this->session());
+        $service = new DeleteAvatarService($this->getUserRepository(), $this->response(), $this->session(), $this->storage());
         $service->deleteAvatar();
     }
 

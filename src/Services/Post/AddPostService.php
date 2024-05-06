@@ -12,7 +12,6 @@ use JetBrains\PhpStorm\NoReturn;
 
 class AddPostService
 {
-    private string $table;
     private Post $post;
 
     public function __construct(
@@ -34,7 +33,10 @@ class AddPostService
 
     #[NoReturn] public function addPost(): void
     {
-        $this->postRepository->save($this->table(), $this->post->get());
+        $this->postRepository->save([
+            'table' => $this->table(),
+            'data' => $this->post->get(),
+        ]);
         $this->response->json(['href' => '/'])->send();
     }
 

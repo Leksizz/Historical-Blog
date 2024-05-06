@@ -5,7 +5,6 @@ namespace App\Src\Models\Post;
 use App\Core\DTO\Post\PostDTO;
 use App\Core\Session\SessionInterface;
 use App\Core\Upload\FileUploader;
-use App\Core\Upload\FileUploaderInterface;
 
 class Post
 {
@@ -23,7 +22,7 @@ class Post
         $this->content = $dto->content;
         $this->mainImage = $dto->mainImage;
         $this->category = $dto->category;
-        $this->author = $session->getColumn('user', 'name');
+        $this->author = $session->getColumn('user', 'nickname');
     }
 
     public function title(): string

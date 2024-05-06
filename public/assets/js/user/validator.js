@@ -1,5 +1,5 @@
 const validationRules = {
-    login: {
+    nickname: {
         regex: /^[a-zA-Z0-9_]+$/,
         errorMessageId: 'errorNickname'
     },

@@ -14,29 +14,43 @@ abstract class Repository implements RepositoryInterface
         $this->db = $db;
     }
 
-    public function save(string $table, array $data): int|false
+    public function save(array $params): int|false
     {
-        return $this->db->insert($table, $data);
+        return $this->db->insert($params);
     }
 
-    public function get(string $table, array $params = []): ?array
+    public function one(array $params): ?array
     {
-        return $this->db->select($table, $params);
+        return $this->db->selectOne($params);
     }
 
-    public function edit(string $table, array $params, array $where): bool
+    public function get(array $params): ?array
     {
-        return $this->db->update($table, $params, $where);
+        return $this->db->select($params);
+    }
+
+    public function all(array $params): ?array
+    {
+        return $this->db->select($params);
+    }
+
+    public function edit(array $params): bool
+    {
+        return $this->db->update($params);
+    }
+
+    public function getById(array $params): ?array
+    {
+        return $this->one($params);
+    }
+
+    public function countColumn(array $params): int
+    {
+        return $this->db->countColumn($params);
     }
 
     public function delete()
     {
         // TODO: Implement delete() method.
     }
-
-    public function exists()
-    {
-        // TODO: Implement exists() method.
-    }
-
 }

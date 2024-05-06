@@ -4,6 +4,7 @@ use App\Core\Router\Route;
 use App\Src\Controllers\Blog\MainController;
 use App\Src\Controllers\Blog\SessionController;
 use App\Src\Controllers\Post\AddPostController;
+use App\Src\Controllers\Post\CategoryController;
 use App\Src\Controllers\Post\PostController;
 use App\Src\Controllers\User\AuthController;
 use App\Src\Controllers\User\ProfileController;
@@ -26,4 +27,7 @@ return [
     Route::get('/addPost', [AddPostController::class, 'index'], [AuthMiddleware::class]),
     Route::post('/addPost', [AddPostController::class, 'addPost']),
     Route::get('/post/\d+', [PostController::class, 'index']),
+    Route::get('/getPost/\d+', [PostController::class, 'getPost']),
+    Route::get('/[a-zA-Z0-9]+/\d+', [CategoryController::class, 'index']),
+    Route::get('/getPostsByCategory/[a-zA-Z0-9]+/\d+', [CategoryController::class, 'getPosts']),
 ];
