@@ -10,9 +10,6 @@ use JetBrains\PhpStorm\NoReturn;
 
 class GetUserService
 {
-    private string $table;
-
-
     public function __construct(
         private readonly RepositoryInterface $userRepository,
         private readonly ResponseInterface   $response,
@@ -33,5 +30,4 @@ class GetUserService
         ]);
         $this->response->json(['status' => 'success', 'result' => $user])->send();
     }
-
 }

@@ -1,12 +1,13 @@
-<div class="row">
-    <div class="col-sm-8">
+<script type="module" src="/assets/js/post/popularPosts.js"></script>
+<div class="row" id="container">
+    <h1 class="text-center">Популярное:</h1>
+    <div class="col-sm-8 mb-3">
         <div class="main-card card">
-            <img src="../../index.php" class="card-img-top" alt="...">
+            <img src="" class="card-img-top" alt="..." id="mainPreview">
             <div class="card-body">
-                <h5 class="card-title">Заголовок карточки</h5>
-                <p class="card-text">Небольшой пример текста, который должен основываться на названии карточки и
-                    составлять основную часть содержимого карты.</p>
-                <a href="#" class="btn btn-primary">Перейти куда-нибудь</a>
+                <h5 class="card-title" id="mainTitle"></h5>
+                <p class="card-text" id="mainContent"></p>
+                <a href="#" class="btn btn-primary" id="mainLink">Читать</a>
             </div>
         </div>
     </div>
@@ -53,53 +54,8 @@
             <a class="btn btn-secondary form-control me-2" href="/addPost" role="button">Добавить статью</a>
         </div>
     </div>
-
-    <div class="col-sm-8">
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            <div class="col">
-                <div class="card">
-                    <img src="../../index.php" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Это более длинная карта С вспомогательным текстом ниже в качестве
-                            естественного
-                            перехода к дополнительному контенту. Этот контент немного длиннее.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="../../index.php" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Это более длинная карта С вспомогательным текстом ниже в качестве
-                            естественного
-                            перехода к дополнительному контенту. Этот контент немного длиннее.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="../../index.php" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Это более длинная карта С вспомогательным текстом ниже в качестве
-                            естественного
-                            перехода к дополнительному контенту.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="../../index.php" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Это более длинная карта С вспомогательным текстом ниже в качестве
-                            естественного
-                            перехода к дополнительному контенту. Этот контент немного длиннее.</p>
-                    </div>
-                </div>
-            </div>
+    <div class="col-sm-8 mb-3">
+        <div class="row row-cols-1 row-cols-md-2 g-4" id="cardsContainer">
         </div>
     </div>
 </div>

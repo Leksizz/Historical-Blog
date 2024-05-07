@@ -12,6 +12,9 @@ const links = {
     ],
     'post': [
         '/addPost',
+    ],
+    'admin': [
+        '/admin',
     ]
 };
 

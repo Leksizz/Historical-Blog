@@ -7,6 +7,7 @@ use App\Core\DTO\DTOFactory;
 use App\Core\Exceptions\DTOException;
 use App\Core\Repository\RepositoryFactory;
 use App\Src\Services\Post\addPostService;
+use JetBrains\PhpStorm\NoReturn;
 
 class AddPostController extends Controller
 {
@@ -18,7 +19,7 @@ class AddPostController extends Controller
     /**
      * @throws DTOException
      */
-    public function addPost(): void
+    #[NoReturn] public function addPost(): void
     {
         $dto = DTOFactory::createFromRequest($this->request(), 'post');
         $post = RepositoryFactory::getRepository('post', $this->db());

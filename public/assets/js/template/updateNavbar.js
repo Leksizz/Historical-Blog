@@ -6,7 +6,24 @@ $(document).ready(async function () {
             dataType: 'json'
         });
         let navbarContent;
-        if (response.session) {
+        if (response.session.nickname === 'Admin') {
+            navbarContent = `
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 dropstart">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="nickname" href="#" role="button" data-bs-toggle="dropdown">
+                            </a>
+                            <ul class="dropdown-menu bg-dark">
+                                 <li><a class="admin dropdown-item text-light" href="/admin"><i class="fa-solid fa-screwdriver-wrench"></i> Админ</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="exit dropdown-item text-light" href="/logout"><i class="fa-solid fa-door-open pe-2"></i>Выход</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+            `;
+            document.getElementById('navbarSupportedContent').innerHTML = navbarContent;
+            const nickname = document.getElementById('nickname');
+            nickname.innerHTML = response.session.nickname;
+        } else if (response.session) {
             navbarContent = `
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 dropstart">
                         <li class="nav-item dropdown">
