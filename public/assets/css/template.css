@@ -17,6 +17,10 @@
     background-color: forestgreen;
 }
 
+.admin:hover {
+    background-color: cornflowerblue;
+}
+
 .exit:hover {
     background-color: darkred;
 }
@@ -92,5 +96,5 @@ footer {
 
 .fa-telegram {
     font-size: 20px;
-    color:  #0088cc;
+    color: #0088cc;
 }

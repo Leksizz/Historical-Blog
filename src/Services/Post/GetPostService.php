@@ -49,6 +49,19 @@ class GetPostService
         $this->response->json(['status' => 'success', 'result' => $post])->send();
     }
 
+    public function getPopularPosts(): void
+    {
+        $condition = 'DESC';
+        $limit = 5;
+        $posts = $this->postRepository->get([
+            'table' => $this->table(),
+            'limit' => $limit,
+            'orderBy' => 'views',
+            'orderCondition' => $condition,
+        ]);
+        $this->response->json(['status' => 'success', 'result' => $posts])->send();
+    }
+
     private function updateViews(): void
     {
         $views = $this->postRepository->one([

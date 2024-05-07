@@ -17,6 +17,7 @@ class Auth implements AuthInterface
     {
 
     }
+
     public function logout(): void
     {
         $this->session->remove($this->sessionField());
@@ -61,5 +62,13 @@ class Auth implements AuthInterface
     public function id(): ?int
     {
         return $this->session->get($this->sessionField());
+    }
+
+    public function admin(): bool
+    {
+        if ($this->session->getColumn('user', 'nickname') === 'Admin') {
+            return true;
+        }
+        return false;
     }
 }

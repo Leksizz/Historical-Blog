@@ -1,6 +1,7 @@
 <?php
 
 use App\Core\Router\Route;
+use App\Src\Controllers\Admin\AdminController;
 use App\Src\Controllers\Blog\MainController;
 use App\Src\Controllers\Blog\SessionController;
 use App\Src\Controllers\Post\AddPostController;
@@ -9,11 +10,13 @@ use App\Src\Controllers\Post\PostController;
 use App\Src\Controllers\User\AuthController;
 use App\Src\Controllers\User\ProfileController;
 use App\Src\Controllers\User\RegisterController;
+use App\Src\Middlewares\AdminMiddleware;
 use App\Src\Middlewares\AuthMiddleware;
 use App\Src\Middlewares\GuestMiddleware;
 
 return [
     Route::get('/', [MainController::class, 'index']),
+    Route::get('/getPopularPosts', [PostController::class, 'getPopularPosts']),
     Route::get('/getSession', [SessionController::class, 'sendSession']),
     Route::get('/logout', [AuthController::class, 'logout']),
     Route::get('/register', [RegisterController::class, 'index'], [GuestMiddleware::class]),
@@ -30,4 +33,9 @@ return [
     Route::get('/getPost/\d+', [PostController::class, 'getPost']),
     Route::get('/[a-zA-Z0-9]+/\d+', [CategoryController::class, 'index']),
     Route::get('/getPostsByCategory/[a-zA-Z0-9]+/\d+', [CategoryController::class, 'getPosts']),
+    Route::get('/admin', [AdminController::class, 'index'], [AdminMiddleware::class]),
+    Route::get('/admin/users', [AdminController::class, 'users'], [AdminMiddleware::class]),
+    Route::get('/admin/posts', [AdminController::class, 'index'], [AdminMiddleware::class]),
+    Route::get('/admin/categories', [AdminController::class, 'index'], [AdminMiddleware::class]),
+    Route::get('/admin/getUsers', [AdminController::class, 'getUsers'], [AdminMiddleware::class]),
 ];

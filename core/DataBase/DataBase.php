@@ -100,11 +100,14 @@ class DataBase implements DataBaseInterface
         $limit = $params['limit'] ?? null;
         $offset = $params['offset'] ?? null;
         $columns = $params['columns'] ?? ['*'];
+        $orderBy = $params['orderBy'] ?? null;
+        $orderCondition = $params['orderCondition'] ?? null;
 
         $whereClause = '';
         $columnsClause = '';
         $limitClause = '';
         $offsetClause = '';
+        $orderByClause = '';
 
         if (!empty($where)) {
             $whereClause = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($where)));
@@ -118,8 +121,13 @@ class DataBase implements DataBaseInterface
 
         $sql = "$columnsClause FROM $table $whereClause";
 
+        if ($orderBy !== null) {
+            $orderByClause = "ORDER BY $orderBy $orderCondition";
+            $sql .= $orderByClause;
+        }
+
         if ($limit !== null) {
-            $limitClause = " LIMIT $limit";
+            $limitClause = " LIMIT $limit ";
             $sql .= $limitClause;
         }
 
@@ -127,7 +135,6 @@ class DataBase implements DataBaseInterface
             $offsetClause = " OFFSET $offset";
             $sql .= $offsetClause;
         }
-
         $stmt = $this->pdo->prepare($sql);
 
         try {

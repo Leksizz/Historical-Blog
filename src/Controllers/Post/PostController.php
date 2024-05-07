@@ -4,7 +4,6 @@ namespace App\Src\Controllers\Post;
 
 use App\Core\Controller\Controller;
 use App\Core\Repository\RepositoryFactory;
-use App\Core\View\View;
 use App\Src\Services\Post\GetPostService;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -17,8 +16,17 @@ class PostController extends Controller
 
     #[NoReturn] public function getPost(): void
     {
+        $this->getPostService()->getPost();
+    }
+
+    public function getPopularPosts(): void
+    {
+        $this->getPostService()->getPopularPosts();
+    }
+
+    private function getPostService(): GetPostService
+    {
         $post = RepositoryFactory::getRepository('post', $this->db());
-        $service = new GetPostService($post, $this->response(), $this->request());
-        $service->getPost();
+        return new GetPostService($post, $this->response(), $this->request());
     }
 }
