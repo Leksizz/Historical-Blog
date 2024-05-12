@@ -2,9 +2,9 @@
 vendor/
 storage/user
 storage/post
-/logs/admin
-/logs/user
-/logs/post
+logs/admin
+logs/user
+logs/post
 .idea/
 public/storage/
 phinx.php
