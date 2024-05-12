@@ -6,6 +6,6 @@ logs/admin
 logs/user
 logs/post
 .idea/
-public/storage/
+public/storage
 phinx.php
 storage/readme/
