@@ -1,12 +1,10 @@
 {
-  "name": "leksizz/historical",
-  "description": "This is a historical blog where people can chat, post their articles, and leave comments.",
+  "name": "leksizz/historium",
+  "description": "This is a historical blog where people can post their posts, and leave comments.",
   "type": "project",
   "require": {
-    "intervention/image": "^3.2.3",
-    "kub-at/php-simple-html-dom-parser": "^1.9",
     "ext-pdo": "*",
-    "symfony/var-dumper": "^6.3"
+    "robmorgan/phinx": "^0.16.0"
   },
   "license": "MIT",
   "autoload": {

@@ -2,8 +2,8 @@
 
 namespace App\Src\Models\User;
 
-use App\Core\DTO\User\AvatarDTO;
 use App\Core\Upload\FileUploader;
+use App\Src\DTO\User\AvatarDTO;
 
 class Avatar
 {

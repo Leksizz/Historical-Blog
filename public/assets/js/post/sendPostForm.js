@@ -14,7 +14,6 @@ $(document).ready(function () {
             processData: false,
             success: function (result) {
                 json = jQuery.parseJSON(result);
-                console.log(json);
                 if (json.status === 'error') {
                     const error = document.getElementById('error');
                     error.innerText = json.result;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\DTO\User;
+namespace App\Src\DTO\User;
 
 class AvatarDTO
 {

@@ -22,4 +22,6 @@ interface RequestInterface
     public function validate(array $data): bool;
 
     public function errors(): array;
+
+    public function file(string $key): array;
 }

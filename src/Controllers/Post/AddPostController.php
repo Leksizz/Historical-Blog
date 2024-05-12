@@ -23,7 +23,7 @@ class AddPostController extends Controller
     {
         $dto = DTOFactory::createFromRequest($this->request(), 'post');
         $post = RepositoryFactory::getRepository('post', $this->db());
-        $service = new AddPostService($dto, $post, $this->response(), $this->session());
+        $service = new AddPostService($dto, $post, $this->response(), $this->session(), $this->logger());
         $service->addPost();
     }
 

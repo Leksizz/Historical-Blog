@@ -2,13 +2,13 @@
 
 namespace App\Src\Services\User;
 
-use App\Core\Auth\Auth;
-use App\Core\DTO\User\UserDTO;
+use App\Core\Auth\AuthInterface;
 use App\Core\Http\Response\ResponseInterface;
-use App\Core\Repository\RepositoryInterface;
+use App\Core\Logger\LoggerInterface;
 use App\Core\Session\SessionInterface;
+use App\Src\DTO\User\UserDTO;
 use App\Src\Models\User\User;
-use App\Src\Services\User\traits\SetTable;
+use App\Src\Repositories\User\UserRepositoryInterface;
 use JetBrains\PhpStorm\NoReturn;
 
 class AuthService
@@ -17,11 +17,12 @@ class AuthService
 
 
     public function __construct(
-        private readonly RepositoryInterface $userRepository,
-        private readonly UserDTO|array       $dto,
-        private readonly ResponseInterface   $response,
-        private readonly Auth                $auth,
-        private readonly SessionInterface    $session,
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly UserDTO|array           $dto,
+        private readonly ResponseInterface       $response,
+        private readonly AuthInterface           $auth,
+        private readonly SessionInterface        $session,
+        private readonly LoggerInterface         $logger,
     )
     {
         if (is_array($dto)) {
@@ -29,17 +30,13 @@ class AuthService
         }
 
         $this->user = new User($this->dto);
-        $this->setTable();
     }
 
-    use setTable;
 
     private function attempt(): bool
     {
-        $user = $this->userRepository->getUserByEmail([
-            'table' => $this->table(),
-            'where' => ['email' => $this->user->email()]
-        ]);
+        $user = $this->userRepository->getUserByEmail($this->user->email());
+
         if (!$user) {
             return false;
         }
@@ -56,6 +53,7 @@ class AuthService
     #[NoReturn] public function authentication(): void
     {
         if ($this->attempt()) {
+            $this->logger->write("Пользователь " . $this->session->getColumn('user', 'id') . " зашёл на сайт", 'user/changes');
             $this->response->json(['href' => '/'])->send();
         }
 

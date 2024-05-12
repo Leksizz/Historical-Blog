@@ -15,6 +15,7 @@ const links = {
     ],
     'admin': [
         '/admin',
+        '/changes',
     ]
 };
 

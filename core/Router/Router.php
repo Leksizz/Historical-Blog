@@ -8,6 +8,7 @@ use App\Core\DataBase\DataBaseInterface;
 use App\Core\Http\Redirect\RedirectInterface;
 use App\Core\Http\Request\RequestInterface;
 use App\Core\Http\Response\ResponseInterface;
+use App\Core\Logger\LoggerInterface;
 use App\Core\Session\SessionInterface;
 use App\Core\Storage\StorageInterface;
 use App\Core\View\View;
@@ -27,6 +28,7 @@ class Router implements RouterInterface
         private readonly DataBaseInterface $dataBase,
         private readonly AuthInterface     $auth,
         private readonly StorageInterface  $storage,
+        private readonly LoggerInterface   $logger,
     )
     {
         $this->initRoutes();
@@ -41,7 +43,6 @@ class Router implements RouterInterface
     public function dispatch(string $uri, string $method): void
     {
         $route = $this->findRoute($uri, $method);
-
         if (!$route) {
             $this->notFound();
         }
@@ -67,6 +68,7 @@ class Router implements RouterInterface
             call_user_func([$controller, 'setAuth'], $this->auth);
             call_user_func([$controller, 'setDataBase'], $this->dataBase);
             call_user_func([$controller, 'setStorage'], $this->storage);
+            call_user_func([$controller, 'setLogger'], $this->logger);
             call_user_func([$controller, $action]);
         } else {
             call_user_func($route->getAction());

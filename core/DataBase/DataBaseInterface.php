@@ -13,4 +13,6 @@ interface DataBaseInterface
     public function update(array $params): bool;
 
     public function countColumn(array $params): int;
+
+    public function delete(array $params): bool;
 }

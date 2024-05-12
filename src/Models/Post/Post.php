@@ -2,9 +2,9 @@
 
 namespace App\Src\Models\Post;
 
-use App\Core\DTO\Post\PostDTO;
 use App\Core\Session\SessionInterface;
 use App\Core\Upload\FileUploader;
+use App\Src\DTO\Post\PostDTO;
 
 class Post
 {

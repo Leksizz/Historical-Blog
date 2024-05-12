@@ -2,7 +2,7 @@
 
 namespace App\Core\Router;
 
-class Route
+class Route implements RouteInterface
 {
     public function __construct(
         private readonly string $uri,

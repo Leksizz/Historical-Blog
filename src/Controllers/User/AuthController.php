@@ -23,12 +23,13 @@ class AuthController extends Controller
     {
         $dto = DTOFactory::createFromRequest($this->request(), 'user');
         $user = RepositoryFactory::getRepository('user', $this->db());
-        $service = new AuthService($user, $dto, $this->response(), $this->auth(), $this->session());
+        $service = new AuthService($user, $dto, $this->response(), $this->auth(), $this->session(), $this->logger());
         $service->authentication();
     }
 
-    public function logout(): void
+    #[NoReturn] public function logout(): void
     {
+        $this->logger()->write("Пользователь " . $this->session()->getColumn('user', 'id') . " покинул сайт", "user/changes");
         $this->auth()->logout();
         $this->redirect('/');
     }

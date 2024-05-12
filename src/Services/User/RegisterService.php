@@ -2,22 +2,22 @@
 
 namespace App\Src\Services\User;
 
-use App\Core\DTO\User\UserDTO;
 use App\Core\Http\Response\ResponseInterface;
-use App\Core\Repository\RepositoryInterface;
+use App\Core\Logger\LoggerInterface;
+use App\Src\DTO\User\UserDTO;
 use App\Src\Models\User\User;
-use App\Src\Services\User\traits\SetTable;
+use App\Src\Repositories\User\UserRepositoryInterface;
 use JetBrains\PhpStorm\NoReturn;
 
 class RegisterService
 {
-    private string $table;
     private User $user;
 
     public function __construct(
-        private readonly RepositoryInterface $userRepository,
-        private readonly UserDTO|array       $dto,
-        private readonly ResponseInterface   $response
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly UserDTO|array           $dto,
+        private readonly ResponseInterface       $response,
+        private readonly LoggerInterface         $logger,
     )
     {
         if (is_array($dto)) {
@@ -25,24 +25,20 @@ class RegisterService
         }
 
         $this->user = new User($this->dto);
-        $this->setTable();
     }
 
-    use SetTable;
 
     #[NoReturn] public function register(): void
     {
         $errors = [];
-        if ($this->userRepository->has([
-            'table' => $this->table(),
-            'where' => ['email' => $this->user->email()],
-        ])) {
+        if ($this->userRepository->has(
+            ['email' => $this->user->email()],
+        )) {
             $errors[] = ' Такой имейл уже занят ';
         }
-        if ($this->userRepository->has([
-            'table' => $this->table(),
-            'where' => ['nickname' => $this->user->nickname()],
-        ])) {
+        if ($this->userRepository->has(
+            ['nickname' => $this->user->nickname()],
+        )) {
             $errors[] = ' Такой никнейм уже занят ';
         }
 
@@ -50,10 +46,9 @@ class RegisterService
             $this->response->json(['status' => 'error', 'result' => $errors])->send();
         }
 
-        $this->userRepository->save([
-            'table' => $this->table(),
-            'data' => $this->user->get(),
-        ]);
+        $this->logger->write("Пользователь " . $this->user->nickname() . " успешно зарегистрирован", 'user/changes');
+
+        $this->userRepository->save($this->user->get());
         $this->response->json(['href' => '/login'])->send();
     }
 }

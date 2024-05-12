@@ -25,7 +25,7 @@ class Validator implements ValidatorInterface
     }
 
 
-    public function validateRule(mixed $value, string $key): string|false
+    private function validateRule(mixed $value, string $key): string|false
     {
         $patterns = [
             'name' => "/^.+$/",
@@ -34,6 +34,7 @@ class Validator implements ValidatorInterface
             'email' => "/(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/",
             'password' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})/',
             'type' => '/^image\/(jpeg|jpg|gif|png|bmp|webp|svg|ico)$/i',
+            'comment' => '/^.{1,255}/',
         ];
 
         $errors = [
@@ -45,6 +46,7 @@ class Validator implements ValidatorInterface
             'password' => "Ошибка при обработке данных на сервере: пароль: от 8-15 символов, с минимум одной цифрой, одной заглавной и
                 одной строчной буквой.",
             'type' => "Недопустимый формат файла",
+            'comment' => "Комментарий не может быть пустым",
         ];
         if (preg_match($patterns[$key], $value)) {
             return false;

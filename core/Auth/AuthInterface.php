@@ -18,5 +18,7 @@ interface AuthInterface
 
     public function sessionField(): string;
 
+    public function admin(): bool;
+
     public function id(): ?int;
 }

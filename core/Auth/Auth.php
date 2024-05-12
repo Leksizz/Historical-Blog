@@ -15,7 +15,6 @@ class Auth implements AuthInterface
         private readonly ConfigInterface   $config,
     )
     {
-
     }
 
     public function logout(): void
@@ -34,8 +33,8 @@ class Auth implements AuthInterface
             return null;
         }
 
-        return $this->db->select($this->table(), [
-            'id' => $this->session->get($this->sessionField()),
+        return $this->db->select(['table' => $this->table(),
+            'where' => ['id' => $this->session->get($this->sessionField())]
         ]);
     }
 

@@ -1,0 +1,28 @@
+.buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+.column {
+    flex: 1;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.column:last-child {
+    border-right: none;
+}
+h3 {
+    margin-top: 0;
+}

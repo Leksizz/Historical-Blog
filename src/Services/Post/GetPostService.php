@@ -4,29 +4,23 @@ namespace App\Src\Services\Post;
 
 use App\Core\Http\Request\RequestInterface;
 use App\Core\Http\Response\ResponseInterface;
-use App\Core\Repository\RepositoryInterface;
-use App\Src\Services\Post\traits\SetTable;
+use App\Src\Repositories\Post\PostRepositoryInterface;
 use JetBrains\PhpStorm\NoReturn;
 
 class GetPostService
 {
     public function __construct(
-        private readonly RepositoryInterface $postRepository,
-        private readonly ResponseInterface   $response,
-        private readonly RequestInterface    $request,
+        private readonly PostRepositoryInterface $postRepository,
+        private readonly ResponseInterface       $response,
+        private readonly RequestInterface        $request,
     )
     {
-        $this->setTable();
-    }
 
-    use SetTable;
+    }
 
     #[NoReturn] public function getPost(): void
     {
-        $post = $this->postRepository->getById([
-            'table' => 'posts',
-            'where' => ['id' => $this->id(2)],
-        ]);
+        $post = $this->postRepository->getPostById($this->id(2));
         $this->updateViews();
         $this->response->json(['status' => 'success', 'result' => $post])->send();
     }
@@ -36,45 +30,23 @@ class GetPostService
     {
         $limit = 5;
         $offset = ($this->id(3) - 1) * $limit;
-        $post = $this->postRepository->get([
-            'table' => $this->table(),
-            'where' => ['category' => $this->category()],
-            'limit' => $limit,
-            'offset' => $offset,
-        ]);
-        $post['total'] = $this->postRepository->countColumn([
-            'table' => $this->table(),
-            'where' => ['category' => $this->category()],
-        ]);
+        $post = $this->postRepository->getPostsByCategory($this->category(), $limit, $offset);
+        $post['total'] = $this->postRepository->getNumberOfPostsByCategory($this->category());
         $this->response->json(['status' => 'success', 'result' => $post])->send();
     }
 
-    public function getPopularPosts(): void
+    #[NoReturn] public function getPopularPosts(): void
     {
-        $condition = 'DESC';
         $limit = 5;
-        $posts = $this->postRepository->get([
-            'table' => $this->table(),
-            'limit' => $limit,
-            'orderBy' => 'views',
-            'orderCondition' => $condition,
-        ]);
+        $posts = $this->postRepository->getPopularPosts($limit);
         $this->response->json(['status' => 'success', 'result' => $posts])->send();
     }
 
     private function updateViews(): void
     {
-        $views = $this->postRepository->one([
-            'table' => $this->table(),
-            'columns' => ['views'],
-            'where' => ['id' => $this->id(2)],
-        ])['views'];
+        $views = $this->postRepository->getViews($this->id(2));
 
-        $this->postRepository->edit([
-            'table' => $this->table(),
-            'set' => ['views' => ++$views],
-            'where' => ['id' => $this->id(2)]
-        ]);
+        $this->postRepository->increaseViews($views, $this->id(2));
     }
 
     private function id(int $num): int

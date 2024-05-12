@@ -9,5 +9,4 @@ export async function fetchData(url) {
     } else {
         window.location.href = '/404';
     }
-
 }

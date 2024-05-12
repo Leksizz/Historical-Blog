@@ -16,15 +16,15 @@ class PostController extends Controller
 
     #[NoReturn] public function getPost(): void
     {
-        $this->getPostService()->getPost();
+        $this->service()->getPost();
     }
 
-    public function getPopularPosts(): void
+    #[NoReturn] public function getPopularPosts(): void
     {
-        $this->getPostService()->getPopularPosts();
+        $this->service()->getPopularPosts();
     }
 
-    private function getPostService(): GetPostService
+    private function service(): GetPostService
     {
         $post = RepositoryFactory::getRepository('post', $this->db());
         return new GetPostService($post, $this->response(), $this->request());

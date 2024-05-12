@@ -7,9 +7,11 @@ use App\Core\DataBase\DataBaseInterface;
 use App\Core\Http\Redirect\RedirectInterface;
 use App\Core\Http\Request\RequestInterface;
 use App\Core\Http\Response\ResponseInterface;
+use App\Core\Logger\LoggerInterface;
 use App\Core\Session\SessionInterface;
 use App\Core\Storage\StorageInterface;
 use App\Core\View\ViewInterface;
+use JetBrains\PhpStorm\NoReturn;
 
 abstract class Controller
 {
@@ -21,6 +23,7 @@ abstract class Controller
     private AuthInterface $auth;
     private ResponseInterface $response;
     private StorageInterface $storage;
+    private LoggerInterface $logger;
 
     public function view(string $path, string $title): void
     {
@@ -57,7 +60,7 @@ abstract class Controller
         $this->redirect = $redirect;
     }
 
-    public function redirect(string $url): void
+    #[NoReturn] public function redirect(string $url): void
     {
         $this->redirect->to($url);
     }
@@ -100,6 +103,16 @@ abstract class Controller
     public function storage(): StorageInterface
     {
         return $this->storage;
+    }
+
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
+    }
+
+    public function logger(): LoggerInterface
+    {
+        return $this->logger;
     }
 
 }

@@ -23,7 +23,7 @@ class RegisterController extends Controller
     {
         $dto = DTOFactory::createFromRequest($this->request(), 'user');
         $user = RepositoryFactory::getRepository('user', $this->db());
-        $service = new RegisterService($user, $dto, $this->response());
+        $service = new RegisterService($user, $dto, $this->response(), $this->logger());
         $service->register();
     }
 }

@@ -7,8 +7,7 @@ use App\Core\Controller\Controller;
 use App\Core\DTO\DTOFactory;
 use App\Core\Exceptions\DTOException;
 use App\Core\Repository\RepositoryFactory;
-use App\Core\Repository\RepositoryInterface;
-use App\Src\Repositories\User\UserRepository;
+use App\Src\Repositories\User\UserRepositoryInterface;
 use App\Src\Services\User\DeleteAvatarService;
 use App\Src\Services\User\GetUserService;
 use App\Src\Services\User\UpdateAvatarService;
@@ -16,8 +15,6 @@ use JetBrains\PhpStorm\NoReturn;
 
 class ProfileController extends Controller
 {
-    private RepositoryInterface $user;
-
     public function index(): void
     {
         $this->view('user/profile', 'Профиль');
@@ -29,25 +26,25 @@ class ProfileController extends Controller
     public function changeAvatar(): void
     {
         $dto = DTOFactory::createFromRequest($this->request(), 'avatar');
-        $service = new UpdateAvatarService($this->getUserRepository(), $dto, $this->response(), $this->session(), $this->storage());
+        $service = new UpdateAvatarService($this->userRepository(), $dto, $this->response(), $this->session(), $this->storage(), $this->logger());
         $service->updateAvatar();
     }
 
     public function deleteAvatar(): void
     {
-        $service = new DeleteAvatarService($this->getUserRepository(), $this->response(), $this->session(), $this->storage());
+        $service = new DeleteAvatarService($this->userRepository(), $this->response(), $this->session(), $this->storage(), $this->logger());
         $service->deleteAvatar();
     }
 
     #[NoReturn] public function getUser(): void
     {
-        $service = new GetUserService($this->getUserRepository(), $this->response(), $this->session());
+        $service = new GetUserService($this->userRepository(), $this->response(), $this->session());
         $service->getUser();
     }
 
-    private function getUserRepository(): UserRepository
+    private function userRepository(): UserRepositoryInterface
     {
-        return $this->user = RepositoryFactory::getRepository('user', $this->db());
+        return RepositoryFactory::getRepository('user', $this->db());
     }
 
 }

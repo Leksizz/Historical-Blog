@@ -2,23 +2,25 @@
 
 namespace App\Core\DTO;
 
-use App\Core\DTO\Post\PostDTO;
-use App\Core\DTO\User\AvatarDTO;
-use App\Core\DTO\User\UserDTO;
 use App\Core\Exceptions\DTOException;
 use App\Core\Http\Request\RequestInterface;
+use App\Src\DTO\Comment\CommentDTO;
+use App\Src\DTO\Post\PostDTO;
+use App\Src\DTO\User\AvatarDTO;
+use App\Src\DTO\User\UserDTO;
 
-class DTOFactory
+class DTOFactory implements DTOFactoryInterface
 {
     /**
      * @throws DTOException
      */
-    public static function createFromRequest(RequestInterface $request, string $type): UserDTO|PostDTO|AvatarDTO|array
+    public static function createFromRequest(RequestInterface $request, string $type): UserDTO|PostDTO|AvatarDTO|CommentDTO|array
     {
         return match ($type) {
             'user' => self::createUserDTO($request),
             'avatar' => self::createAvatarDTO($request),
             'post' => self::createPostDTO($request),
+            'comment' => self::createCommentDTO($request),
             default => throw new DTOException("Несуществующий тип DTO"),
         };
     }
@@ -74,4 +76,15 @@ class DTOFactory
         return $dto;
     }
 
+    private static function createCommentDTO(RequestInterface $request): CommentDTO|array
+    {
+        if (!$request->validate($request->all())) {
+            return $request->errors();
+        }
+
+        $dto = new CommentDTO();
+        $dto->comment = $request->input('comment');
+
+        return $dto;
+    }
 }

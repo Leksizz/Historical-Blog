@@ -2,7 +2,6 @@ import {fetchData} from '../get/get.js';
 
 $(document).ready(async function () {
     const post = await fetchData('/getPopularPosts');
-
     document.getElementById('mainPreview').src = '/storage/' + post[0].preview;
     document.getElementById('mainTitle').innerHTML = post[0].title;
     document.getElementById('mainContent').innerHTML = post[0].content;

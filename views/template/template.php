@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/assets/css/template.css">
     <script type="text/javascript" src="/assets/js/template/jquery.js"></script>
     <script type="text/javascript" src="/assets/js/template/cssLoader.js"></script>
+    <link rel="shortcut icon" href="/storage/icon/icon.png" type="image/x-icon">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">

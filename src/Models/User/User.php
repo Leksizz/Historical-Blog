@@ -2,8 +2,7 @@
 
 namespace App\Src\Models\User;
 
-use App\Core\DTO\User\UserDTO;
-use App\Core\Session\SessionInterface;
+use App\Src\DTO\User\UserDTO;
 
 class User
 {
@@ -19,7 +18,7 @@ class User
         $this->lastname = $dto->lastname;
         $this->nickname = $dto->nickname;
         $this->email = $dto->email;
-        $this->password = password_hash($dto->password, PASSWORD_BCRYPT);
+        $this->password = $dto->password ? password_hash($dto->password, PASSWORD_BCRYPT) : null;
     }
 
     public function name(): string
@@ -50,11 +49,11 @@ class User
     public function get(): array
     {
         return [
-            'name' => $this->name,
-            'lastname' => $this->lastname,
-            'nickname' => $this->nickname,
-            'email' => $this->email,
-            'password' => $this->password,
+            'name' => $this->name(),
+            'lastname' => $this->lastname(),
+            'nickname' => $this->nickname(),
+            'email' => $this->email(),
+            'password' => $this->password(),
         ];
     }
 

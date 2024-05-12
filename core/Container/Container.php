@@ -14,6 +14,8 @@ use App\Core\Http\Request\Request;
 use App\Core\Http\Request\RequestInterface;
 use App\Core\Http\Response\Response;
 use App\Core\Http\Response\ResponseInterface;
+use App\Core\Logger\Logger;
+use App\Core\Logger\LoggerInterface;
 use App\Core\Router\Router;
 use App\Core\Router\RouterInterface;
 use App\Core\Session\Session;
@@ -38,6 +40,7 @@ class Container
     public readonly ResponseInterface $response;
     public readonly AuthInterface $auth;
     public readonly StorageInterface $storage;
+    public readonly LoggerInterface $logger;
 
     public function __construct()
     {
@@ -57,6 +60,7 @@ class Container
         $this->response = new Response();
         $this->auth = new Auth($this->dataBase, $this->session, $this->config);
         $this->storage = new Storage($this->config);
-        $this->router = new Router($this->view, $this->request, $this->redirect, $this->response, $this->session, $this->dataBase, $this->auth, $this->storage);
+        $this->logger = new Logger();
+        $this->router = new Router($this->view, $this->request, $this->redirect, $this->response, $this->session, $this->dataBase, $this->auth, $this->storage, $this->logger);
     }
 }

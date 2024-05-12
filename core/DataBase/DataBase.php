@@ -205,28 +205,26 @@ class DataBase implements DataBaseInterface
         return $stmt->fetchColumn();
     }
 
-//    public function delete(string $table, array $params = [], array $where = []): bool
-//    {
-//        $set = '';
-//        $whereClause = '';
-//
-//        if (count($params) > 0) {
-//            $set = 'SET ' . implode(' , ', array_map(fn($field) => "$field = :$field", array_keys($params)));
-//        }
-//
-//        if (count($where) > 0) {
-//            $whereClause = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($where)));
-//        }
-//
-//        $sql = "DELETE $table $set $whereClause";
-//        $stmt = $this->pdo->prepare($sql);
-//
-//        try {
-//            $params = array_merge($params, $where);
-//            $stmt->execute($params);
-//            return true;
-//        } catch (\PDOException $exception) {
-//            exit("Delete failed: {$exception->getMessage()}");
-//        }
-//    }
+    public function delete(array $params): bool
+    {
+        $table = $params['table'];
+        $where = $params['where'] ?? [];
+
+        $whereClause = '';
+
+        if (count($where) > 0) {
+            $whereClause = 'WHERE ' . implode(' AND ', array_map(fn($field) => "$field = :$field", array_keys($where)));
+        }
+
+        $sql = "DELETE FROM" . " $table $whereClause";
+        $stmt = $this->pdo->prepare($sql);
+
+        try {
+            $params = array_merge($where);
+            $stmt->execute($params);
+            return true;
+        } catch (\PDOException $exception) {
+            exit("Delete failed: {$exception->getMessage()}");
+        }
+    }
 }

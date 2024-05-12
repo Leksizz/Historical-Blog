@@ -2,26 +2,26 @@ import {fetchData} from '../get/get.js';
 
 $(document).ready(async function () {
     const users = await fetchData('/admin/getUsers');
-    const tableBody = $('.table tbody'); // Получаем тело таблицы
+    const tableBody = $('.table tbody');
 
-    // Очищаем тело таблицы перед добавлением новых данных
     tableBody.empty();
-
-    // Добавляем строки для каждого пользователя
     users.forEach(user => {
-        const row = $('<tr>'); // Создаем новую строку
+        const row = $('<tr>');
 
-        // Добавляем ячейки в строку
         row.append(`<td>${user.id}</td>`);
         row.append(`<td>${user.name}</td>`);
+        row.append(`<td>${user.lastname}</td>`);
         row.append(`<td>${user.email}</td>`);
         row.append(`<td>${user.nickname}</td>`);
         row.append(`<td>
-                        <button type="button" class="btn btn-sm btn-primary">Редактировать</button>
-                        <button type="button" class="btn btn-sm btn-danger">Удалить</button>
+                        <div class="buttons-container">
+        <a href="/admin/users/edit/${user.id}" type="button" class="btn btn-sm btn-secondary">Редактировать</a>
+        <form action="/admin/users/delete/${user.id}" method="post">
+            <input type="submit" value="Удалить" class="btn btn-sm btn-danger">
+        </form>
+    </div>
                     </td>`);
 
-        // Добавляем строку в тело таблицы
         tableBody.append(row);
     });
 });

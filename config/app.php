@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'url' => 'http://localhost',
+    'name' => 'Historium',
+    'url' => 'http://historium',
 ];
