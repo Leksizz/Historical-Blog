@@ -9,7 +9,7 @@ use App\Src\DTO\Post\PostDTO;
 use App\Src\DTO\User\AvatarDTO;
 use App\Src\DTO\User\UserDTO;
 
-class DTOFactory implements DTOFactoryInterface
+class DTOFactory
 {
     /**
      * @throws DTOException

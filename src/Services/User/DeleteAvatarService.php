@@ -25,7 +25,7 @@ class DeleteAvatarService
     {
 
         $this->id = $this->session->get('user')['id'];
-        $this->defaultAvatar = $this->storage->relativePath('user/user_avatar.jpg');
+        $this->defaultAvatar = $this->storage->relativePath('default/user_avatar.jpg');
         $this->oldAvatar = $this->session->getColumn('user', 'avatar');
     }
 

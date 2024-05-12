@@ -12,7 +12,7 @@ use App\Src\Repositories\Post\PostRepositoryInterface;
 use App\Src\Repositories\User\UserRepository;
 use App\Src\Repositories\User\UserRepositoryInterface;
 
-class RepositoryFactory implements RepositoryFactoryInterface
+class RepositoryFactory
 {
     public static function getRepository(string $type, DataBaseInterface $db): UserRepositoryInterface|PostRepositoryInterface|AdminRepositoryInterface|CommentRepositoryInterface
     {
