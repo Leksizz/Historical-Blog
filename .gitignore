@@ -3,3 +3,6 @@
 phinx.php
 public/storage
 *.log
+storage/user/*
+storage/post/*
+storage/readme/*
