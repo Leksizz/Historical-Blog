@@ -82,11 +82,11 @@
 <details>
   <summary>Обзор текущего наполнения</summary>
 
-- Основная страница ![Основная страница](/storage/readme/main.gif)
-- Регистрация и авторизация ![Регистрация и авторизация](/storage/readme/auth.gif)
-- Добавление статей ![Добавление статей](/storage/readme/addPost.gif)
-- Система комментариев ![Система комментариев](/storage/readme/comments.gif)
-- Пагинация ![Пагинация](/storage/readme/pagination.gif)
-- Админ-панель ![Админ-панель](/storage/readme/admin.gif)
+- Основная страница ![Основная страница](/storage/readmes/main.gif)
+- Регистрация и авторизация ![Регистрация и авторизация](/storage/readmes/auth.gif)
+- Добавление статей ![Добавление статей](/storage/readmes/addPost.gif)
+- Система комментариев ![Система комментариев](/storage/readmes/comments.gif)
+- Пагинация ![Пагинация](/storage/readmes/pagination.gif)
+- Админ-панель ![Админ-панель](/storage/readmes/admin.gif)
 
 </details>
