@@ -35,7 +35,7 @@ class DeleteAvatarService
         if (!$this->removeAvatar()) {
             $this->response->json(['status' => 'error', 'result' => 'Отсутствует файл для удаления'])->send();
         }
-        if ($this->userRepository->deleteAvatar($this->defaultAvatar, $this->id)) {
+        if ($this->userRepository->deleteAvatar('default/user_avatar.jpg', $this->id)) {
             $this->session->setColumn('user', 'avatar', $this->defaultAvatar);
             $this->logger->write("Пользователь " . $this->session->getColumn('user', 'id') . " удалил аватар", 'user/changes');
             $this->response->json(['status' => 'success', 'href' => '/profile'])->send();

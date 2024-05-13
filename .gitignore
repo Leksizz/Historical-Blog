@@ -1,11 +1,5 @@
-!storage/user/user_avatar.jpg
 /vendor/
-storage/user
-storage/post
-logs/admin
-logs/user
-logs/post
 .idea
-public/storage
 phinx.php
-storage/readme
+public/storage
+*.log
